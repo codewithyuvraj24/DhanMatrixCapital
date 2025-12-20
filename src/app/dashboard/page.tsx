@@ -24,6 +24,12 @@ import {
   Target
 } from 'lucide-react'
 import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Skeleton'
+import { useToast } from '@/components/ui/PremiumToast'
+import MagneticButton from '@/components/ui/MagneticButton'
+import GoalTracker from '@/components/features/GoalTracker'
+import ROICalculator from '@/components/features/ROICalculator'
+import PortfolioHealth from '@/components/features/PortfolioHealth'
+import { Download } from 'lucide-react'
 
 type Investment = {
   id: string
@@ -44,6 +50,7 @@ export default function DashboardPage() {
 
 function Dashboard() {
   const { user } = useAuth()
+  const { showToast } = useToast()
   const [investments, setInvestments] = useState<Investment[]>([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -84,8 +91,10 @@ function Dashboard() {
       setInvestments(snap.docs.map(d => ({ id: d.id, ...d.data() } as Investment)))
       setShowModal(false)
       setFormData({ depositAmount: '', withdrawalDate: '', status: 'active' })
+      showToast('Investment created successfully!', 'success')
     } catch (err) {
       setError('Failed to create investment')
+      showToast('Failed to create investment', 'error')
     } finally {
       setSubmitting(false)
     }
@@ -95,6 +104,29 @@ function Dashboard() {
   const activeInvestments = investments.filter(inv => inv.status === 'active').length
   const withdrawnInvestments = investments.filter(inv => inv.status === 'withdrawn').length
   const averageReturn = 15
+
+  // Export functionality
+  const handleExportCSV = () => {
+    const csvContent = [
+      ['Position ID', 'Amount', 'Status', 'Maturity Date', 'Created'],
+      ...investments.map(inv => [
+        inv.id.slice(0, 8),
+        inv.depositAmount,
+        inv.status,
+        inv.withdrawalDate,
+        new Date(inv.createdAt).toLocaleDateString()
+      ])
+    ].map(row => row.join(',')).join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `portfolio-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+    showToast('Portfolio exported successfully', 'success')
+  }
 
   if (loading) return (
     <div className="max-w-7xl mx-auto px-4 pt-32 pb-12">
@@ -123,14 +155,22 @@ function Dashboard() {
             </h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">Your wealth journey is progressing strategically.</p>
           </div>
-          <motion.button
-            onClick={() => setShowModal(true)}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 sm:py-5 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition shadow-2xl shadow-blue-500/20 active:scale-95 text-sm sm:text-base"
-            whileHover={{ y: -2 }}
-          >
-            <Plus size={20} strokeWidth={3} />
-            <span>Schedule Investment</span>
-          </motion.button>
+          <div className="flex gap-3">
+            <MagneticButton
+              onClick={handleExportCSV}
+              className="px-6 py-3 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-700 dark:text-white rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center gap-2"
+            >
+              <Download size={18} />
+              <span className="hidden sm:inline">Export</span>
+            </MagneticButton>
+            <MagneticButton
+              onClick={() => setShowModal(true)}
+              className="flex items-center justify-center gap-3 px-8 py-4 sm:py-5 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition shadow-2xl shadow-blue-500/20 text-sm sm:text-base"
+            >
+              <Plus size={20} strokeWidth={3} />
+              <span>Schedule Investment</span>
+            </MagneticButton>
+          </div>
         </div>
       </FadeIn>
 
@@ -168,6 +208,22 @@ function Dashboard() {
           <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden h-full">
             <PortfolioBreakdownChart />
           </div>
+        </FadeIn>
+      </div>
+
+      {/* Wealth Tracking Tools */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <FadeIn delay={0.35}>
+          <GoalTracker currentAmount={totalInvested} />
+        </FadeIn>
+        <FadeIn delay={0.4}>
+          <PortfolioHealth
+            activeInvestments={activeInvestments}
+            totalInvestments={investments.length}
+          />
+        </FadeIn>
+        <FadeIn delay={0.45} className="lg:col-span-3">
+          <ROICalculator />
         </FadeIn>
       </div>
 
