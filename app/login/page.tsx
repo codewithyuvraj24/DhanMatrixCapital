@@ -25,8 +25,10 @@ export default function Login() {
       const user = userCredential.user
 
       // 2. Determine Redirection (Admin vs User)
-      const adminDoc = await getDoc(doc(db, 'admins', user.uid))
-      if (adminDoc.exists()) {
+      const isSuperAdmin = user.email === 'yuvraj.basutkar24@gmail.com'
+      const adminDoc = !isSuperAdmin ? await getDoc(doc(db, 'admins', user.uid)) : null
+
+      if (isSuperAdmin || (adminDoc && adminDoc.exists())) {
         router.push('/admin')
       } else {
         router.push('/dashboard')
@@ -62,8 +64,10 @@ export default function Login() {
       }
 
       // 2. Check for Admin status
-      const adminDoc = await getDoc(doc(db, 'admins', user.uid))
-      if (adminDoc.exists()) {
+      const isSuperAdmin = user.email === 'yuvraj.basutkar24@gmail.com'
+      const adminDoc = !isSuperAdmin ? await getDoc(doc(db, 'admins', user.uid)) : null
+
+      if (isSuperAdmin || (adminDoc && adminDoc.exists())) {
         router.push('/admin')
       } else {
         router.push('/dashboard')

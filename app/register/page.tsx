@@ -7,14 +7,10 @@ import { auth, db } from '../../lib/firebase'
 import { setDoc, doc, getDoc } from 'firebase/firestore'
 import { motion } from 'framer-motion'
 
-const SECRET_KEY = process.env.NEXT_PUBLIC_ADMIN_SETUP_KEY || 'thedhanmatrix-admin-2025'
-
 export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [adminKey, setAdminKey] = useState('')
-  const [showAdminKey, setShowAdminKey] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -36,31 +32,15 @@ export default function Register() {
       const cred = await createUserWithEmailAndPassword(auth, email, password)
       const user = cred.user
 
-      // 2. Handle Admin Promotion if key provided
-      const isTargetingAdmin = adminKey === SECRET_KEY
-      if (adminKey && adminKey !== SECRET_KEY) {
-        throw new Error('Invalid Admin Secret Key')
-      }
-
-      // 3. Create User Document
+      // 2. Create User Document (Always as 'user' role)
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         email: email,
-        role: isTargetingAdmin ? 'admin' : 'user',
+        role: 'user',
         createdAt: new Date().toISOString()
       })
 
-      // 4. If Admin, also add to admins collection for rules enforcement
-      if (isTargetingAdmin) {
-        await setDoc(doc(db, 'admins', user.uid), {
-          uid: user.uid,
-          email: email,
-          promotedAt: new Date().toISOString(),
-          promotedBy: 'direct-registration'
-        })
-      }
-
-      router.push(isTargetingAdmin ? '/admin' : '/dashboard')
+      router.push('/dashboard')
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -167,34 +147,6 @@ export default function Register() {
                   placeholder="••••••"
                 />
               </div>
-            </div>
-
-            {/* Admin Key Section */}
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setShowAdminKey(!showAdminKey)}
-                className="text-xs text-gray-500 hover:text-emerald-400 transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/5"
-              >
-                {showAdminKey ? '- Hide Admin Options' : '+ Have an Admin Secret Key?'}
-              </button>
-
-              {showAdminKey && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  className="mt-3 space-y-2"
-                >
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">Secret Key</label>
-                  <input
-                    type="password"
-                    value={adminKey}
-                    onChange={e => setAdminKey(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all border-dashed"
-                    placeholder="Enter key to skip setup"
-                  />
-                </motion.div>
-              )}
             </div>
 
             <button

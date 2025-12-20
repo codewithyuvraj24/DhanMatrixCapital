@@ -27,9 +27,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       // check admins collection for doc with uid
       try {
-        const adminDoc = await getDoc(doc(db, 'admins', u.uid))
-        if (adminDoc.exists()) setRole('admin')
-        else setRole('user')
+        // Super Admin hardcoded check
+        if (u.email === 'yuvraj.basutkar24@gmail.com') {
+          setRole('admin')
+        } else {
+          const adminDoc = await getDoc(doc(db, 'admins', u.uid))
+          if (adminDoc.exists()) setRole('admin')
+          else setRole('user')
+        }
       } catch (error) {
         console.error('Error checking admin status:', error)
         setRole('user')
