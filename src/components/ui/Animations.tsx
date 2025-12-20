@@ -126,3 +126,5 @@ export function ScaleIn({ children, className = "" }: AnimationProps) {
     </motion.div>
   )
 }
+
+export const Stagger = StaggerContainer

@@ -74,12 +74,14 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden py-12 sm:py-20">
       <FadeIn className="max-w-md w-full relative z-10">
-        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white dark:border-white/10 rounded-3xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden">
-          <div className="p-6 sm:p-10 text-center border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
-            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-blue-600/10 dark:bg-blue-500/10 border border-blue-500/20 mb-4 sm:mb-6">
-              <Lock className="text-blue-600 dark:text-blue-400 w-8 h-8 sm:w-10 sm:h-10" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">TheDhanMatrix</h2>
+        <div className="bg-white/60 dark:bg-black/40 backdrop-blur-3xl border border-white/20 dark:border-white/10 rounded-3xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden">
+          <div className="p-6 sm:p-10 text-center border-b border-slate-100/50 dark:border-white/5 bg-slate-50/30 dark:bg-white/5">
+            <Link href="/" className="inline-block group">
+              <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-blue-600/10 dark:bg-blue-500/10 border border-blue-500/20 mb-4 sm:mb-6 group-hover:scale-105 transition-transform duration-500">
+                <Lock className="text-blue-600 dark:text-blue-400 w-8 h-8 sm:w-10 sm:h-10" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">TheDhanMatrix</h2>
+            </Link>
             <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mt-2 sm:mt-3 font-bold uppercase tracking-widest leading-none">Authentication Portal</p>
           </div>
 

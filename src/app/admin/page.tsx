@@ -6,6 +6,21 @@ import { db, auth } from '@/lib/firebase'
 import { useAuth } from '@/context/AuthContext'
 import { signOut } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
+import { useToast } from '@/components/ui/PremiumToast'
+import MagneticButton from '@/components/ui/MagneticButton'
+import {
+  TrendingUp,
+  Users,
+  DollarSign,
+  Activity,
+  Edit3,
+  Trash2,
+  LogOut,
+  Home,
+  Shield
+} from 'lucide-react'
 
 export default function AdminPage() {
   return (
@@ -27,17 +42,17 @@ type Investment = {
 function AdminPanel() {
   const { role } = useAuth()
   const router = useRouter()
+  const { showToast } = useToast()
   const [investments, setInvestments] = useState<Investment[]>([])
   const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null)
 
   async function handleLogout() {
     try {
       await signOut(auth)
       router.push('/')
     } catch (error) {
-      console.error('Logout error:', error)
+      showToast('Logout failed', 'error')
     }
   }
 
@@ -56,11 +71,9 @@ function AdminPanel() {
       const snap = await getDocs(collection(db, 'investments'))
       setInvestments(snap.docs.map(d => ({ id: d.id, ...d.data() } as Investment)))
       setEditingId(null)
-      setMessage({ text: 'Investment updated successfully', type: 'success' })
-      setTimeout(() => setMessage(null), 3000)
+      showToast('Investment updated successfully', 'success')
     } catch (err) {
-      console.error('Update error:', err)
-      setMessage({ text: 'Failed to update investment', type: 'error' })
+      showToast('Failed to update investment', 'error')
     }
   }
 
@@ -70,11 +83,9 @@ function AdminPanel() {
     try {
       await deleteDoc(doc(db, 'investments', id))
       setInvestments(prev => prev.filter(inv => inv.id !== id))
-      setMessage({ text: 'Investment deleted successfully', type: 'success' })
-      setTimeout(() => setMessage(null), 3000)
+      showToast('Investment deleted successfully', 'success')
     } catch (err) {
-      console.error('Delete error:', err)
-      setMessage({ text: 'Failed to delete investment', type: 'error' })
+      showToast('Failed to delete investment', 'error')
     }
   }
 
@@ -85,152 +96,170 @@ function AdminPanel() {
   const uniqueUsers = new Set(investments.map(inv => inv.userId)).size
 
   if (loading) return (
-    <div className="max-w-7xl mx-auto px-4 pt-24 pb-8">
-      <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-        <p className="mt-4 text-gray-600">Loading admin data...</p>
+    <div className="max-w-7xl mx-auto px-4 pt-32 pb-12">
+      <div className="text-center py-20">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500/20 border-t-blue-500"></div>
+        <p className="mt-6 text-slate-600 dark:text-slate-400 font-medium">Loading admin data...</p>
       </div>
     </div>
   )
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pt-24 pb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-24 sm:pt-32 pb-16 sm:pb-20 relative z-10">
       {/* Header */}
-      {message && (
-        <div className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 text-white ${message.type === 'success' ? 'bg-green-600' : 'bg-red-600'}`}>
-          {message.text}
+      <FadeIn>
+        <div className="mb-10 sm:mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold uppercase tracking-widest text-[10px] sm:text-xs">
+              <Shield size={14} />
+              <span>System Control</span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Command Center</span>
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">
+              Platform oversight and investment management
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <MagneticButton
+              onClick={() => router.push('/')}
+              className="px-6 py-3 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-700 dark:text-white rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center gap-2"
+            >
+              <Home size={18} />
+              <span className="hidden sm:inline">Main Site</span>
+            </MagneticButton>
+            <MagneticButton
+              onClick={handleLogout}
+              className="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-500/20 flex items-center gap-2"
+            >
+              <LogOut size={18} />
+              <span className="hidden sm:inline">Logout</span>
+            </MagneticButton>
+          </div>
         </div>
-      )}
-      <div className="mb-8 flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Admin Panel</h1>
-          <p className="text-gray-600 mt-1">Manage all user investments and monitor platform statistics</p>
-        </div>
-        <div className="flex gap-4">
-          <button
-            onClick={() => router.push('/')}
-            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
-          >
-            Main Site
-          </button>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-sm"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
+      </FadeIn>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow border-l-4 border-blue-600">
-          <p className="text-gray-600 text-sm font-medium">Total Invested</p>
-          <p className="text-3xl font-bold text-blue-600 mt-2">${totalInvested.toLocaleString()}</p>
-          <p className="text-gray-500 text-xs mt-2">{investments.length} total investments</p>
+      <StaggerContainer>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {[
+            { label: "Total AUM", value: `$${totalInvested.toLocaleString()}`, icon: <DollarSign size={20} />, sub: `${investments.length} positions`, color: "blue" },
+            { label: "Active Investments", value: activeCount, icon: <Activity size={20} />, sub: "Currently earning", color: "emerald" },
+            { label: "Completed", value: withdrawnCount, icon: <TrendingUp size={20} />, sub: "Withdrawn", color: "purple" },
+            { label: "Total Users", value: uniqueUsers, icon: <Users size={20} />, sub: "Active investors", color: "orange" }
+          ].map((stat, idx) => (
+            <StaggerItem key={idx}>
+              <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-8 rounded-2xl sm:rounded-[2rem] hover:border-red-500/30 transition-all group">
+                <div className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-${stat.color}-500/10 text-${stat.color}-600 dark:text-${stat.color}-400 w-fit`}>
+                  {stat.icon}
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1 sm:mb-2">{stat.value}</h3>
+                <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold">{stat.sub}</p>
+              </div>
+            </StaggerItem>
+          ))}
         </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border-l-4 border-green-600">
-          <p className="text-gray-600 text-sm font-medium">Active Investments</p>
-          <p className="text-3xl font-bold text-green-600 mt-2">{activeCount}</p>
-          <p className="text-gray-500 text-xs mt-2">Currently earning</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border-l-4 border-purple-600">
-          <p className="text-gray-600 text-sm font-medium">Withdrawn</p>
-          <p className="text-3xl font-bold text-purple-600 mt-2">{withdrawnCount}</p>
-          <p className="text-gray-500 text-xs mt-2">Completed investments</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow border-l-4 border-orange-600">
-          <p className="text-gray-600 text-sm font-medium">Total Users</p>
-          <p className="text-3xl font-bold text-orange-600 mt-2">{uniqueUsers}</p>
-          <p className="text-gray-500 text-xs mt-2">Active investors</p>
-        </div>
-      </div>
+      </StaggerContainer>
 
       {/* Investments Management */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">Investment Management</h2>
-          <p className="text-gray-600 text-sm mt-1">Click on any field to edit investment details</p>
-        </div>
+      <FadeIn delay={0.3}>
+        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-10 rounded-3xl sm:rounded-[2.5rem] overflow-hidden">
+          <div className="mb-8 sm:mb-10">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <Edit3 className="text-red-600 w-5 h-5 sm:w-6 sm:h-6" strokeWidth={3} />
+              Investment Management
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">Click on any field to edit investment details</p>
+          </div>
 
-        {investments.length === 0 ? (
-          <div className="p-12 text-center">
-            <div className="text-5xl mb-4">📭</div>
-            <p className="text-lg text-gray-600">No investments yet</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">User ID</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Deposit</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Withdrawal Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {investments.map((inv, idx) => (
-                  <tr key={inv.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="px-6 py-4 text-sm text-gray-700 font-mono">{inv.userId.slice(0, 12)}...</td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="text"
-                        defaultValue={inv.depositAmount}
-                        onBlur={e => handleUpdate(inv.id, 'depositAmount', e.target.value)}
-                        onClick={() => setEditingId(inv.id)}
-                        className="w-24 px-2 py-1 border border-gray-300 rounded text-sm hover:border-blue-400 focus:outline-none focus:border-blue-600"
-                      />
-                    </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="text"
-                        defaultValue={inv.withdrawalDate}
-                        onBlur={e => handleUpdate(inv.id, 'withdrawalDate', e.target.value)}
-                        onClick={() => setEditingId(inv.id)}
-                        className="w-32 px-2 py-1 border border-gray-300 rounded text-sm hover:border-blue-400 focus:outline-none focus:border-blue-600"
-                      />
-                    </td>
-                    <td className="px-6 py-4">
-                      <select
-                        defaultValue={inv.status}
-                        onChange={e => handleUpdate(inv.id, 'status', e.target.value)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium border-0 cursor-pointer ${inv.status === 'active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-purple-100 text-purple-800'
-                          }`}
-                      >
-                        <option value="active">Active</option>
-                        <option value="pending">Pending</option>
-                        <option value="withdrawn">Withdrawn</option>
-                      </select>
-                    </td>
-                    <td className="px-6 py-4 flex gap-2">
-                      <button
-                        onClick={() => handleDelete(inv.id)}
-                        className="text-red-600 hover:text-red-900 text-sm font-medium"
-                      >
-                        Delete
-                      </button>
-                    </td>
+          {investments.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="w-24 h-24 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
+                <Activity size={40} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">No Investments Yet</h3>
+              <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">The platform is ready for its first investor.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-slate-100 dark:border-white/10">
+                    <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">User ID</th>
+                    <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Deposit</th>
+                    <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Withdrawal Date</th>
+                    <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Status</th>
+                    <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody className="divide-y divide-slate-50 dark:divide-white/5">
+                  {investments.map(inv => (
+                    <tr key={inv.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                      <td className="py-6 font-mono text-xs text-slate-600 dark:text-slate-400">{inv.userId.slice(0, 12)}...</td>
+                      <td className="py-6">
+                        <input
+                          type="text"
+                          defaultValue={inv.depositAmount}
+                          onBlur={e => handleUpdate(inv.id, 'depositAmount', e.target.value)}
+                          onClick={() => setEditingId(inv.id)}
+                          className="w-28 px-3 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-bold text-slate-900 dark:text-white hover:border-blue-400 focus:outline-none focus:border-blue-600 transition-colors"
+                        />
+                      </td>
+                      <td className="py-6">
+                        <input
+                          type="text"
+                          defaultValue={inv.withdrawalDate}
+                          onBlur={e => handleUpdate(inv.id, 'withdrawalDate', e.target.value)}
+                          onClick={() => setEditingId(inv.id)}
+                          className="w-36 px-3 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-bold text-slate-900 dark:text-white hover:border-blue-400 focus:outline-none focus:border-blue-600 transition-colors"
+                        />
+                      </td>
+                      <td className="py-6">
+                        <select
+                          defaultValue={inv.status}
+                          onChange={e => handleUpdate(inv.id, 'status', e.target.value)}
+                          className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border-0 cursor-pointer ${inv.status === 'active'
+                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                              : inv.status === 'withdrawn'
+                                ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
+                                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                            }`}
+                        >
+                          <option value="active">Active</option>
+                          <option value="pending">Pending</option>
+                          <option value="withdrawn">Withdrawn</option>
+                        </select>
+                      </td>
+                      <td className="py-6">
+                        <button
+                          onClick={() => handleDelete(inv.id)}
+                          className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </FadeIn>
 
       {/* Info Box */}
-      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <p className="text-sm text-blue-800">
-          <strong>ℹ️ Tip:</strong> Click on any deposit or date field to edit. Changes are saved automatically when you click away from the field.
-        </p>
-      </div>
+      <FadeIn delay={0.5}>
+        <div className="mt-8 p-6 bg-blue-500/10 border border-blue-500/20 rounded-3xl flex items-center gap-4">
+          <div className="w-12 h-12 bg-blue-500 text-white rounded-2xl flex items-center justify-center shrink-0">
+            <Shield size={24} />
+          </div>
+          <p className="text-sm font-bold text-blue-700 dark:text-blue-400 leading-relaxed">
+            <strong>Admin Tip:</strong> Click on any deposit or date field to edit. Changes are saved automatically when you click away from the field.
+          </p>
+        </div>
+      </FadeIn>
     </div>
   )
 }

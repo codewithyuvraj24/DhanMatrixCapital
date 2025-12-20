@@ -16,20 +16,26 @@ export const metadata = {
   title: 'TheDhanMatrix',
 }
 
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { ToastProvider } from '@/components/ui/PremiumToast'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={josefin.variable}>
       <body className={`${josefin.className} min-h-screen relative overflow-x-hidden transition-colors duration-500`}>
         <ThemeProvider>
           <AuthProvider>
-            <BackgroundOrbs />
-            <div className="relative z-10 flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow">{children}</main>
-              <Footer />
-            </div>
+            <ToastProvider>
+              <BackgroundOrbs />
+              <div className="relative z-10 flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </div>
+            </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
