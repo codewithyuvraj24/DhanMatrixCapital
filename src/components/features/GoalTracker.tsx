@@ -31,7 +31,7 @@ export default function GoalTracker({ currentAmount }: GoalTrackerProps) {
                     <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
                         <Target className="text-purple-600 dark:text-purple-400" size={20} />
                     </div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">Investment Goal</h3>
+                    <h2 className="text-lg font-black text-slate-900 dark:text-white">Investment Goal</h2>
                 </div>
                 {!isEditing && (
                     <button
@@ -41,7 +41,7 @@ export default function GoalTracker({ currentAmount }: GoalTrackerProps) {
                         }}
                         className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-colors"
                     >
-                        <Edit3 size={16} className="text-slate-400" />
+                        <Edit3 size={16} className="text-slate-600 dark:text-slate-300" />
                     </button>
                 )}
             </div>
@@ -87,22 +87,22 @@ export default function GoalTracker({ currentAmount }: GoalTrackerProps) {
                         <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
                             {Math.round(progress)}%
                         </p>
-                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Complete</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 font-bold uppercase tracking-widest mt-1">Complete</p>
                     </div>
                 </div>
 
                 {/* Amounts */}
                 <div className="mt-8 w-full space-y-3">
                     <div className="flex justify-between items-center">
-                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Current</span>
+                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Current</span>
                         <span className="text-lg font-black text-slate-900 dark:text-white">
-                            ${currentAmount.toLocaleString()}
+                            ₹{currentAmount.toLocaleString()}
                         </span>
                     </div>
 
                     {isEditing ? (
                         <div className="flex items-center gap-2">
-                            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Target</span>
+                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
                             <div className="flex-1 flex items-center gap-2">
                                 <input
                                     type="number"
@@ -127,18 +127,18 @@ export default function GoalTracker({ currentAmount }: GoalTrackerProps) {
                         </div>
                     ) : (
                         <div className="flex justify-between items-center">
-                            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Target</span>
+                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
                             <span className="text-lg font-black text-purple-600 dark:text-purple-400">
-                                ${goalAmount.toLocaleString()}
+                                ₹{goalAmount.toLocaleString()}
                             </span>
                         </div>
                     )}
 
                     <div className="pt-3 border-t border-slate-100 dark:border-white/5">
                         <div className="flex justify-between items-center">
-                            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Remaining</span>
+                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Remaining</span>
                             <span className="text-lg font-black text-orange-600 dark:text-orange-400">
-                                ${Math.max(0, goalAmount - currentAmount).toLocaleString()}
+                                ₹{Math.max(0, goalAmount - currentAmount).toLocaleString()}
                             </span>
                         </div>
                     </div>

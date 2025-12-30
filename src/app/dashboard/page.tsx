@@ -6,7 +6,6 @@ import { collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
-import { InvestmentTrendChart, PortfolioBreakdownChart } from '@/components/features/Charts'
 import { validateInvestmentAmount, validateWithdrawalDate, formatCurrency, getAmountErrorMessage } from '@/lib/validators'
 import { addDoc } from 'firebase/firestore'
 import {
@@ -17,19 +16,17 @@ import {
   AlertTriangle,
   Plus,
   LayoutDashboard,
-  User,
   ArrowRight,
   X,
-  CreditCard,
-  Target
+  Target,
+  Download
 } from 'lucide-react'
 import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/PremiumToast'
 import MagneticButton from '@/components/ui/MagneticButton'
-import GoalTracker from '@/components/features/GoalTracker'
-import ROICalculator from '@/components/features/ROICalculator'
-import PortfolioHealth from '@/components/features/PortfolioHealth'
-import { Download } from 'lucide-react'
+import { DashboardCharts } from '@/components/features/DashboardCharts'
+import NewsWidget from '@/components/features/NewsWidget'
+import AIPredictionWidget from '@/components/features/AIPredictionWidget'
 
 type Investment = {
   id: string
@@ -141,7 +138,7 @@ function Dashboard() {
   )
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-24 sm:pt-32 pb-16 sm:pb-20 relative z-10">
+    <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pt-24 sm:pt-32 pb-16 sm:pb-20 relative z-10 w-full">
       {/* Header */}
       <FadeIn>
         <div className="mb-10 sm:mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8">
@@ -151,7 +148,7 @@ function Dashboard() {
               <span>Investment Portfolio</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-              Hello, {user?.displayName || user?.email?.split('@')[0]}
+              Hello, {user?.displayName || user?.email?.split('@')[0] || user?.phoneNumber || 'Operative'}
             </h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">Your wealth journey is progressing strategically.</p>
           </div>
@@ -197,35 +194,27 @@ function Dashboard() {
         </div>
       </StaggerContainer>
 
-      {/* Analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        <FadeIn delay={0.2} className="lg:col-span-2">
-          <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden">
-            <InvestmentTrendChart />
+      {/* Analytics & Wealth Tools - Lazy Loaded */}
+      <FadeIn delay={0.2}>
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 mb-12 items-start">
+          <div className="xl:col-span-8 space-y-8">
+            <DashboardCharts
+              totalInvested={totalInvested}
+              activeInvestments={activeInvestments}
+              totalInvestments={investments.length}
+            />
           </div>
-        </FadeIn>
-        <FadeIn delay={0.3}>
-          <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden h-full">
-            <PortfolioBreakdownChart />
-          </div>
-        </FadeIn>
-      </div>
 
-      {/* Wealth Tracking Tools */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        <FadeIn delay={0.35}>
-          <GoalTracker currentAmount={totalInvested} />
-        </FadeIn>
-        <FadeIn delay={0.4}>
-          <PortfolioHealth
-            activeInvestments={activeInvestments}
-            totalInvestments={investments.length}
-          />
-        </FadeIn>
-        <FadeIn delay={0.45} className="lg:col-span-3">
-          <ROICalculator />
-        </FadeIn>
-      </div>
+          <div className="xl:col-span-4 space-y-8 h-full">
+            <div className="sticky top-32 space-y-8">
+              <AIPredictionWidget totalInvested={totalInvested} />
+              <div className="h-[600px] xl:h-[700px]">
+                <NewsWidget />
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
 
       {/* Positions Table */}
       <FadeIn delay={0.4}>
@@ -344,9 +333,9 @@ function Dashboard() {
 
               <div className="space-y-8">
                 <div className="relative group">
-                  <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3 ml-2">Initial Capital (USD)</label>
+                  <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-3 ml-2">Initial Capital (INR)</label>
                   <div className="relative">
-                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
                     <input
                       type="number"
                       value={formData.depositAmount}
@@ -371,7 +360,7 @@ function Dashboard() {
                   <div>
                     <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Est. Return (15%)</p>
                     <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
-                      {formData.depositAmount ? formatCurrency(parseFloat(formData.depositAmount) * 0.15) : '$0.00'}
+                      {formData.depositAmount ? formatCurrency(parseFloat(formData.depositAmount) * 0.15) : '₹0.00'}
                     </p>
                   </div>
                   <TrendingUp className="text-blue-600/30" size={40} />

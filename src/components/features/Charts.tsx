@@ -31,7 +31,7 @@ export function InvestmentTrendChart() {
 
   return (
     <div className="w-full p-6">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">Investment Momentum</h3>
+      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Investment Momentum</h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={investmentTrendData}>
           <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
@@ -77,7 +77,7 @@ export function PortfolioBreakdownChart() {
 
   return (
     <div className="w-full p-6">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">Asset Distribution</h3>
+      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Asset Distribution</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -114,7 +114,7 @@ export function PlanComparisonChart() {
 
   return (
     <div className="w-full p-6">
-      <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">Yield Projections</h3>
+      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Yield Projections</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={returnData}>
           <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />

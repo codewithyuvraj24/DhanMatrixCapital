@@ -9,7 +9,7 @@ const plans = [
   {
     id: 1,
     name: 'Growth',
-    minInvestment: '25k',
+    minInvestment: '₹25k',
     annualReturn: '5-15%',
     term: 'Flexible',
     description: 'Consistent returns with flexible withdrawals and tax benefits.',

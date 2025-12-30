@@ -13,7 +13,7 @@ import MagneticButton from '@/components/ui/MagneticButton'
 import {
   TrendingUp,
   Users,
-  DollarSign,
+  IndianRupee,
   Activity,
   Edit3,
   Trash2,
@@ -144,7 +144,7 @@ function AdminPanel() {
       <StaggerContainer>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
-            { label: "Total AUM", value: `$${totalInvested.toLocaleString()}`, icon: <DollarSign size={20} />, sub: `${investments.length} positions`, color: "blue" },
+            { label: "Total AUM", value: `₹${totalInvested.toLocaleString()}`, icon: <IndianRupee size={20} />, sub: `${investments.length} positions`, color: "blue" },
             { label: "Active Investments", value: activeCount, icon: <Activity size={20} />, sub: "Currently earning", color: "emerald" },
             { label: "Completed", value: withdrawnCount, icon: <TrendingUp size={20} />, sub: "Withdrawn", color: "purple" },
             { label: "Total Users", value: uniqueUsers, icon: <Users size={20} />, sub: "Active investors", color: "orange" }
@@ -221,10 +221,10 @@ function AdminPanel() {
                           defaultValue={inv.status}
                           onChange={e => handleUpdate(inv.id, 'status', e.target.value)}
                           className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border-0 cursor-pointer ${inv.status === 'active'
-                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                              : inv.status === 'withdrawn'
-                                ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
-                                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                            : inv.status === 'withdrawn'
+                              ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
+                              : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
                             }`}
                         >
                           <option value="active">Active</option>

@@ -1,22 +1,34 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { FadeIn } from '@/components/ui/Animations'
-import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react'
+import { Lock, Mail, ArrowRight, ShieldCheck, Smartphone } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { AnimatePresence } from 'framer-motion'
+import PhoneAuth from '@/components/auth/PhoneAuth'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('phone')
+  const { user: currentUser, role } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (currentUser) {
+      if (role === 'admin') router.push('/admin')
+      else router.push('/dashboard')
+    }
+  }, [currentUser, role, router])
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -57,13 +69,15 @@ export default function Login() {
           role: 'user',
           createdAt: new Date().toISOString()
         })
-      }
-      const isSuperAdmin = user.email === 'yuvraj.basutkar24@gmail.com'
-      const adminDoc = !isSuperAdmin ? await getDoc(doc(db, 'admins', user.uid)) : null
-      if (isSuperAdmin || (adminDoc && adminDoc.exists())) {
-        router.push('/admin')
+        router.push('/onboarding')
       } else {
-        router.push('/dashboard')
+        const isSuperAdmin = user.email === 'yuvraj.basutkar24@gmail.com'
+        const adminDoc = !isSuperAdmin ? await getDoc(doc(db, 'admins', user.uid)) : null
+        if (isSuperAdmin || (adminDoc && adminDoc.exists())) {
+          router.push('/admin')
+        } else {
+          router.push('/dashboard')
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in with Google')
@@ -97,56 +111,91 @@ export default function Login() {
               </motion.div>
             )}
 
-            <form onSubmit={handleLogin} className="space-y-8">
-              <div className="space-y-3">
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Secure Email</label>
-                <div className="relative group">
-                  <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                    <Mail size={20} />
-                  </span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 transition-all font-bold"
-                    placeholder="Enter email address"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Access Key</label>
-                <div className="relative group">
-                  <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                    <Lock size={20} />
-                  </span>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 transition-all font-bold"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </div>
-
+            <div className="flex p-1 bg-slate-100 dark:bg-white/5 rounded-2xl mb-8">
               <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-5 bg-blue-600 text-white rounded-[1.5rem] font-black hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/20 disabled:opacity-50 flex justify-center items-center gap-3 active:scale-95"
+                onClick={() => setAuthMethod('phone')}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${authMethod === 'phone' ? 'bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
-                {loading ? (
-                  <div className="h-6 w-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-                ) : (
-                  <>
-                    <span>AUTHORIZE ACCESS</span>
-                    <ArrowRight size={20} strokeWidth={3} />
-                  </>
-                )}
+                Mobile + OTP
               </button>
-            </form>
+              <button
+                onClick={() => setAuthMethod('email')}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${authMethod === 'email' ? 'bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+              >
+                Email + Pass
+              </button>
+            </div>
+
+            <AnimatePresence mode="wait">
+              {authMethod === 'email' ? (
+                <motion.form
+                  key="email-login"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onSubmit={handleLogin}
+                  className="space-y-8"
+                >
+                  <div className="space-y-3">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Secure Email</label>
+                    <div className="relative group">
+                      <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <Mail size={20} />
+                      </span>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 transition-all font-bold"
+                        placeholder="Enter email address"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Access Key</label>
+                    <div className="relative group">
+                      <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <Lock size={20} />
+                      </span>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                        className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 transition-all font-bold"
+                        placeholder="••••••••"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-5 bg-blue-600 text-white rounded-[1.5rem] font-black hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/20 disabled:opacity-50 flex justify-center items-center gap-3 active:scale-95"
+                  >
+                    {loading ? (
+                      <div className="h-6 w-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        <span>AUTHORIZE ACCESS</span>
+                        <ArrowRight size={20} strokeWidth={3} />
+                      </>
+                    )}
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="phone-login"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <PhoneAuth />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <div className="flex items-center my-10">
               <div className="flex-1 border-t border-slate-100 dark:border-white/5"></div>

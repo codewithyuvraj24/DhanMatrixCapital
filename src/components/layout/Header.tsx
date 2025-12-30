@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/70 dark:bg-black/40 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/10 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2 group">
           <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
             <Image src="/dmc-logo.png" alt="DMC Logo" fill className="object-cover" sizes="40px" />
@@ -40,7 +40,7 @@ export default function Header() {
         </Link>
         <nav className="flex items-center space-x-1 md:space-x-4">
           <div className="hidden md:flex items-center space-x-1">
-            {['Home', 'About', 'Plans', 'Contact'].map((item) => (
+            {['Home', 'About', 'Plans', 'Compare', 'Contact'].map((item) => (
               <Link
                 key={item}
                 href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
@@ -53,11 +53,10 @@ export default function Header() {
 
           <div className="w-px h-6 bg-gray-200 dark:bg-white/10 mx-2"></div>
 
-          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-all flex items-center justify-center"
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -73,14 +72,18 @@ export default function Header() {
                 <Layout size={16} />
                 <span>Dashboard</span>
               </Link>
-              <Link href="/profile" className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition relative">
+              <Link
+                href="/profile"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition relative"
+                aria-label="View Profile"
+              >
                 <UserIcon size={20} />
               </Link>
               <button
                 onClick={handleLogout}
                 disabled={loading}
                 className="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition"
-                title="Sign Out"
+                aria-label="Sign Out"
               >
                 <LogOut size={20} />
               </button>

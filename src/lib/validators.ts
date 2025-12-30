@@ -38,21 +38,21 @@ export function validatePassword(password: string): boolean {
 }
 
 /**
- * Formats a number as USD currency
+ * Formats a number as INR currency
  * @param amount - The amount to format
  * @returns Formatted currency string
  */
 export function formatCurrency(amount: number | string): string {
   try {
     const num = parseFloat(amount.toString())
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(num)
   } catch {
-    return '$0.00'
+    return '₹0.00'
   }
 }
 
@@ -82,7 +82,7 @@ export function getAmountErrorMessage(amount: string | number): string {
   const num = parseFloat(amount.toString())
   if (isNaN(num)) return 'Investment amount must be a number'
   if (num <= 0) return 'Investment amount must be greater than 0'
-  if (num > 10000000) return 'Investment amount cannot exceed $10,000,000'
+  if (num > 10000000) return 'Investment amount cannot exceed ₹1,00,00,000'
   return 'Invalid investment amount'
 }
 

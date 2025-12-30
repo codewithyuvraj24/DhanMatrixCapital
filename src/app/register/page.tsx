@@ -1,14 +1,16 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { setDoc, doc, getDoc } from 'firebase/firestore'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn } from '@/components/ui/Animations'
-import { UserPlus, Mail, Lock, ArrowRight, ShieldCheck } from 'lucide-react'
+import { UserPlus, Mail, Lock, ArrowRight, ShieldCheck, Smartphone } from 'lucide-react'
 import Link from 'next/link'
+import PhoneAuth from '@/components/auth/PhoneAuth'
 
 export default function Register() {
   const [email, setEmail] = useState('')
@@ -16,7 +18,16 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('phone')
+  const { user, role } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      if (role === 'admin') router.push('/admin')
+      else router.push('/dashboard')
+    }
+  }, [user, role, router])
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
@@ -41,7 +52,7 @@ export default function Register() {
         createdAt: new Date().toISOString()
       })
 
-      router.push('/dashboard')
+      router.push('/onboarding')
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -65,9 +76,11 @@ export default function Register() {
           role: 'user',
           createdAt: new Date().toISOString()
         })
+        router.push('/onboarding')
+      } else {
+        const adminDoc = await getDoc(doc(db, 'admins', user.uid))
+        router.push(adminDoc.exists() ? '/admin' : '/dashboard')
       }
-      const adminDoc = await getDoc(doc(db, 'admins', user.uid))
-      router.push(adminDoc.exists() ? '/admin' : '/dashboard')
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -100,74 +113,109 @@ export default function Register() {
               </motion.div>
             )}
 
-            <form onSubmit={handleRegister} className="space-y-6">
-              <div className="space-y-3">
-                <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Email Identity</label>
-                <div className="relative group">
-                  <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
-                    <Mail size={20} />
-                  </span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold"
-                    placeholder="name@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Secure Key</label>
-                  <div className="relative group">
-                    <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
-                      <Lock size={18} />
-                    </span>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      required
-                      className="w-full pl-11 pr-4 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold text-sm"
-                      placeholder="••••••"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Confirm</label>
-                  <div className="relative group">
-                    <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
-                      <Lock size={18} />
-                    </span>
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={e => setConfirmPassword(e.target.value)}
-                      required
-                      className="w-full pl-11 pr-4 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold text-sm"
-                      placeholder="••••••"
-                    />
-                  </div>
-                </div>
-              </div>
-
+            <div className="flex p-1 bg-slate-100 dark:bg-white/5 rounded-2xl mb-8">
               <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black hover:bg-emerald-700 transition-all shadow-2xl shadow-emerald-500/20 disabled:opacity-50 flex justify-center items-center gap-3 active:scale-95"
+                onClick={() => setAuthMethod('phone')}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${authMethod === 'phone' ? 'bg-white dark:bg-emerald-500 text-emerald-600 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
               >
-                {loading ? (
-                  <div className="h-6 w-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-                ) : (
-                  <>
-                    <span>INITIALIZE PROTOCOL</span>
-                    <ArrowRight size={20} strokeWidth={3} />
-                  </>
-                )}
+                Mobile + OTP
               </button>
-            </form>
+              <button
+                onClick={() => setAuthMethod('email')}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${authMethod === 'email' ? 'bg-white dark:bg-emerald-500 text-emerald-600 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+              >
+                Email + Pass
+              </button>
+            </div>
+
+            <AnimatePresence mode="wait">
+              {authMethod === 'email' ? (
+                <motion.form
+                  key="email-form"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onSubmit={handleRegister}
+                  className="space-y-6"
+                >
+                  <div className="space-y-3">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Email Identity</label>
+                    <div className="relative group">
+                      <span className="absolute inset-y-0 left-0 pl-5 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
+                        <Mail size={20} />
+                      </span>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="w-full pl-14 pr-6 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold"
+                        placeholder="name@example.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Secure Key</label>
+                      <div className="relative group">
+                        <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
+                          <Lock size={18} />
+                        </span>
+                        <input
+                          type="password"
+                          value={password}
+                          onChange={e => setPassword(e.target.value)}
+                          required
+                          className="w-full pl-11 pr-4 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold text-sm"
+                          placeholder="••••••"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-2">Confirm</label>
+                      <div className="relative group">
+                        <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-emerald-600 transition-colors">
+                          <Lock size={18} />
+                        </span>
+                        <input
+                          type="password"
+                          value={confirmPassword}
+                          onChange={e => setConfirmPassword(e.target.value)}
+                          required
+                          className="w-full pl-11 pr-4 py-4 bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-all font-bold text-sm"
+                          placeholder="••••••"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black hover:bg-emerald-700 transition-all shadow-2xl shadow-emerald-500/20 disabled:opacity-50 flex justify-center items-center gap-3 active:scale-95"
+                  >
+                    {loading ? (
+                      <div className="h-6 w-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <>
+                        <span>INITIALIZE PROTOCOL</span>
+                        <ArrowRight size={20} strokeWidth={3} />
+                      </>
+                    )}
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="phone-form"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <PhoneAuth />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <div className="flex items-center my-10">
               <div className="flex-1 border-t border-slate-100 dark:border-white/5"></div>

@@ -40,15 +40,15 @@ export default function ROICalculator() {
                 <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
                     <Calculator className="text-blue-600 dark:text-blue-400" size={20} />
                 </div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-white">ROI Projection</h3>
+                <h2 className="text-lg font-black text-slate-900 dark:text-white">ROI Projection</h2>
             </div>
 
             {/* Input Controls */}
             <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Initial Investment</label>
+                    <label className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Initial Investment</label>
                     <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-300 font-bold">₹</span>
                         <input
                             type="number"
                             value={initial}
@@ -59,9 +59,9 @@ export default function ROICalculator() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Monthly Add</label>
+                    <label className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Monthly Add</label>
                     <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-300 font-bold">₹</span>
                         <input
                             type="number"
                             value={monthly}
@@ -72,7 +72,7 @@ export default function ROICalculator() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Annual Return %</label>
+                    <label className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Annual Return %</label>
                     <input
                         type="number"
                         value={rate}
@@ -82,7 +82,7 @@ export default function ROICalculator() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Time Horizon</label>
+                    <label className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Time Horizon</label>
                     <div className="relative">
                         <input
                             type="number"
@@ -90,7 +90,7 @@ export default function ROICalculator() {
                             onChange={e => setYears(Number(e.target.value))}
                             className="w-full pr-12 px-3 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
                         />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">years</span>
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-300 font-bold text-xs">years</span>
                     </div>
                 </div>
             </div>
@@ -109,14 +109,14 @@ export default function ROICalculator() {
                         <XAxis
                             dataKey="year"
                             stroke="currentColor"
-                            className="text-slate-400 text-xs"
+                            className="text-slate-600 dark:text-slate-300 text-xs"
                             tick={{ fontSize: 10 }}
                         />
                         <YAxis
                             stroke="currentColor"
-                            className="text-slate-400 text-xs"
+                            className="text-slate-600 dark:text-slate-300 text-xs"
                             tick={{ fontSize: 10 }}
-                            tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                            tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
                         />
                         <Tooltip
                             contentStyle={{
@@ -126,7 +126,7 @@ export default function ROICalculator() {
                                 fontSize: '12px',
                                 fontWeight: 'bold'
                             }}
-                            formatter={(value: number) => `$${value.toLocaleString()}`}
+                            formatter={(value: number) => `₹${value.toLocaleString()}`}
                         />
                         <Area
                             type="monotone"
@@ -143,15 +143,15 @@ export default function ROICalculator() {
             <div className="grid grid-cols-3 gap-4">
                 <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                     <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">Final Value</p>
-                    <p className="text-xl font-black text-blue-600 dark:text-blue-400">${finalValue.toLocaleString()}</p>
+                    <p className="text-xl font-black text-blue-600 dark:text-blue-400">₹{finalValue.toLocaleString()}</p>
                 </div>
                 <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
                     <p className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Total Gains</p>
-                    <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">+${totalGains.toLocaleString()}</p>
+                    <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">+₹{totalGains.toLocaleString()}</p>
                 </div>
                 <div className="p-4 bg-slate-500/10 border border-slate-500/20 rounded-2xl">
-                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">Invested</p>
-                    <p className="text-xl font-black text-slate-600 dark:text-slate-400">${totalContributions.toLocaleString()}</p>
+                    <p className="text-xs font-black text-slate-600 dark:text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-1">Invested</p>
+                    <p className="text-xl font-black text-slate-600 dark:text-slate-600 dark:text-slate-300">₹{totalContributions.toLocaleString()}</p>
                 </div>
             </div>
         </div>
