@@ -1,219 +1,119 @@
 # 💎 Dhanmatrixcapital
 
-> A premium wealth management platform built with Next.js 14, Firebase, and cutting-edge UI technologies.
+> A high-performance, ultra-wide wealth management ecosystem built with Next.js 14, Firebase, and a multi-language "Matrix Core" for institutional-grade financial analysis.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=for-the-badge&logo=typescript)
+![Python](https://img.shields.io/badge/Python-3.11-ffd43b?style=for-the-badge&logo=python)
 ![Firebase](https://img.shields.io/badge/Firebase-10.0-orange?style=for-the-badge&logo=firebase)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-38bdf8?style=for-the-badge&logo=tailwind-css)
+
+---
+
+## 🚀 Phase 3: The Multi-Core Upgrade
+
+Dhanmatrixcapital has evolved from a tracker into a **Multi-Language Financial Protocol**.
+
+### 🧠 Matrix Prophet AI Core (Python & FastAPI)
+- **Growth Forecasting**: Uses Monte Carlo simulations (1,000+ paths) to predict ROI with 95% confidence intervals.
+- **Protocol Optimization**: Backend powered by Python's `numpy` and `FastAPI` for ultra-fast vector calculations.
+
+### ⚡ Ultra-Wide Dashboard (1920px+)
+- **Institutional Layout**: Optimized for 4K and Full HD displays with a sticky sidebar and multi-column analytics grid.
+- **Glassmorphism 2.0**: Enhanced backdrop filters and dynamic grid patterns for a state-of-the-art aesthetic.
+
+### 🔐 Advanced Authentication Matrix
+- **Mobile + OTP**: Secure mobile number verification using Firebase Phone Auth.
+- **Smart Onboarding**: Tiered wizard flow for goal setting and risk profiling.
+- **Google & Email**: Traditional auth methods bridged into a unified user identity.
+
+### 🏛️ Institutional-Grade Systems
+- **Relation Audit Vault (SQL)**: Double-entry ledger schema for SEBI-compliant financial auditing.
+- **Lumina Engine (Rust)**: High-frequency trading scaffold designed for sub-millisecond execution logic.
+- **Smart Yield Contract (Solidity)**: Decentralized vault for Web3 bridge investments.
+
+---
 
 ## ✨ Features
 
 ### 🎨 Premium UI/UX
-- **Glassmorphism Design** - Frosted glass aesthetic with backdrop blur throughout
-- **Magnetic Buttons** - Physics-based hover interactions using Framer Motion
-- **Premium Toasts** - Elegant notification system with auto-dismiss
-- **Dark Mode** - Seamless theme switching with persistent preferences
-- **Responsive Design** - Mobile-first approach with smooth breakpoints
+- **Magnetic Physics** - Buttons that react to cursor proximity via Framer Motion.
+- **Market Pulse** - Real-time financial news feed from leading global sources.
+- **PWA Ready** - Fully installable as a mobile and desktop app with offline synchronization.
 
-### 💰 Wealth Management Tools
-- **Investment Goal Tracker** - Animated circular progress ring with editable targets
-- **ROI Calculator** - Interactive compound interest projections with real-time charts
-- **Portfolio Health Gauge** - Semicircular health score visualization
-- **CSV Export** - One-click portfolio data download
-- **Investment Dashboard** - Comprehensive overview with animated stats
+### 📊 Financial Intelligence
+- **ROI Forecasting** - Real-time AI projections next to current momentum charts.
+- **Comparison Hub** - Side-by-side spec comparison of investment strategies.
+- **Portfolio Health** - Dynamic scoring based on diversification and active revenue pools.
 
-### 🔐 Authentication & Security
-- **Firebase Authentication** - Email/Password and Google Sign-In
-- **Protected Routes** - Client-side route protection
-- **Role-Based Access** - User and Admin roles with separate panels
-- **Secure Firestore** - Server-side security rules
-
-### 📊 Data Visualization
-- **Recharts Integration** - Interactive area charts and pie charts
-- **Real-time Updates** - Live data synchronization with Firestore
-- **Animated Transitions** - Smooth chart animations and state changes
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+ and npm
-- Firebase project with Firestore and Authentication enabled
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/Dhanmatrixcapital.git
-cd Dhanmatrixcapital
-```
-
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Configure Firebase**
-
-Create a `.env.local` file in the root directory:
-
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-```
-
-4. **Set up Firestore**
-
-Apply security rules from `firestore.rules` to your Firebase project.
-
-Create an admin user by adding a document:
-```
-Collection: admins
-Document ID: <your-user-uid>
-Fields: (empty or add metadata)
-```
-
-5. **Run the development server**
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+---
 
 ## 📁 Project Structure
 
 ```
 Dhanmatrixcapital/
+├── matrix_core/                # Multi-Core Backend Layer
+│   ├── analytics/             # Python Prophet AI (FastAPI, NumPy)
+│   ├── engine/                # Rust Execution Scaffold
+│   ├── vault/                 # SQL Audit Schemas
+│   ├── contracts/             # Solidity Smart Contracts
+│   └── automate/              # Shell Orchestration Scripts
 ├── src/
-│   ├── app/                    # Next.js 14 App Router
-│   │   ├── (auth)/            # Auth pages (login, register)
-│   │   ├── dashboard/         # User dashboard
-│   │   ├── admin/             # Admin panel
-│   │   ├── profile/           # User profile
-│   │   └── layout.tsx         # Root layout with providers
-│   ├── components/
-│   │   ├── ui/                # Reusable UI components
-│   │   │   ├── Animations.tsx
-│   │   │   ├── MagneticButton.tsx
-│   │   │   ├── PremiumToast.tsx
-│   │   │   └── Skeleton.tsx
-│   │   ├── features/          # Feature-specific components
-│   │   │   ├── Charts.tsx
-│   │   │   ├── GoalTracker.tsx
-│   │   │   ├── ROICalculator.tsx
-│   │   │   └── PortfolioHealth.tsx
-│   │   ├── layout/            # Layout components
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   └── BackgroundOrbs.tsx
-│   │   └── auth/              # Auth components
-│   │       └── ProtectedRoute.tsx
-│   ├── context/               # React Context providers
-│   │   ├── AuthContext.tsx
-│   │   └── ThemeContext.tsx
-│   ├── lib/                   # Utilities and configs
-│   │   ├── firebase.ts
-│   │   └── validators.ts
-│   └── styles/
-│       └── globals.css
-├── public/                    # Static assets
-└── firestore.rules           # Firestore security rules
+│   ├── app/                   # Next.js 14 (Dashboard, Compare, Onboarding)
+│   ├── components/            # Advanced UI & Feature Modules
+│   ├── context/               # Auth & Theme State
+│   └── lib/                   # Firebase v10+, News API, Shaders
+├── public/                    # PWA Assets & Branding
+└── firestore.rules           # Secure Protocol Access Rules
 ```
-
-## 🎯 Key Technologies
-
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript 5.9
-- **Styling:** Tailwind CSS 3.0
-- **Animations:** Framer Motion 12
-- **Charts:** Recharts 3.6
-- **Database:** Firebase Firestore
-- **Auth:** Firebase Authentication
-- **Icons:** Lucide React
-- **Font:** Josefin Sans (Google Fonts)
-
-## 🔧 Available Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-```
-
-## 🎨 Design System
-
-### Colors
-- **Primary:** Blue (#3B82F6)
-- **Success:** Emerald (#10B981)
-- **Warning:** Amber (#F59E0B)
-- **Error:** Red (#EF4444)
-- **Accent:** Purple (#8B5CF6)
-
-### Typography
-- **Font Family:** Josefin Sans
-- **Weights:** 400 (Regular), 700 (Bold), 900 (Black)
-
-### Glassmorphism
-```css
-bg-white/70 dark:bg-white/5
-backdrop-blur-xl
-border border-white/20 dark:border-white/10
-```
-
-## 📱 Pages Overview
-
-### Public Pages
-- **Home** (`/`) - Landing page with hero section and features
-- **About** (`/about`) - Company mission and values
-- **Contact** (`/contact`) - Contact form and information
-- **Plans** (`/plans`) - Pricing and subscription tiers
-
-### Protected Pages
-- **Dashboard** (`/dashboard`) - Investment overview with wealth tools
-- **Profile** (`/profile`) - User settings and account management
-- **Admin** (`/admin`) - Investment management panel (admin only)
-
-## 🔐 Security
-
-- **Firestore Rules:** Server-side validation for all database operations
-- **Protected Routes:** Client-side route guards for authenticated pages
-- **Environment Variables:** Sensitive config stored in `.env.local`
-- **Role-Based Access:** Admin privileges managed via Firestore collection
-
-## 🚧 Limitations & Notes
-
-- **No Payment Integration:** This is a portfolio management tool without real payment processing
-- **Display-Only Financials:** Investment data is for tracking purposes only
-- **Admin Management:** Admins can manually update investment records via the Admin Panel
-- **No Automated Withdrawals:** All transactions are manual entries
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
-
-- [Next.js](https://nextjs.org/) - The React Framework
-- [Firebase](https://firebase.google.com/) - Backend infrastructure
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-- [Recharts](https://recharts.org/) - Chart library
-- [Lucide](https://lucide.dev/) - Icon library
 
 ---
 
+## 🎯 Key Technologies
+
+- **Frontend:** Next.js 14, TypeScript, Framer Motion 12, Recharts.
+- **AI Core:** Python 3.11, FastAPI, NumPy.
+- **Database:** Firebase Firestore (Persistent Local Cache Enabled).
+- **Optimization:** Sharp (Image Processing), SVGO (Asset Optimization).
+- **Backend Bridge:** RESTful multi-service architecture.
+
+---
+
+## 🚀 Quick Start
+
+1. **Install Frontend**
+```bash
+npm install
+npm run dev
+```
+
+2. **Initialize AI Prophet (Optional)**
+```bash
+cd matrix_core/analytics
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+3. **Configure Matrix Keys**
+Create `.env.local`:
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=xxx
+NEXT_PUBLIC_FIREBASE_VAPID_KEY=xxx # For Push Notifications
+# ... (standard firebase keys)
+```
+
+---
+
+## 🎨 Design System
+
+- **Primary:** Quantum Blue (`#3B82F6`)
+- **Intelligence:** Matrix Indigo (`#6366F1`)
+- **Typography:** Josefin Sans (400, 700, 900)
+- **Viewport:** Ultra-Wide 1920px Optimization
+
+---
+
+## 🙏 Acknowledgments
+
+Built for the next generation of wealth managers.  
 **Built with 💎 by Dhanmatrixcapital Team**
