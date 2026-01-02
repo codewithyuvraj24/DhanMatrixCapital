@@ -68,12 +68,13 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                                 Matrix Prophet
                                 <span className="text-[10px] bg-blue-600/20 text-blue-600 px-2 py-0.5 rounded-full uppercase tracking-widest">AI Core</span>
                             </h2>
-                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Growth Forecasting Protocol</p>
+                            <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Growth Forecasting Protocol</p>
                         </div>
                     </div>
                     <button
                         onClick={() => setShowInfo(!showInfo)}
                         className="p-2 text-slate-400 hover:text-blue-600 transition-colors"
+                        aria-label="More Information"
                     >
                         <Info size={18} />
                     </button>
@@ -101,7 +102,7 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                             className="flex-1 space-y-6"
                         >
                             <div className="bg-white/50 dark:bg-black/20 p-5 rounded-2xl border border-white dark:border-white/5">
-                                <p className="text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Predicted Value (12m)</p>
+                                <p className="text-xs font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">Predicted Value (12m)</p>
                                 <div className="flex items-baseline gap-2">
                                     <h3 className="text-3xl font-black text-slate-900 dark:text-white">{formatCurrency(prediction.predicted_value)}</h3>
                                     <span className="text-emerald-500 font-bold text-sm flex items-center gap-0.5">
@@ -112,11 +113,11 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-4 bg-white/30 dark:bg-white/5 rounded-xl border border-white/50 dark:border-white/5">
-                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Optimistic Case</p>
+                                    <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Optimistic Case</p>
                                     <p className="text-lg font-black text-slate-900 dark:text-white">{formatCurrency(prediction.confidence_high)}</p>
                                 </div>
                                 <div className="p-4 bg-white/30 dark:bg-white/5 rounded-xl border border-white/50 dark:border-white/5">
-                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Conservative Case</p>
+                                    <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Conservative Case</p>
                                     <p className="text-lg font-black text-slate-900 dark:text-white">{formatCurrency(prediction.confidence_low)}</p>
                                 </div>
                             </div>
@@ -131,7 +132,7 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                     ) : (
                         <div className="flex-1 flex flex-col items-center justify-center text-center">
                             <AlertCircle className="text-slate-300 mb-4" size={40} />
-                            <p className="text-sm font-bold text-slate-500">No investment data available for AI analysis.</p>
+                            <p className="text-sm font-bold text-slate-600">No investment data available for AI analysis.</p>
                         </div>
                     )}
                 </AnimatePresence>
