@@ -13,9 +13,10 @@ interface DashboardChartsProps {
     totalInvested: number
     activeInvestments: number
     totalInvestments: number
+    initialGoal?: number
 }
 
-export function DashboardCharts({ totalInvested, activeInvestments, totalInvestments }: DashboardChartsProps) {
+export function DashboardCharts({ totalInvested, activeInvestments, totalInvestments, initialGoal }: DashboardChartsProps) {
     return (
         <>
             {/* Analytics Charts */}
@@ -36,7 +37,7 @@ export function DashboardCharts({ totalInvested, activeInvestments, totalInvestm
             {/* Wealth Tracking Tools */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                 <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
-                    <GoalTracker currentAmount={totalInvested} />
+                    <GoalTracker currentAmount={totalInvested} initialGoal={initialGoal} />
                 </Suspense>
 
                 <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>

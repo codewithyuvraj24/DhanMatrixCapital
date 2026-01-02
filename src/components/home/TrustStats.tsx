@@ -10,11 +10,11 @@ export default function TrustStats() {
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
                     <div>
-                        <h2 className="text-4xl sm:text-6xl font-black mb-10 leading-[1.1] text-slate-900 dark:text-white">
-                            Institutional Grade <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Secure Wealth Infrastructure.</span>
+                        <h2 className="text-4xl sm:text-7xl font-black mb-12 sm:mb-16 leading-[1] text-slate-900 dark:text-white tracking-tighter">
+                            Institutional <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Secure Protocol.</span>
                         </h2>
-                        <div className="space-y-10">
+                        <div className="space-y-12 sm:space-y-16">
                             {[
                                 {
                                     icon: <Users className="text-blue-600 dark:text-blue-400" size={28} />,
@@ -43,12 +43,12 @@ export default function TrustStats() {
                                     transition={{ delay: idx * 0.1 }}
                                     className="flex items-center gap-8 group"
                                 >
-                                    <div className={`w-16 h-16 rounded-2xl ${stat.color} flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-lg shadow-black/5`}>
+                                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-[1.5rem] ${stat.color} flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-xl shadow-black/5`}>
                                         {stat.icon}
                                     </div>
                                     <div>
-                                        <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
-                                        <p className="text-slate-600 dark:text-slate-300 font-black uppercase tracking-[0.2em] text-[10px] sm:text-xs mt-1">{stat.label}</p>
+                                        <p className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-2">{stat.value}</p>
+                                        <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-[0.3em] text-[10px] sm:text-xs">{stat.label}</p>
                                     </div>
                                 </motion.div>
                             ))}

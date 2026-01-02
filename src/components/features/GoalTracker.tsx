@@ -5,10 +5,11 @@ import { Target, Edit3, Check, X } from 'lucide-react'
 
 interface GoalTrackerProps {
     currentAmount: number
+    initialGoal?: number
 }
 
-export default function GoalTracker({ currentAmount }: GoalTrackerProps) {
-    const [goalAmount, setGoalAmount] = useState(100000) // Default goal: $100k
+export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerProps) {
+    const [goalAmount, setGoalAmount] = useState(initialGoal || 100000)
     const [isEditing, setIsEditing] = useState(false)
     const [tempGoal, setTempGoal] = useState(goalAmount.toString())
 

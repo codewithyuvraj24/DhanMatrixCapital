@@ -19,19 +19,27 @@ app.add_middleware(
 class PredictionRequest(BaseModel):
     capital: float
     months: int = 12
-    historical_returns: List[float] = [0.12, 0.15, 0.18, 0.14, 0.16] # Default Growth Plan
+    ticker: str = "^NSEI" # Default to Nifty 50
+    historical_returns: List[float] = []
 
 class PredictionResponse(BaseModel):
     predicted_value: float
     annual_yield_percent: float
     confidence_low: float
     confidence_high: float
-    message: str
+    message: str 
 
 @app.post("/predict", response_model=PredictionResponse)
 async def predict_roi(request: PredictionRequest):
     try:
-        prophet = ROIPredictor(request.historical_returns)
+        # If historical returns provided, use them (simulation mode)
+        # Otherwise use ticker (live mode)
+        if request.historical_returns:
+            prophet = ROIPredictor()
+            prophet.returns = request.historical_returns
+        else:
+            prophet = ROIPredictor(request.ticker)
+            
         result = prophet.predict_future_value(request.capital, request.months)
         
         return {

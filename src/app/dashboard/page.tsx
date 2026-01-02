@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { collection, query, where, getDocs, getDocsFromCache, getDocsFromServer } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { validateInvestmentAmount, validateWithdrawalDate, formatCurrency, getAmountErrorMessage } from '@/lib/validators'
@@ -50,7 +51,8 @@ export default function DashboardPage() {
 }
 
 function Dashboard() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
+  const router = useRouter()
   const { showToast } = useToast()
   const [investments, setInvestments] = useState<Investment[]>([])
   const [loading, setLoading] = useState(true)
@@ -58,6 +60,12 @@ function Dashboard() {
   const [formData, setFormData] = useState({ depositAmount: '', withdrawalDate: '', status: 'active' })
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (user && profile && !profile.onboardingComplete) {
+      router.push('/onboarding')
+    }
+  }, [user, profile, router])
 
   useEffect(() => {
     if (!user) return
@@ -247,6 +255,7 @@ function Dashboard() {
               totalInvested={totalInvested}
               activeInvestments={activeInvestments}
               totalInvestments={investments.length}
+              initialGoal={profile?.onboarding?.amount ? parseFloat(profile.onboarding.amount) : undefined}
             />
           </div>
 

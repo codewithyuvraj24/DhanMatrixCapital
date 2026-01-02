@@ -2,19 +2,21 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
-import { doc, getDoc, getDocFromCache, getDocFromServer } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
 
 type AuthContextType = {
   user: User | null
+  profile: any | null
   role: 'admin' | 'user' | null
-  loading: boolean     // Overall loading (waits for role)
+  loading: boolean     // Overall loading (waits for role & profile)
   userLoading: boolean // Only waits for auth state
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, role: null, loading: true, userLoading: true })
+const AuthContext = createContext<AuthContextType>({ user: null, profile: null, role: null, loading: true, userLoading: true })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<any | null>(null)
   const [role, setRole] = useState<'admin' | 'user' | null>(null)
   const [loading, setLoading] = useState(true)
   const [userLoading, setUserLoading] = useState(true)
@@ -27,66 +29,62 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (u) => {
+    let profileUnsub: () => void = () => { }
+    let adminUnsub: () => void = () => { }
+
+    const unsub = onAuthStateChanged(auth, (u) => {
       console.log('Auth State Changed:', u?.uid || 'None')
 
       if (u) {
         localStorage.setItem('dmc_auth_hint', 'true')
-      } else {
-        localStorage.removeItem('dmc_auth_hint')
-      }
+        setUser(u)
+        setUserLoading(false)
 
-      setUser(u)
-      setUserLoading(false)
+        // 1. Listen to Profile (Users Collection)
+        profileUnsub = onSnapshot(doc(db, 'users', u.uid), (snap) => {
+          if (snap.exists()) {
+            setProfile(snap.data())
+          } else {
+            setProfile(null)
+          }
+        })
 
-      if (!u) {
-        setRole(null)
-        setLoading(false)
-        return
-      }
-
-      // Start role verification
-      try {
+        // 2. Listen to Admin Status (Admins Collection or Super Email)
         if (u.email === 'yuvraj.basutkar24@gmail.com') {
           setRole('admin')
+          setLoading(false)
         } else {
-          const roleDocRef = doc(db, 'admins', u.uid)
-
-          // 1. Try cache first (instant)
-          try {
-            const cachedDoc = await getDocFromCache(roleDocRef)
-            if (cachedDoc.exists()) {
-              setRole('admin')
-              setLoading(false)
-              // We don't return here so we can refresh the cache from server in background
-            }
-          } catch (cacheErr) {
-            // Document not in cache, proceed to server
-          }
-
-          // 2. Race the server call with a timeout
-          const rolePromise = getDocFromServer(roleDocRef)
-          const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Role Check Timeout')), 10000)
-          )
-
-          const adminDoc = await Promise.race([rolePromise, timeoutPromise]) as any
-          if (adminDoc.exists()) setRole('admin')
-          else setRole('user')
+          adminUnsub = onSnapshot(doc(db, 'admins', u.uid), (snap) => {
+            if (snap.exists()) setRole('admin')
+            else setRole('user')
+            setLoading(false)
+          }, (err) => {
+            console.warn('Admin check failed:', err)
+            setRole('user')
+            setLoading(false)
+          })
         }
-      } catch (error: any) {
-        console.warn('Admin status verification failed or timed out:', error.message)
-        // Default to user role on error/timeout to unblock the UI
-        if (!role) setRole('user')
-      } finally {
+      } else {
+        localStorage.removeItem('dmc_auth_hint')
+        setUser(null)
+        setProfile(null)
+        setRole(null)
+        setUserLoading(false)
         setLoading(false)
+        profileUnsub()
+        adminUnsub()
       }
     })
-    return () => unsub()
+
+    return () => {
+      unsub()
+      profileUnsub()
+      adminUnsub()
+    }
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, userLoading }}>
+    <AuthContext.Provider value={{ user, profile, role, loading, userLoading }}>
       {children}
     </AuthContext.Provider>
   )

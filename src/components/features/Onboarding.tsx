@@ -1,9 +1,11 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import confetti from 'canvas-confetti'
+import { db } from '@/lib/firebase'
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import {
     ArrowRight,
     Target,
@@ -32,8 +34,16 @@ const steps = [
 ]
 
 export default function OnboardingWizard() {
-    const { user } = useAuth()
+    const { user, role } = useAuth()
     const router = useRouter()
+
+    // Safety check: Admins should not see onboarding
+    useEffect(() => {
+        if (role === 'admin') {
+            router.push('/admin')
+        }
+    }, [role, router])
+
     const [currentStep, setCurrentStep] = useState(0)
     const [data, setData] = useState<OnboardingData>({
         goal: 'Retirement',
@@ -44,15 +54,22 @@ export default function OnboardingWizard() {
 
     const nextStep = () => {
         if (currentStep < steps.length - 1) {
-            setCurrentStep(c => c + 1)
+            const newStep = currentStep + 1
+            setCurrentStep(newStep)
+            // If we just moved to the final "Ready" step, fire completion immediately
+            if (newStep === steps.length - 1) {
+                completeOnboarding()
+            }
         } else {
             completeOnboarding()
         }
     }
 
-    const completeOnboarding = () => {
-        // Trigger confetti
-        const duration = 3000
+    const completeOnboarding = async () => {
+        if (!user) return
+
+        // 1. Start celebration immediately
+        const duration = 2000
         const end = Date.now() + duration
 
         const frame = () => {
@@ -73,12 +90,29 @@ export default function OnboardingWizard() {
 
             if (Date.now() < end) {
                 requestAnimationFrame(frame)
-            } else {
-                // Navigate after celebration
-                setTimeout(() => router.push('/dashboard'), 1000)
             }
         }
         frame()
+
+        // 2. Save data and redirect after the 2s pause
+        try {
+            await Promise.all([
+                setDoc(doc(db, 'users', user.uid), {
+                    onboarding: {
+                        ...data,
+                        completedAt: serverTimestamp()
+                    },
+                    onboardingComplete: true,
+                    updatedAt: serverTimestamp()
+                }, { merge: true }),
+                // Ensure at least 2sec of celebration
+                new Promise(resolve => setTimeout(resolve, duration))
+            ])
+            router.push('/dashboard')
+        } catch (error) {
+            console.error('Failed to save onboarding data:', error)
+            router.push('/dashboard')
+        }
     }
 
     return (
@@ -308,8 +342,16 @@ export default function OnboardingWizard() {
                             <p className="text-slate-600 dark:text-slate-300 text-lg mb-8 leading-relaxed">
                                 Your profile has been optimized. We are redirecting you to your personalized dashboard now.
                             </p>
-                            <div className="inline-flex items-center gap-2 text-sm text-slate-400 font-bold uppercase tracking-widest animate-pulse">
-                                Redirecting <ArrowRight size={14} />
+                            <div className="flex flex-col items-center gap-6 mt-4">
+                                <div className="inline-flex items-center gap-2 text-sm text-slate-400 font-bold uppercase tracking-widest animate-pulse">
+                                    Redirecting <ArrowRight size={14} />
+                                </div>
+                                <button
+                                    onClick={() => router.push('/dashboard')}
+                                    className="text-xs text-blue-600 dark:text-blue-400 font-bold hover:underline"
+                                >
+                                    Not redirecting? Click here
+                                </button>
                             </div>
                         </motion.div>
                     )}

@@ -4,73 +4,70 @@ import { Check } from "lucide-react"
 
 export default function PlansPreview() {
     return (
-        <section className="py-24">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white">Investment Plans</h2>
-                    <p className="text-xl text-slate-600 dark:text-slate-300">Scale your wealth with our adaptive portfolios.</p>
+        <section className="py-20 sm:py-32 relative overflow-hidden">
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                <div className="text-center mb-16 sm:mb-24">
+                    <h2 className="text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Investment <span className="text-blue-600">Plans</span></h2>
+                    <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">Simple, transparent plans designed for consistent growth.</p>
                 </div>
 
                 <div className="flex justify-center max-w-md mx-auto">
                     {[
                         {
-                            name: "Growth",
+                            name: "Growth Plan",
                             returns: "5-15% per month",
-                            min: "₹25k",
+                            min: "₹25,000",
                             features: [
-                                "Withdraw Payments Anytime",
-                                "Withdrawals Credit in 24h",
-                                "100% Tax Free Return",
-                                "Real-time Tracking",
-                                "Risk Management"
+                                "Withdraw money anytime",
+                                "Process within 24 hours",
+                                "100% Tax-free returns",
+                                "Real-time tracking",
+                                "Smart risk management"
                             ],
                             popular: true
                         }
                     ].map((plan, idx) => (
-                        <div key={idx} className={`relative p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border transition-all duration-500 ${plan.popular
-                            ? 'bg-blue-600 border-blue-500 text-white shadow-2xl shadow-blue-500/30 lg:scale-105 z-10'
-                            : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:border-blue-500/50'
+                        <div key={idx} className={`relative p-8 sm:p-12 rounded-[2.5rem] border transition-all duration-700 ${plan.popular
+                            ? 'bg-blue-600 border-blue-500 text-white shadow-[0_32px_64px_-12px_rgba(37,99,235,0.4)] lg:scale-110 z-10'
+                            : 'bg-white/40 dark:bg-white/5 backdrop-blur-md border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:border-blue-500/50 hover:shadow-xl hover:shadow-black/5'
                             }`}>
                             {plan.popular && (
-                                <div className="absolute top-0 right-6 sm:right-10 -translate-y-1/2 bg-amber-400 text-black px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-                                    Most Popular
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 text-black px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-xl">
+                                    Highly Recommended
                                 </div>
                             )}
-                            <h3 className="text-xl sm:text-2xl font-black mb-2">{plan.name}</h3>
-                            <div className="flex items-baseline gap-1 mb-6 sm:mb-8">
-                                <span className="text-3xl sm:text-4xl font-black">{plan.returns}</span>
+                            <div className="flex justify-between items-start mb-6">
+                                <h3 className="text-2xl sm:text-3xl font-black">{plan.name}</h3>
+                                {plan.popular && <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm"><Check size={20} /></div>}
                             </div>
-                            <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
-                                <div className="flex justify-between text-[10px] sm:text-sm font-bold opacity-70">
-                                    <span>Minimum Investment</span>
+                            <div className="flex items-baseline gap-1 mb-8">
+                                <span className="text-4xl sm:text-5xl font-black tracking-tighter">{plan.returns}</span>
+                            </div>
+                            <div className="space-y-4 sm:space-y-5 mb-10 sm:mb-12">
+                                <div className="flex justify-between text-xs sm:text-sm font-bold uppercase tracking-widest opacity-70">
+                                    <span>Min Investment</span>
                                     <span>{plan.min}</span>
                                 </div>
                                 <div className="h-px bg-current opacity-10"></div>
                                 {plan.features.map((f, i) => (
-                                    <div key={i} className="flex items-center gap-3 font-medium">
-                                        <Check className={plan.popular ? "text-blue-200" : "text-blue-600 dark:text-blue-400"} size={16} />
-                                        <span className="text-xs sm:text-sm">{f}</span>
+                                    <div key={i} className="flex items-center gap-4 font-semibold text-sm sm:text-base">
+                                        <div className={`p-1 rounded-full ${plan.popular ? "bg-blue-400/30" : "bg-blue-500/10"}`}>
+                                            <Check className={plan.popular ? "text-blue-100" : "text-blue-600 dark:text-blue-400"} size={14} />
+                                        </div>
+                                        <span>{f}</span>
                                     </div>
                                 ))}
                             </div>
                             <Link
                                 href="/register"
-                                className={`block w-full py-4 rounded-xl sm:rounded-2xl text-center font-black transition-all text-sm sm:text-base ${plan.popular
-                                    ? 'bg-white text-blue-600 hover:bg-slate-100'
-                                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                                className={`block w-full py-5 rounded-2xl text-center font-black transition-all text-base sm:text-lg shadow-xl hover:-translate-y-1 active:scale-95 ${plan.popular
+                                    ? 'bg-white text-blue-600 hover:bg-slate-50 hover:shadow-white/20'
+                                    : 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-blue-500/20'
                                     }`}
                             >
                                 Get Started
                             </Link>
-
-                            <div className="mt-8 text-center">
-                                <Link
-                                    href="/compare"
-                                    className={`text-xs font-black uppercase tracking-widest hover:underline ${plan.popular ? 'text-blue-100' : 'text-blue-600'}`}
-                                >
-                                    Compare with other strategies
-                                </Link>
-                            </div>
                         </div>
                     ))}
                 </div>
