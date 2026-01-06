@@ -18,7 +18,8 @@ export default function Hero() {
                     fill
                     priority
                     className="object-cover"
-                    quality={90}
+                    quality={80}
+                    sizes="100vw"
                 />
             </div>
             <div className="max-w-7xl mx-auto px-4 relative z-10 w-full">
@@ -63,12 +64,12 @@ export default function Hero() {
                                 <ArrowRight size={20} className="sm:w-[22px]" strokeWidth={3} />
                             </Link>
                             {!user && (
-                                <Link href="#how-it-works" className="w-full sm:w-auto px-10 py-3 sm:px-12 sm:py-5 text-slate-500 dark:text-slate-400 font-bold text-base sm:text-xl hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center justify-center gap-2 active:scale-95">
+                                <Link href="#how-it-works" className="w-full sm:w-auto px-10 py-3 sm:px-12 sm:py-5 text-slate-600 dark:text-slate-400 font-bold text-base sm:text-xl hover:text-blue-600 dark:hover:text-blue-400 transition-all flex items-center justify-center gap-2 active:scale-95">
                                     Learn More
                                 </Link>
                             )}
                         </div>
-                        <div className="mt-4 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                        <div className="mt-4 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">
                             <Lock size={10} className="sm:w-3 sm:h-3" />
                             <span>Secure login • Your data stays private</span>
                         </div>
@@ -76,9 +77,9 @@ export default function Hero() {
 
                     <FadeIn delay={0.4}>
                         <div className="mt-12 sm:mt-20 flex flex-wrap justify-center items-center gap-8 sm:gap-20 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
-                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3"><Lock size={16} className="text-emerald-500" /> SECURE & ENCRYPTED</span>
-                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3"><ShieldCheck size={16} className="text-blue-500" /> SEBI COMPLIANT</span>
-                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3"><Zap size={16} className="text-amber-500" /> INSTANT SETTLEMENT</span>
+                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3 text-slate-600 dark:text-slate-400"><Lock size={16} className="text-emerald-500" /> SECURE & ENCRYPTED</span>
+                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3 text-slate-600 dark:text-slate-400"><ShieldCheck size={16} className="text-blue-500" /> SEBI COMPLIANT</span>
+                            <span className="font-black text-xs sm:text-sm tracking-[0.2em] flex items-center gap-3 text-slate-600 dark:text-slate-400"><Zap size={16} className="text-amber-500" /> INSTANT SETTLEMENT</span>
                         </div>
                     </FadeIn>
                 </div>

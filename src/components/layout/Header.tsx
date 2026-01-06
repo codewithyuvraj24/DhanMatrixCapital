@@ -6,7 +6,7 @@ import { useTheme } from "@/context/ThemeContext"
 import { signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Sun, Moon, LogOut, Layout, User as UserIcon, PlusCircle, LineChart, Menu, X } from "lucide-react"
 
 export default function Header() {
@@ -14,6 +14,11 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   async function handleLogout() {
     setLoading(true)
@@ -59,10 +64,11 @@ export default function Header() {
 
           <button
             onClick={toggleTheme}
-            className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-all flex items-center justify-center"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-full transition-all flex items-center justify-center w-10 h-10"
             aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            {/* Show nothing on server, or default icon. Better to show nothing to avoid flicker if mismatch */}
+            {!mounted ? null : (theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />)}
           </button>
 
           {/* Desktop Auth */}

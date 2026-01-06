@@ -151,7 +151,7 @@ export default function PhoneAuth() {
                                     onChange={e => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
                                     required
                                     className="w-full pl-24 pr-6 py-5 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 transition-all font-black tracking-widest"
-                                    placeholder="Enter Vector"
+                                    placeholder="10-digit number"
                                 />
                             </div>
                         </div>
