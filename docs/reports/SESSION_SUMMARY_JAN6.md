@@ -345,3 +345,11 @@ git push origin main
  -   * * N e w   P a g e s * * :   C r e a t e d   \ / p r i v a c y \   a n d   \ / t e r m s \ . 
  -   * * L i n k s * * :   A d d e d   e x t e r n a l   l i n k s   t o   S E B I ,   N S E ,   A M F I .  
  
+ # #   U I   P o l i s h :   L e g a l   P a g e s 
+ -   * * R e d e s i g n e d   P r i v a c y   &   T e r m s * * :   T r a n s f o r m e d   f r o m   p l a i n   t e x t   t o   G l a s s m o r p h i c / H o l o g r a p h i c   i n t e r a c t i v e   d o c u m e n t s . 
+ -   * * V i s u a l s * * :   A d d e d   g r i d   b a c k g r o u n d s ,   a n i m a t e d   b a d g e s ,   a n d   g r a d i e n t   t y p o g r a p h y .  
+ 
+ # #   T h e m e   P o l i s h 
+ -   * * P r i v a c y * * :   S w i t c h e d   t o   ' M a t r i x   G r e e n '   e n c r y p t i o n   t h e m e . 
+ -   * * T e r m s * * :   S w i t c h e d   t o   ' S l a t e   &   G o l d '   c o n t r a c t   t h e m e .  
+ 
