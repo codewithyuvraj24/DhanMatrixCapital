@@ -12,7 +12,7 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState<Theme>('dark') // Default to dark as requested
+    const [theme, setTheme] = useState<Theme>('light') // Default to light
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') as Theme

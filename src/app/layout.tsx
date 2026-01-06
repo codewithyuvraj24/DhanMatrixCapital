@@ -8,12 +8,18 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
 import Analytics from '@/components/ui/Analytics'
 import { Suspense } from 'react'
-import { Outfit } from 'next/font/google'
+import { Outfit, Space_Grotesk } from 'next/font/google'
 
 const outfit = Outfit({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-outfit',
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space',
 })
 
 export const metadata = {

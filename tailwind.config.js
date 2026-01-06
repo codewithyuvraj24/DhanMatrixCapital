@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['var(--font-outfit)', 'Outfit', 'sans-serif'],
+        heading: ['var(--font-space)', 'Space Grotesk', 'sans-serif'],
       },
       colors: {
         brand: {
