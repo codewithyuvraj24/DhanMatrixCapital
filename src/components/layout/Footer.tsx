@@ -44,37 +44,39 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Platform</h4>
+            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Platform & Tools</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
               <li><Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link href="/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Client Dashboard</Link></li>
               <li><Link href="/plans" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Investment Plans</Link></li>
-              <li><Link href="/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Dashboard</Link></li>
+              <li><Link href="/plans#calculator" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">ROI Calculator</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Support</h4>
+            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Company & Support</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
+              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Dhanmatrix</Link></li>
               <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Help Center</Link></li>
-              <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Support</Link></li>
+              <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Partner with Us</Link></li>
+              <li><Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Contact</h4>
+            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Data & Trust</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>Solapur, Maharashtra, India</span>
+              <li>
+                <a href="https://www.sebi.gov.in" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2">
+                  <ShieldCheck size={16} /> SEBI India
+                </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>dhanmatrixcap@gmail.com</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <ShieldCheck size={18} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>ISO 27001 Certified</span>
+              <li><a href="https://www.nseindia.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">NSE India</a></li>
+              <li><a href="https://www.amfiindia.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">AMFI</a></li>
+              <li className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-white/10 mt-2">
+                <Mail size={16} className="text-blue-600 dark:text-blue-400 shrink-0" />
+                <span className="text-sm">dhanmatrixcap@gmail.com</span>
               </li>
             </ul>
           </div>
