@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import BackgroundOrbs from '@/components/layout/BackgroundOrbs'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
-import Analytics from '@/components/ui/Analytics'
+import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from 'react'
 import { Outfit, Space_Grotesk } from 'next/font/google'
 

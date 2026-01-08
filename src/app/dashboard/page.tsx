@@ -5,6 +5,8 @@ import { useAuth } from '@/context/AuthContext'
 import { collection, query, where, getDocs, getDocsFromCache, getDocsFromServer } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
+import { useRef } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { validateInvestmentAmount, validateWithdrawalDate, formatCurrency, getAmountErrorMessage } from '@/lib/validators'
@@ -12,23 +14,24 @@ import { addDoc } from 'firebase/firestore'
 import {
   TrendingUp,
   Wallet,
+  ArrowRight,
+  ArrowUpRight,
+  ArrowDownRight,
+  Activity,
+  X,
+  Plus,
+  Info,
+  Download,
+  Target,
+  LayoutDashboard,
   CheckCircle,
   Clock,
-  AlertTriangle,
-  Plus,
-  LayoutDashboard,
-  ArrowRight,
-  X,
-  Target,
-  Download,
-  Info
+  AlertTriangle
 } from 'lucide-react'
 import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/PremiumToast'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { DashboardCharts } from '@/components/features/DashboardCharts'
-import NewsWidget from '@/components/features/NewsWidget'
-import AIPredictionWidget from '@/components/features/AIPredictionWidget'
 
 type Investment = {
   id: string
@@ -40,7 +43,6 @@ type Investment = {
 }
 
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
-import MarketTicker from '@/components/features/MarketTicker'
 
 export default function DashboardPage() {
   return (
@@ -147,7 +149,7 @@ function Dashboard() {
 
   // Calculate derived stats
   const totalInvested = investments.reduce((sum, inv) => sum + (Number(inv.depositAmount) || 0), 0)
-  const totalValue = totalInvested * 1.124 // Mocking +12.4% gain for UI demo purposes as per design
+  const totalValue = totalInvested * 1.124 // Mocking +12.4% gain for UI demo purposes
   const activeInvestments = investments.filter(inv => inv.status === 'active').length
   const withdrawnInvestments = investments.filter(inv => inv.status === 'withdrawn').length
   const averageReturn = 15
@@ -180,10 +182,7 @@ function Dashboard() {
 
   return (
     <>
-      <div className="pt-20 pb-0 max-w-[1920px] mx-auto">
-        <MarketTicker />
-      </div>
-      <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pb-16 sm:pb-20 relative z-10 w-full pt-8">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pb-16 sm:pb-20 relative z-10 w-full pt-20">
         <FadeIn>
           <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div className="space-y-1">
