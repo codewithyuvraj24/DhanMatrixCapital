@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { ThemeProvider } from '@/context/ThemeContext'
 import BackgroundOrbs from '@/components/layout/BackgroundOrbs'
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
 import Analytics from '@/components/ui/Analytics'
 import { Suspense } from 'react'
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
+        <VercelAnalytics />
         <SpeedInsights />
         <script
           type="application/ld+json"
