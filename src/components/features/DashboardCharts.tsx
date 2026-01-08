@@ -20,16 +20,16 @@ export function DashboardCharts({ totalInvested, activeInvestments, totalInvestm
     return (
         <>
             {/* Analytics Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
                 <Suspense fallback={<ChartSkeleton />}>
                     <div className="lg:col-span-2">
-                        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden min-h-[350px]">
+                        <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2 rounded-3xl overflow-hidden min-h-[350px] shadow-sm">
                             <InvestmentTrendChart />
                         </div>
                     </div>
                 </Suspense>
 
-                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden h-full min-h-[350px]">
+                <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2 rounded-3xl overflow-hidden h-full min-h-[350px] shadow-sm">
                     <PortfolioBreakdownChart />
                 </div>
             </div>

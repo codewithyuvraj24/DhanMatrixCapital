@@ -56,16 +56,16 @@ export default function MarketTicker() {
     if (!mounted) return null
 
     return (
-        <div className="w-full bg-white/70 dark:bg-black/60 backdrop-blur-md border-b border-gray-200 dark:border-white/10 overflow-hidden h-12 flex items-center relative z-40">
+        <div className="hidden md:flex w-full bg-slate-50/80 dark:bg-black/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10 overflow-hidden h-8 items-center relative z-40">
             <div className="flex absolute left-0 top-0 h-full items-center animate-ticker hover:pause-animation will-change-transform">
                 {/* Double the list for seamless infinite scroll */}
                 {[...data, ...data].map((item, idx) => (
-                    <div key={`${item.symbol}-${idx}`} className="flex items-center gap-4 px-8 border-r border-gray-100 dark:border-white/5 min-w-fit">
-                        <span className="font-bold text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.name}</span>
-                        <div className={`flex items-center gap-2 font-black text-xs tabular-nums ${item.isUp ? 'text-emerald-500' : 'text-red-500'}`}>
+                    <div key={`${item.symbol}-${idx}`} className="flex items-center gap-3 px-6 border-r border-slate-200/50 dark:border-white/5 min-w-fit">
+                        <span className="font-bold text-[10px] text-slate-500 dark:text-slate-400 whitespace-nowrap uppercase tracking-wider">{item.name}</span>
+                        <div className={`flex items-center gap-1.5 font-black text-[10px] tabular-nums ${item.isUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                             <span>{item.price.toFixed(2)}</span>
                             <span className="flex items-center">
-                                {item.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                {item.isUp ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                                 {Math.abs(item.change).toFixed(2)}%
                             </span>
                         </div>
@@ -74,8 +74,8 @@ export default function MarketTicker() {
             </div>
 
             {/* Gradient Masks for Fade Effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
 
             <style jsx global>{`
                 @keyframes ticker {

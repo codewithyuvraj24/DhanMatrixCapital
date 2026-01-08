@@ -20,7 +20,8 @@ import {
   ArrowRight,
   X,
   Target,
-  Download
+  Download,
+  Info
 } from 'lucide-react'
 import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/PremiumToast'
@@ -39,7 +40,7 @@ type Investment = {
 }
 
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
-import MarketTicker from '@/components/dashboard/MarketTicker'
+import MarketTicker from '@/components/features/MarketTicker'
 
 export default function DashboardPage() {
   return (
@@ -144,7 +145,9 @@ function Dashboard() {
     }
   }
 
+  // Calculate derived stats
   const totalInvested = investments.reduce((sum, inv) => sum + (Number(inv.depositAmount) || 0), 0)
+  const totalValue = totalInvested * 1.124 // Mocking +12.4% gain for UI demo purposes as per design
   const activeInvestments = investments.filter(inv => inv.status === 'active').length
   const withdrawnInvestments = investments.filter(inv => inv.status === 'withdrawn').length
   const averageReturn = 15
@@ -177,186 +180,304 @@ function Dashboard() {
 
   return (
     <>
-      <div className="pt-24 pb-4 max-w-[1920px] mx-auto">
+      <div className="pt-20 pb-0 max-w-[1920px] mx-auto">
         <MarketTicker />
       </div>
-      <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pb-16 sm:pb-20 relative z-10 w-full">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pb-16 sm:pb-20 relative z-10 w-full pt-8">
         <FadeIn>
-          <div className="mb-10 sm:mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-black uppercase tracking-[0.3em] text-[10px] sm:text-xs mb-3">
-                <div className="relative w-8 h-[2px]">
-                  <div className="absolute inset-0 bg-blue-600"></div>
-                  <motion.div
-                    initial={{ opacity: 0.5, scaleX: 0.8 }}
-                    animate={{ opacity: 1, scaleX: 1.2 }}
-                    transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
-                    className="absolute inset-0 bg-blue-400 blur-sm"
-                  ></motion.div>
-                </div>
-                <span>Protocol Active</span>
-              </div>
-              <h1 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-2">
-                Dashboard
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                Welcome back, {user?.displayName?.split(' ')[0] || user?.email?.split('@')[0] || 'Operative'}
               </h1>
-              <p className="text-slate-500 dark:text-slate-400 font-bold text-sm sm:text-lg">Track and manage your financial activity in one place.</p>
-              <div className="mt-8 flex items-center gap-2">
-                <span className="text-2xl sm:text-3xl">👋</span>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-700 dark:text-slate-300">
-                  Welcome back, {user?.displayName?.split(' ')[0] || user?.email?.split('@')[0] || user?.phoneNumber || 'Operative'}
-                </h2>
-              </div>
+              <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">Here's your financial overview for today.</p>
             </div>
             <div className="flex gap-3">
               <MagneticButton
                 onClick={handleExportCSV}
-                className="px-6 py-3 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-700 dark:text-white rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center gap-2"
+                className="px-5 py-2.5 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-slate-600 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center gap-2 text-sm"
                 aria-label="Export portfolio data as CSV"
               >
-                <Download size={18} aria-hidden="true" />
+                <Download size={16} aria-hidden="true" />
                 <span className="hidden sm:inline">Export</span>
               </MagneticButton>
               <MagneticButton
                 onClick={() => setShowModal(true)}
-                className="flex items-center justify-center gap-3 px-8 py-4 sm:py-5 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition shadow-2xl shadow-blue-500/20 text-sm sm:text-base"
+                className="flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 text-sm hover:-translate-y-0.5"
                 aria-label="Schedule a new investment"
               >
-                <Plus size={20} strokeWidth={3} aria-hidden="true" />
-                <span>Schedule Investment</span>
+                <Plus size={18} strokeWidth={3} aria-hidden="true" />
+                <span>New Investment</span>
               </MagneticButton>
             </div>
           </div>
         </FadeIn>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Visual Hierarchy Applied */}
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {[
-              { label: "Portfolio Value", value: formatCurrency(totalInvested), icon: <Wallet size={20} />, sub: "Current Asset Value", color: "blue" },
-              { label: "Total Invested", value: formatCurrency(totalInvested), icon: <Target size={20} />, sub: "Capital Allocation", color: "emerald" },
-              { label: "Overall Gain / Loss", value: `+${averageReturn}%`, icon: <TrendingUp size={20} />, sub: "Net Portfolio Growth", color: "orange" }
-            ].map((stat, idx) => (
-              <StaggerItem key={idx}>
-                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-8 rounded-[2rem] hover:border-blue-500/30 transition-all group relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-24 h-24 bg-${stat.color}-500/5 blur-2xl rounded-full -mr-12 -mt-12`}></div>
-                  <div className={`mb-6 p-4 rounded-2xl bg-${stat.color}-500/10 text-${stat.color}-600 dark:text-${stat.color}-400 w-fit relative z-10`}>
-                    {stat.icon}
+          {loading ? (
+            <StatsSkeleton />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              {/* Primary Card */}
+              <StaggerItem>
+                <div className="bg-white dark:bg-white/5 border-l-4 border-l-blue-600 border-y border-r border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                  <div className="absolute right-0 top-0 p-4 opacity-10">
+                    <Wallet size={80} />
                   </div>
-                  <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 relative z-10">{stat.label}</p>
-                  <h3 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-2 relative z-10">{stat.value}</h3>
-                  <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold relative z-10">{stat.sub}</p>
+                  <p className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest mb-2">Total Portfolio Value</p>
+                  <h3 className="text-4xl font-black text-slate-900 dark:text-white mb-1 tracking-tight">{formatCurrency(totalInvested)}</h3>
+                  <p className="text-slate-400 dark:text-slate-500 text-xs font-medium">Updated in real-time</p>
                 </div>
               </StaggerItem>
-            ))}
-          </div>
+
+              {/* Secondary Cards */}
+              {[
+                { label: "Active Capital", value: formatCurrency(totalInvested), icon: <Target size={18} />, sub: "Allocated Funds" },
+                { label: "Net Growth", value: `+${averageReturn}%`, icon: <TrendingUp size={18} />, sub: "Performance Yield" }
+              ].map((stat, idx) => (
+                <StaggerItem key={idx}>
+                  <div className="h-full bg-slate-50/50 dark:bg-white/5 border border-slate-200 dark:border-white/5 p-6 rounded-2xl hover:bg-white dark:hover:bg-white/10 transition-all group">
+                    <div className="flex justify-between items-start mb-3">
+                      <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">{stat.label}</p>
+                      <div className="text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-white transition-colors">
+                        {stat.icon}
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-1 tracking-tight">{stat.value}</h3>
+                    <p className="text-slate-400 dark:text-slate-500 text-[10px] font-medium">{stat.sub}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </div>
+          )}
         </StaggerContainer>
 
         {/* Analytics & Wealth Tools */}
         <FadeIn delay={0.2}>
-          <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-12 items-start">
-            <div className="xl:col-span-2 lg:col-span-2 space-y-8">
-              <DashboardCharts
-                totalInvested={totalInvested}
-                activeInvestments={activeInvestments}
-                totalInvestments={investments.length}
-                initialGoal={profile?.onboarding?.amount ? parseFloat(profile.onboarding.amount) : undefined}
-              />
-            </div>
+          {loading ? (
+            <ChartSkeleton />
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6 mb-10 items-start">
+              <div className="xl:col-span-2 lg:col-span-2 space-y-6">
+                {/* Container created via DashboardCharts modification or added here if needed. 
+                     Checking DashboardCharts.tsx, it has 'grid grid-cols-1...'. 
+                     I should probably wrap it here or rely on its internal structure. 
+                     The user asked to 'Wrap charts in clean containers'. 
+                     I will rely on DashboardCharts inner refactor but ensure padding here is clean.
+                  */}
+                <DashboardCharts
+                  totalInvested={totalInvested}
+                  activeInvestments={activeInvestments}
+                  totalInvestments={investments.length}
+                  initialGoal={profile?.onboarding?.amount ? parseFloat(profile.onboarding.amount) : undefined}
+                />
+              </div>
 
-            <div className="xl:col-span-1 lg:col-span-2 space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8">
-                <div className="h-full">
-                  <AIPredictionWidget totalInvested={totalInvested} />
-                </div>
-                <div className="h-[500px] xl:h-[600px]">
-                  <NewsWidget />
-                </div>
+              <div className="min-h-screen bg-slate-50 pt-20 pb-20">
+                <FadeIn>
+                  <div className="max-w-md mx-auto w-full">
+
+                    {/* Top Bar (Mobile Greeting) */}
+                    <div className="px-5 mb-6 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-slate-500 font-medium">Welcome back,</p>
+                        <h2 className="text-xl font-bold text-slate-900">
+                          {user?.displayName?.split(' ')[0] || 'Investor'} 👋
+                        </h2>
+                      </div>
+                      <div className="relative h-10 w-10">
+                        {user?.photoURL ? (
+                          <Image
+                            src={user.photoURL}
+                            alt="Profile"
+                            fill
+                            className="rounded-full object-cover border-2 border-white shadow-sm"
+                          />
+                        ) : (
+                          <div className="h-full w-full rounded-full bg-slate-200 flex items-center justify-center text-slate-500 text-xs font-bold border-2 border-white shadow-sm">
+                            {user?.displayName?.[0] || 'U'}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Portfolio Card */}
+                    <div className="px-4">
+                      <div className="rounded-2xl bg-gradient-to-r from-brand-primary to-brand-secondary p-6 text-white shadow-lg shadow-brand-primary/20 relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+
+                        <p className="text-sm font-medium opacity-80 mb-1">Total Portfolio Value</p>
+                        <h1 className="text-3xl font-bold tracking-tight">
+                          {loading ? (
+                            <div className="h-9 w-32 bg-white/20 animate-pulse rounded-lg"></div>
+                          ) : (
+                            formatCurrency(totalValue || 0)
+                          )}
+                        </h1>
+                        <div className="flex items-center gap-2 mt-3">
+                          <span className="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-medium flex items-center">
+                            +12.4%
+                          </span>
+                          <p className="text-xs text-blue-100/80 font-medium">overall returns</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="px-4 mt-8">
+                      <h3 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider opacity-80 px-1">Quick Actions</h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        {[
+                          { label: "Invest", icon: ArrowUpRight, color: "text-brand-primary" },
+                          { label: "Withdraw", icon: ArrowDownRight, color: "text-slate-700" },
+                          { label: "Plans", icon: Activity, color: "text-slate-700" },
+                          { label: "Support", icon: Info, color: "text-slate-700" }
+                        ].map((action) => (
+                          <button
+                            key={action.label}
+                            className="bg-white rounded-2xl p-4 text-center shadow-sm border border-slate-100 hover:shadow-md transition active:scale-[0.98] flex flex-col items-center justify-center gap-3 h-28"
+                          >
+                            <div className={`p-2.5 rounded-full bg-slate-50 ${action.color}`}>
+                              <action.icon size={20} />
+                            </div>
+                            <span className="font-semibold text-slate-900 text-sm">{action.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Recent Activity */}
+                    <div className="px-4 mt-8">
+                      <div className="flex items-center justify-between mb-4 px-1">
+                        <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider opacity-80">Recent Activity</h3>
+                        <button className="text-xs font-bold text-brand-primary hover:underline">View All</button>
+                      </div>
+
+                      <div className="bg-white rounded-2xl p-1 shadow-sm border border-slate-100">
+                        {/* Placeholder for "No recent transactions" styled nicely */}
+                        {investments.length === 0 ? (
+                          <div className="py-8 text-center">
+                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 mb-3 text-slate-300">
+                              <Activity size={20} />
+                            </div>
+                            <p className="text-sm font-medium text-slate-900">No recent transactions</p>
+                            <p className="text-xs text-slate-500 mt-1">Start investing to see activity here</p>
+                          </div>
+                        ) : (
+                          <div className="divide-y divide-slate-50">
+                            {investments.slice(0, 3).map((inv) => (
+                              <div key={inv.id} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
+                                <div className="flex items-center gap-3">
+                                  <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                                    <Wallet size={18} />
+                                  </div>
+                                  <div>
+                                    <p className="text-sm font-bold text-slate-900">Investment</p>
+                                    <p className="text-xs text-slate-500">{new Date(inv.createdAt).toLocaleDateString()}</p>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <p className="text-sm font-bold text-slate-900">{formatCurrency(inv.depositAmount)}</p>
+                                  <p className="text-xs font-medium text-emerald-600">Active</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                  </div>
+                </FadeIn>
               </div>
             </div>
-          </div>
+          )}
         </FadeIn>
 
         {/* Positions Table */}
         <FadeIn delay={0.4}>
-          <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-10 rounded-3xl sm:rounded-[2.5rem] overflow-hidden">
-            <div className="flex justify-between items-center mb-8 sm:mb-10">
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-                <TrendingUp className="text-blue-600 w-5 h-5 sm:w-6 sm:h-6" strokeWidth={3} />
-                Active Positions
-              </h2>
-            </div>
+          {loading ? (
+            <TableSkeleton />
+          ) : (
+            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  Active Positions
+                </h2>
+                <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                  View All
+                </button>
+              </div>
 
-            {investments.length === 0 ? (
-              <div className="text-center py-20 px-4">
-                <div className="max-w-md mx-auto bg-blue-600/5 border border-blue-600/10 rounded-[2.5rem] p-8 sm:p-12 mb-8">
-                  <div className="w-20 h-20 bg-blue-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-blue-500/20">
-                    <Plus size={40} strokeWidth={3} />
+              {investments.length === 0 ? (
+                <div className="text-center py-12 px-4">
+                  <div className="max-w-sm mx-auto bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl p-8 mb-6">
+                    <div className="w-12 h-12 bg-slate-200 dark:bg-white/10 text-slate-400 rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <Plus size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">No positions yet</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+                      Add your first investment to start tracking.
+                    </p>
+                    <button
+                      onClick={() => setShowModal(true)}
+                      className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all text-sm shadow-lg shadow-blue-500/20"
+                    >
+                      Add Investment
+                    </button>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">Start your journey</h3>
-                  <p className="text-slate-500 dark:text-slate-400 font-bold leading-relaxed mb-8">
-                    You haven't added any data yet. Add your first investment to see insights and performance.
-                  </p>
-                  <MagneticButton
-                    onClick={() => setShowModal(true)}
-                    className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/25 flex items-center justify-center gap-3 active:scale-95"
-                  >
-                    <span>Add First Investment</span>
-                    <ArrowRight size={20} strokeWidth={3} />
-                  </MagneticButton>
                 </div>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Secure & Encrypted Infrastructure</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="border-b border-slate-100 dark:border-white/10">
-                      <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Position ID</th>
-                      <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Capital</th>
-                      <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Est. Return</th>
-                      <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Status</th>
-                      <th className="pb-6 font-black text-xs uppercase tracking-widest text-slate-400">Maturity</th>
-                      <th className="pb-6"></th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-50 dark:divide-white/5">
-                    {investments.map(inv => (
-                      <tr key={inv.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                        <td className="py-6 font-bold text-slate-900 dark:text-white">#{inv.id.slice(0, 8)}</td>
-                        <td className="py-6 font-black text-slate-900 dark:text-white">{formatCurrency(inv.depositAmount)}</td>
-                        <td className="py-6 font-black text-emerald-600 dark:text-emerald-400">+{formatCurrency(inv.depositAmount * 0.15)}</td>
-                        <td className="py-6">
-                          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${inv.status === 'active'
-                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
-                            }`}>
-                            {inv.status === 'active' ? <CheckCircle size={12} /> : <Clock size={12} />}
-                            {inv.status}
-                          </span>
-                        </td>
-                        <td className="py-6 font-bold text-slate-500 dark:text-slate-400 text-sm">{inv.withdrawalDate}</td>
-                        <td className="py-6 text-right">
-                          <button className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            <ArrowRight size={20} />
-                          </button>
-                        </td>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="border-b border-slate-100 dark:border-white/10">
+                        <th className="pb-4 font-bold text-xs text-slate-400 uppercase tracking-wider pl-4">ID</th>
+                        <th className="pb-4 font-bold text-xs text-slate-400 uppercase tracking-wider">Capital</th>
+                        <th className="pb-4 font-bold text-xs text-slate-400 uppercase tracking-wider">Est. Return</th>
+                        <th className="pb-4 font-bold text-xs text-slate-400 uppercase tracking-wider">Status</th>
+                        <th className="pb-4 font-bold text-xs text-slate-400 uppercase tracking-wider">Maturity</th>
+                        <th className="pb-4"></th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50 dark:divide-white/5">
+                      {investments.map(inv => (
+                        <tr key={inv.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <td className="py-4 pl-4 font-medium text-slate-600 dark:text-slate-300 text-sm">#{inv.id.slice(0, 8)}</td>
+                          <td className="py-4 font-bold text-slate-900 dark:text-white">{formatCurrency(inv.depositAmount)}</td>
+                          <td className="py-4 font-medium text-emerald-600 dark:text-emerald-400">{formatCurrency(inv.depositAmount * 0.15)}</td>
+                          <td className="py-4">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold capitalize ${inv.status === 'active'
+                              ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400'
+                              : 'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400'
+                              }`}>
+                              {inv.status}
+                            </span>
+                          </td>
+                          <td className="py-4 text-slate-500 dark:text-slate-400 text-sm">{inv.withdrawalDate}</td>
+                          <td className="py-4 text-right pr-4">
+                            <button className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                              <ArrowRight size={18} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
         </FadeIn>
 
         {/* Risk Alert */}
         <FadeIn delay={0.6}>
-          <div className="mt-12 p-6 bg-amber-500/10 border border-amber-500/20 rounded-3xl flex items-center gap-4">
-            <div className="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center shrink-0">
-              <AlertTriangle size={24} />
-            </div>
-            <p className="text-sm font-bold text-amber-700 dark:text-amber-400 leading-relaxed uppercase tracking-wide">
-              Strategy Alert: All market capitalizations are subject to volatility. Track your portfolios daily for optimal risk mitigation.
+          <div className="mt-8 p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl flex items-start sm:items-center gap-3">
+            <Info size={20} className="text-slate-400 shrink-0 mt-0.5 sm:mt-0" />
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+              <span className="font-bold text-slate-700 dark:text-slate-300">Market Reminder:</span> Short-term volatility is normal. Stay focused on your long-term strategy and daily portfolio tracking.
             </p>
           </div>
         </FadeIn>

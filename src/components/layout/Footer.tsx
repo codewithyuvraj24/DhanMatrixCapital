@@ -88,8 +88,8 @@ export default function Footer() {
               <ShieldCheck size={14} className="text-amber-500" />
               Market Risk Disclaimer
             </h5>
-            <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed font-medium capitalize">
-              Investment in the securities market are subject to market risks, read all the related documents carefully before investing. The information provided is for educational and illustrative purposes only and does not constitute investment advice. Past performance is not indicative of future results. The analytics and strategic insights provided by Dhanmatrixcapital are tools to assist investors and do not guarantee specific returns.
+            <p className="text-[10px] text-slate-500 dark:text-slate-500 leading-loose font-medium text-justify">
+              Investment in securities market are subject to market risks, read all the related documents carefully before investing. The information provided is for educational and illustrative purposes only and does not constitute investment advice. Past performance is not indicative of future results. The analytics and strategic insights provided by Dhanmatrixcapital are tools to assist investors and do not guarantee specific returns.
             </p>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">

@@ -1,4 +1,4 @@
-"use client"
+import { Suspense, lazy } from 'react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useTheme } from '@/context/ThemeContext'
 

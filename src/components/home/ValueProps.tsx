@@ -41,12 +41,12 @@ export default function ValueProps() {
                             }
                         ].map((prop, idx) => (
                             <StaggerItem key={idx}>
-                                <div className="h-full p-8 sm:p-10 rounded-[2rem] bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2">
+                                <div className="h-full p-10 sm:p-12 rounded-[2rem] bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2">
                                     <div className="mb-8 p-4 rounded-2xl bg-white dark:bg-slate-900 shadow-xl shadow-black/5 w-fit group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
                                         {prop.icon}
                                     </div>
-                                    <h3 className="text-2xl font-black mb-4 dark:text-white">{prop.title}</h3>
-                                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium text-sm sm:text-base">{prop.desc}</p>
+                                    <h3 className="text-2xl font-black mb-6 dark:text-white">{prop.title}</h3>
+                                    <p className="text-slate-600 dark:text-slate-300 leading-loose font-medium text-sm sm:text-base">{prop.desc}</p>
                                 </div>
                             </StaggerItem>
                         ))}

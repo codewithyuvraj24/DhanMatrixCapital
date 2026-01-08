@@ -15,7 +15,10 @@ export default function HowItWorks() {
                     <FadeIn>
                         <div className="text-center mb-16">
                             <h2 className="text-4xl sm:text-6xl font-black mb-4 leading-tight">Investment <span className="text-blue-400">Strategy</span></h2>
-                            <p className="text-lg sm:text-xl text-blue-200 font-bold tracking-widest uppercase">Our Diversified Portfolio</p>
+                            <p className="text-lg sm:text-xl text-blue-200 font-bold tracking-widest uppercase mb-6">Our Diversified Portfolio</p>
+                            <p className="text-blue-200/60 max-w-2xl mx-auto leading-relaxed">
+                                We intentionally spread capital across multiple asset classes—Large Caps for stability, Mid/Small Caps for growth, and Gold for hedging—to maximize returns while minimizing risk.
+                            </p>
                         </div>
                     </FadeIn>
 

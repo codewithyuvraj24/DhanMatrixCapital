@@ -26,7 +26,7 @@ export default function Hero() {
                     {/* Left Content */}
                     <div className="space-y-8 text-center lg:text-left">
                         <FadeIn>
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-widest mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 font-bold text-xs uppercase tracking-widest mb-6 border border-slate-200 dark:border-white/10">
                                 <span className="relative flex h-2 w-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -34,36 +34,41 @@ export default function Hero() {
                                 SEBI Regulated & ISO 27001 Secure
                             </div>
 
-                            <h1 className="font-heading text-5xl sm:text-7xl xl:text-8xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
-                                Wealth <br />
+                            <h1 className="font-heading text-4xl sm:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
+                                Grow your wealth with <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-                                    Engineering.
-                                </span>
+                                    data-driven strategies
+                                </span> <br />
+                                designed for Indian investors.
                             </h1>
 
-                            <p className="text-xl text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                                Institutional-grade financial architecture for the modern indian investor. Precision analytics, AI-driven insights, and absolute transparency.
+                            <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8">
+                                Experience institutional-grade wealth management with absolute transparency. SEBI regulated, 100% secure, and built for your financial freedom.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
-                                <Link href={user ? "/dashboard" : "/register"} className="w-full sm:w-auto px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black text-lg hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-3">
-                                    {user ? 'Launch Terminal' : 'Start Investing'}
+                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-2">
+                                <Link href={user ? "/dashboard" : "/register"} className="w-full sm:w-auto px-8 py-4 bg-blue-600 dark:bg-blue-600 text-white rounded-2xl font-black text-lg hover:bg-blue-700 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-3">
+                                    {user ? 'Launch Terminal' : 'Start Growing Wealth'}
                                     <ArrowRight size={20} strokeWidth={3} />
                                 </Link>
                                 <Link href="/plans" className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white rounded-2xl font-bold text-lg hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center justify-center gap-3">
-                                    View Protocols
+                                    See Plans That Fit You
                                 </Link>
                             </div>
 
-                            <div className="pt-12 flex items-center justify-center lg:justify-start gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
-                                    <Shield size={16} /> Secure
+                            <p className="text-[10px] text-slate-400 mt-4 max-w-lg mx-auto lg:mx-0 font-medium">
+                                * Investments are subject to market risks. Read all scheme related documents carefully before investing.
+                            </p>
+
+                            <div className="pt-10 flex items-center justify-center lg:justify-start gap-6 sm:gap-8 opacity-80">
+                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                                    <Shield size={18} className="text-emerald-500" /> SEBI Regulated
                                 </div>
-                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
-                                    <Activity size={16} /> Real-time
+                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                                    <Activity size={18} className="text-blue-500" /> Real-time Analytics
                                 </div>
-                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400">
-                                    <Globe size={16} /> Global
+                                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                                    <Globe size={18} className="text-indigo-500" /> ISO Certified
                                 </div>
                             </div>
                         </FadeIn>

@@ -140,7 +140,7 @@ export default function ROICalculator() {
             </div>
 
             {/* Results */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                     <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">Final Value</p>
                     <p className="text-xl font-black text-blue-600 dark:text-blue-400">₹{finalValue.toLocaleString('en-IN')}</p>

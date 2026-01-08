@@ -14,10 +14,12 @@ module.exports = {
       },
       colors: {
         brand: {
-          dark: '#0a192f',
-          darker: '#071221',
-          accent: '#112240',
-        }
+          primary: "#2563EB",   // blue-600
+          secondary: "#1E40AF", // blue-800
+          accent: "#0F172A",    // slate-900
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
       }
     },
   },
