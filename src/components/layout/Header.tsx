@@ -55,12 +55,9 @@ export default function Header() {
     >
       <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 flex justify-between items-center h-12">
 
-        {/* Left: Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-xl shadow-blue-500/10 group-hover:shadow-blue-500/20 transition-all duration-300 group-hover:scale-105">
-            <Image src="/dmc-logo.png" alt="DMC Logo" fill className="object-cover" />
-          </div>
-          <span className="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
+        {/* Left: Branding */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <span className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
             Dhanmatrix<span className="font-black text-blue-600 dark:text-blue-500">Capital</span>
           </span>
         </Link>
@@ -113,11 +110,11 @@ export default function Header() {
               </Link>
 
               <div className="flex items-center gap-1">
-                <Link href="/profile" className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-all">
-                  <UserIcon size={20} />
+                <Link href="/profile" className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-all" aria-label="View profile">
+                  <UserIcon size={20} aria-hidden="true" />
                 </Link>
-                <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-all">
-                  <LogOut size={20} />
+                <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-all" aria-label="Logout">
+                  <LogOut size={20} aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -141,8 +138,10 @@ export default function Header() {
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden w-10 h-10 flex items-center justify-center text-slate-900 dark:text-white bg-slate-100 dark:bg-white/10 rounded-xl"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </div>
 
@@ -171,11 +170,11 @@ export default function Header() {
                   Go to Dashboard <Layout size={18} />
                 </Link>
                 <div className="grid grid-cols-2 gap-3">
-                  <Link href="/profile" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center gap-2 py-3 bg-slate-50 dark:bg-white/5 rounded-xl font-bold text-slate-700 dark:text-slate-300">
-                    <UserIcon size={18} /> Profile
+                  <Link href="/profile" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center gap-2 py-3 bg-slate-50 dark:bg-white/5 rounded-xl font-bold text-slate-700 dark:text-slate-300" aria-label="View profile">
+                    <UserIcon size={18} aria-hidden="true" /> Profile
                   </Link>
-                  <button onClick={handleLogout} className="flex items-center justify-center gap-2 py-3 bg-red-50 dark:bg-red-500/10 text-red-600 rounded-xl font-bold">
-                    <LogOut size={18} /> Logout
+                  <button onClick={handleLogout} className="flex items-center justify-center gap-2 py-3 bg-red-50 dark:bg-red-500/10 text-red-600 rounded-xl font-bold" aria-label="Logout">
+                    <LogOut size={18} aria-hidden="true" /> Logout
                   </button>
                 </div>
               </div>

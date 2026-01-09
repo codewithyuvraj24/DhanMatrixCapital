@@ -32,6 +32,8 @@ import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Ske
 import { useToast } from '@/components/ui/PremiumToast'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { DashboardCharts } from '@/components/features/DashboardCharts'
+import AIPredictionWidget from '@/components/features/AIPredictionWidget'
+import NewsWidget from '@/components/features/NewsWidget'
 
 type Investment = {
   id: string
@@ -273,123 +275,9 @@ function Dashboard() {
                 />
               </div>
 
-              <div className="min-h-screen bg-slate-50 pt-20 pb-20">
-                <FadeIn>
-                  <div className="max-w-md mx-auto w-full">
-
-                    {/* Top Bar (Mobile Greeting) */}
-                    <div className="px-5 mb-6 flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-slate-500 font-medium">Welcome back,</p>
-                        <h2 className="text-xl font-bold text-slate-900">
-                          {user?.displayName?.split(' ')[0] || 'Investor'} 👋
-                        </h2>
-                      </div>
-                      <div className="relative h-10 w-10">
-                        {user?.photoURL ? (
-                          <Image
-                            src={user.photoURL}
-                            alt="Profile"
-                            fill
-                            className="rounded-full object-cover border-2 border-white shadow-sm"
-                          />
-                        ) : (
-                          <div className="h-full w-full rounded-full bg-slate-200 flex items-center justify-center text-slate-500 text-xs font-bold border-2 border-white shadow-sm">
-                            {user?.displayName?.[0] || 'U'}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Portfolio Card */}
-                    <div className="px-4">
-                      <div className="rounded-2xl bg-gradient-to-r from-brand-primary to-brand-secondary p-6 text-white shadow-lg shadow-brand-primary/20 relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-
-                        <p className="text-sm font-medium opacity-80 mb-1">Total Portfolio Value</p>
-                        <h1 className="text-3xl font-bold tracking-tight">
-                          {loading ? (
-                            <div className="h-9 w-32 bg-white/20 animate-pulse rounded-lg"></div>
-                          ) : (
-                            formatCurrency(totalValue || 0)
-                          )}
-                        </h1>
-                        <div className="flex items-center gap-2 mt-3">
-                          <span className="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-medium flex items-center">
-                            +12.4%
-                          </span>
-                          <p className="text-xs text-blue-100/80 font-medium">overall returns</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Quick Actions */}
-                    <div className="px-4 mt-8">
-                      <h3 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider opacity-80 px-1">Quick Actions</h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        {[
-                          { label: "Invest", icon: ArrowUpRight, color: "text-brand-primary" },
-                          { label: "Withdraw", icon: ArrowDownRight, color: "text-slate-700" },
-                          { label: "Plans", icon: Activity, color: "text-slate-700" },
-                          { label: "Support", icon: Info, color: "text-slate-700" }
-                        ].map((action) => (
-                          <button
-                            key={action.label}
-                            className="bg-white rounded-2xl p-4 text-center shadow-sm border border-slate-100 hover:shadow-md transition active:scale-[0.98] flex flex-col items-center justify-center gap-3 h-28"
-                          >
-                            <div className={`p-2.5 rounded-full bg-slate-50 ${action.color}`}>
-                              <action.icon size={20} />
-                            </div>
-                            <span className="font-semibold text-slate-900 text-sm">{action.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Recent Activity */}
-                    <div className="px-4 mt-8">
-                      <div className="flex items-center justify-between mb-4 px-1">
-                        <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider opacity-80">Recent Activity</h3>
-                        <button className="text-xs font-bold text-brand-primary hover:underline">View All</button>
-                      </div>
-
-                      <div className="bg-white rounded-2xl p-1 shadow-sm border border-slate-100">
-                        {/* Placeholder for "No recent transactions" styled nicely */}
-                        {investments.length === 0 ? (
-                          <div className="py-8 text-center">
-                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 mb-3 text-slate-300">
-                              <Activity size={20} />
-                            </div>
-                            <p className="text-sm font-medium text-slate-900">No recent transactions</p>
-                            <p className="text-xs text-slate-500 mt-1">Start investing to see activity here</p>
-                          </div>
-                        ) : (
-                          <div className="divide-y divide-slate-50">
-                            {investments.slice(0, 3).map((inv) => (
-                              <div key={inv.id} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
-                                <div className="flex items-center gap-3">
-                                  <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                                    <Wallet size={18} />
-                                  </div>
-                                  <div>
-                                    <p className="text-sm font-bold text-slate-900">Investment</p>
-                                    <p className="text-xs text-slate-500">{new Date(inv.createdAt).toLocaleDateString()}</p>
-                                  </div>
-                                </div>
-                                <div className="text-right">
-                                  <p className="text-sm font-bold text-slate-900">{formatCurrency(inv.depositAmount)}</p>
-                                  <p className="text-xs font-medium text-emerald-600">Active</p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                  </div>
-                </FadeIn>
+              <div className="space-y-6 sticky top-24">
+                <AIPredictionWidget totalInvested={totalInvested} />
+                <NewsWidget />
               </div>
             </div>
           )}
@@ -420,10 +308,7 @@ function Dashboard() {
                     <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
                       Add your first investment to start tracking.
                     </p>
-                    <button
-                      onClick={() => setShowModal(true)}
-                      className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all text-sm shadow-lg shadow-blue-500/20"
-                    >
+                    <button className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all text-sm shadow-lg shadow-blue-500/20" aria-label="Add first investment">
                       Add Investment
                     </button>
                   </div>
@@ -457,8 +342,8 @@ function Dashboard() {
                           </td>
                           <td className="py-4 text-slate-500 dark:text-slate-400 text-sm">{inv.withdrawalDate}</td>
                           <td className="py-4 text-right pr-4">
-                            <button className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                              <ArrowRight size={18} />
+                            <button className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="View investment details">
+                              <ArrowRight size={18} aria-hidden="true" />
                             </button>
                           </td>
                         </tr>

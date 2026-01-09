@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { useState, useEffect } from 'react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useTheme } from '@/context/ThemeContext'
 
@@ -28,6 +28,13 @@ const returnData = [
 export function InvestmentTrendChart() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return <div className="h-[300px]" />
 
   return (
     <div className="w-full p-6">
@@ -74,6 +81,13 @@ export function InvestmentTrendChart() {
 export function PortfolioBreakdownChart() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return <div className="h-[300px]" />
 
   return (
     <div className="w-full p-6">
@@ -111,6 +125,13 @@ export function PortfolioBreakdownChart() {
 export function PlanComparisonChart() {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return <div className="h-[300px]" />
 
   return (
     <div className="w-full p-6">

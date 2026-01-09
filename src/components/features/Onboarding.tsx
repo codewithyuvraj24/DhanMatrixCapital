@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import confetti from 'canvas-confetti'
 import { db } from '@/lib/firebase'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import {
@@ -68,7 +67,8 @@ export default function OnboardingWizard() {
     const completeOnboarding = async () => {
         if (!user) return
 
-        // 1. Start celebration immediately
+        // 1. Dynamically import confetti and start celebration
+        const confetti = (await import('canvas-confetti')).default
         const duration = 2000
         const end = Date.now() + duration
 

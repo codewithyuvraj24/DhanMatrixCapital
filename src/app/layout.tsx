@@ -6,9 +6,10 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import BackgroundOrbs from '@/components/layout/BackgroundOrbs'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from 'react'
 import { Outfit, Space_Grotesk } from 'next/font/google'
+import { OrganizationSchema } from '@/components/seo/StructuredData'
 
 const outfit = Outfit({
   subsets: ['latin'],

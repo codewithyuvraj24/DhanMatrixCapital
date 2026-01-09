@@ -109,10 +109,7 @@ export default function Login() {
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm p-6">
 
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="relative h-12 w-12 mx-auto mb-3">
-            <Image src="/dmc-logo.png" alt="Dhanmatrix Capital" fill className="object-contain" />
-          </div>
+        <div className="text-center mb-6 pt-2">
           <h1 className="text-2xl font-semibold text-slate-900">
             Sign in to Dhanmatrix
           </h1>

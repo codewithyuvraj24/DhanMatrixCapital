@@ -145,10 +145,10 @@ function AdminPanel() {
         <div className="p-10 bg-red-500/10 border border-red-500/20 rounded-[3rem] space-y-6">
           <Shield className="mx-auto text-red-500" size={64} />
           <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Access Restricted</h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-            Your current account does not have **Administrative Clearance**.
+          <div className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+            Your current account does not have <strong>Administrative Clearance</strong>.
             To activate this command center, follow these strategic steps:
-          </p>
+          </div>
           <div className="text-left bg-white/50 dark:bg-black/20 p-6 rounded-2xl space-y-4 text-sm font-bold">
             <p className="text-emerald-600 dark:text-emerald-400">1. Open Firebase Console</p>
             <p className="text-slate-600 dark:text-slate-300">2. Navigate to Firestore Database -&gt; `users` collection</p>
@@ -255,10 +255,10 @@ function AdminPanel() {
               </div>
               <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-md">
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-1">Security Status</p>
-                <p className="font-bold text-sm text-emerald-300 flex items-center gap-2">
+                <div className="font-bold text-sm text-emerald-300 flex items-center gap-2">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                   Bank-Grade Active
-                </p>
+                </div>
               </div>
             </div>
           </div>

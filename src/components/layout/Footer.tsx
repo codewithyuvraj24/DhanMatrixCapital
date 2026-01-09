@@ -10,10 +10,7 @@ export default function Footer() {
       <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
-            <Link href="/" className="inline-block flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg overflow-hidden shadow-md shadow-amber-500/10">
-                <Image src="/dmc-logo.png" alt="DMC Logo" width={40} height={40} className="object-cover" />
-              </div>
+            <Link href="/" className="inline-block" aria-label="Dhanmatrixcapital home">
               <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
                 Dhanmatrixcapital
               </span>
@@ -83,17 +80,17 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-slate-200 dark:border-white/10 block">
-          <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-2xl mb-8">
-            <h5 className="font-black text-xs uppercase tracking-widest text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-              <ShieldCheck size={14} className="text-amber-500" />
+          <div className="bg-slate-100 dark:bg-white/5 p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8">
+            <h5 className="font-black text-xs sm:text-xs uppercase tracking-widest text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+              <ShieldCheck size={16} className="text-amber-500 shrink-0" />
               Market Risk Disclaimer
             </h5>
-            <p className="text-[10px] text-slate-500 dark:text-slate-500 leading-loose font-medium text-justify">
+            <p className="text-xs sm:text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed sm:leading-loose font-medium">
               Investment in securities market are subject to market risks, read all the related documents carefully before investing. The information provided is for educational and illustrative purposes only and does not constitute investment advice. Past performance is not indicative of future results. The analytics and strategic insights provided by Dhanmatrixcapital are tools to assist investors and do not guarantee specific returns.
             </p>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
-            <p>&copy; 2025 Dhanmatrixcapital Platform Inc. All rights reserved.</p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs sm:text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
+            <p className="text-center md:text-left">&copy; 2025 Dhanmatrixcapital Platform Inc. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="/cookies" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cookies</Link>
             </div>
