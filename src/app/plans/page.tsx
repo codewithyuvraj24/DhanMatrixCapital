@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { Check, AlertTriangle, TrendingUp, Shield, Zap, Crown, Lock } from 'lucide-react'
 import Link from 'next/link'
+import { InvestmentProductSchema } from '@/components/seo/StructuredData'
 
 const plans = [
   {
@@ -31,6 +32,15 @@ export default function Plans() {
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
       <div className="max-w-7xl mx-auto">
+        {plans.map(plan => (
+          <InvestmentProductSchema
+            key={plan.id}
+            name={plan.name}
+            description={plan.description}
+            minInvestment={plan.minInvestment}
+            expectedReturn={plan.annualReturn}
+          />
+        ))}
         <FadeIn>
           <div className="text-center max-w-4xl mx-auto mb-20 sm:mb-32">
             <h1 className="text-4xl sm:text-7xl font-black mb-8 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">

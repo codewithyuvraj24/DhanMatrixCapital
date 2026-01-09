@@ -1,9 +1,11 @@
 "use client"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import trustVisual from "../../../public/trust-visual.png"
 import { Users, TrendingUp, Target } from "lucide-react"
+import { memo } from "react"
 
-export default function TrustStats() {
+function TrustStats() {
     return (
         <section className="py-24 sm:py-32 relative overflow-hidden bg-slate-50 dark:bg-white/5 transition-colors duration-500">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-600/5 blur-[120px] -z-10"></div>
@@ -63,10 +65,10 @@ export default function TrustStats() {
                             className="relative z-10 p-2 bg-white/70 dark:bg-white/5 border border-white dark:border-white/10 rounded-[2.5rem] backdrop-blur-3xl shadow-2xl overflow-hidden"
                         >
                             <Image
-                                src="/trust-visual.png"
+                                src={trustVisual}
                                 alt="Financial Security"
-                                width={600}
-                                height={600}
+                                placeholder="blur"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                                 className="w-full h-auto rounded-[2rem] object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent pointer-events-none"></div>
@@ -77,3 +79,5 @@ export default function TrustStats() {
         </section>
     )
 }
+
+export default memo(TrustStats)

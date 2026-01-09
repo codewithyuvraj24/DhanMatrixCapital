@@ -7,9 +7,10 @@ interface MagneticButtonProps {
     className?: string
     onClick?: () => void
     disabled?: boolean
+    "aria-label"?: string
 }
 
-export default function MagneticButton({ children, className = '', onClick, disabled = false }: MagneticButtonProps) {
+export default function MagneticButton({ children, className = '', onClick, disabled = false, "aria-label": ariaLabel }: MagneticButtonProps) {
     const ref = useRef<HTMLButtonElement>(null)
     const x = useMotionValue(0)
     const y = useMotionValue(0)
@@ -49,6 +50,7 @@ export default function MagneticButton({ children, className = '', onClick, disa
             style={{ x: springX, y: springY }}
             whileTap={{ scale: disabled ? 1 : 0.95 }}
             className={`${className} ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+            aria-label={ariaLabel}
         >
             {children}
         </motion.button>

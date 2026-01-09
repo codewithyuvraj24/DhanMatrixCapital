@@ -1,8 +1,9 @@
 "use client"
 import { HelpCircle } from "lucide-react"
-import { useState } from "react"
+import { useState, memo } from "react"
+import { faqData } from "./faqData"
 
-export default function FAQ() {
+function FAQ() {
     const [activeFaq, setActiveFaq] = useState<number | null>(null)
 
     return (
@@ -15,12 +16,7 @@ export default function FAQ() {
                 </div>
 
                 <div className="space-y-4">
-                    {[
-                        { q: "Is my capital safe?", a: "Yes, we use bank-grade encryption and secure institutional custody. However, please note that all market investments carry some inherent risk." },
-                        { q: "How long is the lock-in period?", a: "Lock-in periods vary by plan, typically ranging from 30 days to 1 year. You can view specific terms in your dashboard." },
-                        { q: "Can I withdraw anytime?", a: "Withdrawals can be initiated once the maturity period is reached. Emergency withdrawals are available with a small processing fee." },
-                        { q: "How does the AI strategy work?", a: "Our AI analyzes live market trends, volume, and volatility to execute trades across diversified asset classes automatically." }
-                    ].map((faq, idx) => (
+                    {faqData.map((faq, idx) => (
                         <div
                             key={idx}
                             className={`rounded-2xl sm:rounded-3xl border transition-all duration-300 overflow-hidden cursor-pointer ${activeFaq === idx
@@ -29,14 +25,14 @@ export default function FAQ() {
                             onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                         >
                             <div className="p-6 sm:p-8 flex justify-between items-center font-black text-lg sm:text-xl dark:text-white tracking-tight">
-                                <span>{faq.q}</span>
+                                <span>{faq.question}</span>
                                 <div className={`p-2 rounded-full transition-all duration-300 ${activeFaq === idx ? 'bg-blue-600 text-white rotate-180' : 'bg-slate-200 dark:bg-white/10 text-slate-500'}`}>
                                     <HelpCircle size={20} />
                                 </div>
                             </div>
                             {activeFaq === idx && (
                                 <div className="px-6 sm:px-8 pb-6 sm:pb-8 text-slate-600 dark:text-slate-300 font-medium text-base sm:text-lg leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
-                                    {faq.a}
+                                    {faq.answer}
                                 </div>
                             )}
                         </div>
@@ -46,3 +42,5 @@ export default function FAQ() {
         </section>
     )
 }
+
+export default memo(FAQ)

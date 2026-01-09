@@ -1,5 +1,6 @@
 "use server"
 import Parser from 'rss-parser'
+import { unstable_cache } from 'next/cache'
 
 export interface NewsItem {
     title: string
@@ -10,7 +11,7 @@ export interface NewsItem {
     guid?: string
 }
 
-export async function getMarketNews(): Promise<NewsItem[]> {
+async function getMarketNewsRaw(): Promise<NewsItem[]> {
     const parser = new Parser()
 
     // Using Yahoo Finance and Economic Times for a mix of global and Indian context
@@ -31,3 +32,9 @@ export async function getMarketNews(): Promise<NewsItem[]> {
         return []
     }
 }
+
+export const getMarketNews = unstable_cache(
+    getMarketNewsRaw,
+    ['market-news'],
+    { revalidate: 300 }
+)

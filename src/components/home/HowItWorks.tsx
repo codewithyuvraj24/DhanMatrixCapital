@@ -1,7 +1,8 @@
 "use client"
 import { FadeIn, StaggerContainer } from "@/components/ui/Animations"
+import { memo } from "react"
 
-export default function HowItWorks() {
+function HowItWorks() {
     return (
         <>
             <section className="py-24 bg-[#0a192f] text-white relative overflow-hidden">
@@ -88,3 +89,5 @@ export default function HowItWorks() {
         </>
     )
 }
+
+export default memo(HowItWorks)

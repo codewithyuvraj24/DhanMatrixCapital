@@ -34,6 +34,7 @@ export default function NewsWidget() {
                 <button
                     onClick={fetchNews}
                     disabled={loading}
+                    aria-label="Refresh Market News"
                     className={`p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors ${loading ? 'animate-spin' : ''}`}
                 >
                     <RefreshCw size={16} className="text-slate-400" />

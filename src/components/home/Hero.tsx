@@ -1,9 +1,10 @@
 
 "use client"
 import Link from "next/link"
-import Image from "next/image"
+
 import { useAuth } from "@/context/AuthContext"
 import { FadeIn } from "@/components/ui/Animations"
+import { Card } from "@/components/ui/Card"
 import { ArrowRight, TrendingUp, Shield, Activity, Globe } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -98,7 +99,7 @@ export default function Hero() {
                                 <div className="mt-16 space-y-4">
                                     <div className="flex gap-4">
                                         {/* Card A: Total Balance with Graph */}
-                                        <div className="w-2/3 h-40 bg-slate-50 dark:bg-white/5 rounded-2xl p-5 relative overflow-hidden group">
+                                        <Card className="w-2/3 h-40 relative group">
                                             <div className="flex justify-between items-start z-10 relative">
                                                 <div>
                                                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Balance</p>
@@ -114,10 +115,10 @@ export default function Hero() {
                                                     <div key={i} style={{ height: `${h}%` }} className="w-full bg-blue-500/20 rounded-t-sm group-hover:bg-blue-500/40 transition-colors"></div>
                                                 ))}
                                             </div>
-                                        </div>
+                                        </Card>
 
                                         {/* Card B: Asset Allocation */}
-                                        <div className="w-1/3 h-40 bg-slate-50 dark:bg-white/5 rounded-2xl p-4 flex flex-col items-center justify-center relative">
+                                        <Card className="w-1/3 h-40 relative p-4 flex flex-col items-center justify-center">
                                             <div className="relative w-20 h-20 rounded-full border-8 border-slate-200 dark:border-white/10 border-t-purple-500 border-r-blue-500 rotate-45"></div>
                                             <div className="absolute inset-0 flex items-center justify-center flex-col">
                                                 <span className="text-xs font-bold text-slate-400">Assets</span>
@@ -127,11 +128,11 @@ export default function Hero() {
                                                 <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div> Stocks</span>
                                                 <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500"></div> Crypto</span>
                                             </div>
-                                        </div>
+                                        </Card>
                                     </div>
 
                                     {/* Bottom List: Recent Activity */}
-                                    <div className="h-44 bg-slate-50 dark:bg-white/5 rounded-2xl p-5 overflow-hidden">
+                                    <Card className="h-44">
                                         <div className="flex justify-between items-center mb-4">
                                             <h4 className="text-xs font-bold text-slate-400 uppercase">Recent Activity</h4>
                                             <ArrowRight size={14} className="text-slate-400" />
@@ -158,7 +159,7 @@ export default function Hero() {
                                                 </div>
                                             ))}
                                         </div>
-                                    </div>
+                                    </Card>
                                 </div>
                             </div>
 

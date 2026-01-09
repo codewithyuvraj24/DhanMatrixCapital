@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic'
 import Hero from '@/components/home/Hero'
+import { FAQSchema } from '@/components/seo/StructuredData'
+import { faqData } from '@/components/home/faqData'
 
 // Dynamically import below-the-fold components
 const ValueProps = dynamic(() => import('@/components/home/ValueProps'), {
@@ -22,6 +24,7 @@ export default function Home() {
       <PlansPreview />
       <TrustStats />
       <FAQ />
+      <FAQSchema faqs={faqData} />
       <CallToAction />
     </div>
   )

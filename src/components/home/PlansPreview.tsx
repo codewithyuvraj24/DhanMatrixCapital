@@ -1,8 +1,9 @@
 "use client"
 import Link from "next/link"
 import { Check } from "lucide-react"
+import { memo } from "react"
 
-export default function PlansPreview() {
+function PlansPreview() {
     return (
         <section className="py-20 sm:py-32 relative overflow-hidden">
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
@@ -75,3 +76,5 @@ export default function PlansPreview() {
         </section>
     )
 }
+
+export default memo(PlansPreview)

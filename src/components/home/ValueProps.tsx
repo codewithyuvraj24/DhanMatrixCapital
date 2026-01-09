@@ -1,8 +1,9 @@
 "use client"
+import { memo } from "react"
 import { StaggerContainer, StaggerItem } from "@/components/ui/Animations"
 import { Cpu, BarChart3, ShieldCheck, Users } from "lucide-react"
 
-export default function ValueProps() {
+function ValueProps() {
     return (
         <section className="py-20 sm:py-32 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-blue-500/5 blur-[120px] pointer-events-none"></div>
@@ -55,4 +56,8 @@ export default function ValueProps() {
             </div>
         </section>
     )
+
+
 }
+
+export default memo(ValueProps)

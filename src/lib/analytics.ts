@@ -1,3 +1,5 @@
+import { cachedFetch } from './requestQueue'
+
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || ''
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
@@ -38,7 +40,7 @@ const isProd = process.env.NODE_ENV === 'production'
 // On Vercel, we use the relative path mapped in vercel.json. Locally, we use port 8000.
 const AI_CORE_URL = process.env.NEXT_PUBLIC_AI_CORE_URL || (isProd ? '/py-api' : 'http://localhost:8000')
 
-export async function getAIPrediction(request: PredictionRequest): Promise<PredictionResponse | null> {
+async function fetchAIPredictionRaw(request: PredictionRequest): Promise<PredictionResponse | null> {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 8000) // 8s timeout
 
@@ -73,4 +75,9 @@ export async function getAIPrediction(request: PredictionRequest): Promise<Predi
         }
         return null
     }
+}
+
+export async function getAIPrediction(request: PredictionRequest): Promise<PredictionResponse | null> {
+    const key = `prediction-${JSON.stringify(request)}`
+    return cachedFetch(key, () => fetchAIPredictionRaw(request), 3600)
 }

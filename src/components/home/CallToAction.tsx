@@ -1,8 +1,9 @@
 "use client"
 import Link from "next/link"
 import { Lock } from "lucide-react"
+import { memo } from "react"
 
-export default function CallToAction() {
+function CallToAction() {
     return (
         <section className="py-24 sm:py-32 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-700 to-indigo-900"></div>
@@ -29,3 +30,5 @@ export default function CallToAction() {
         </section>
     )
 }
+
+export default memo(CallToAction)
