@@ -17,7 +17,7 @@ function PlansPreview() {
                     {[
                         {
                             name: "Growth Plan",
-                            returns: "5-15% per month",
+                            returns: "5-9% per month",
                             min: "₹25,000",
                             features: [
                                 "Withdraw money anytime",

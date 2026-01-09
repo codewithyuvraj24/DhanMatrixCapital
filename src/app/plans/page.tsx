@@ -11,7 +11,7 @@ const plans = [
     id: 1,
     name: 'Growth Plan',
     minInvestment: '₹25,000',
-    annualReturn: '5-15%',
+    annualReturn: '5-9%',
     term: 'Flexible',
     description: 'A balanced approach for steady growth with the flexibility to withdraw your money whenever you need it.',
     features: [
