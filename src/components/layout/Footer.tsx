@@ -53,7 +53,7 @@ export default function Footer() {
           <div>
             <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Company & Support</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
-              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Dhanmatrix</Link></li>
+              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Dhanmatrixcapital</Link></li>
               <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Help Center</Link></li>
               <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Partner with Us</Link></li>
               <li><Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link></li>

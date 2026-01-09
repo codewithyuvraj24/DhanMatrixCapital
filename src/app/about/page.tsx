@@ -5,15 +5,15 @@ import Link from "next/link"
 
 export default function About() {
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen pt-24 pb-20 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
         <FadeIn>
-          <div className="text-center max-w-4xl mx-auto mb-20 sm:mb-32">
+          <div className="text-left max-w-4xl mb-20 sm:mb-32">
             <h1 className="text-4xl sm:text-7xl font-black mb-8 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
               Simple, Smart <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Wealth Management.</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
               We help you grow your wealth with professional strategies and easy-to-use tools.
             </p>
           </div>

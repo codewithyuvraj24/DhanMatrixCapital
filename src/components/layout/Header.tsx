@@ -125,7 +125,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/register"
-                className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:-translate-y-0.5 transition-all duration-300"
+                className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-xl shadow-blue-600/30 hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300"
               >
                 Start Investing
                 <ChevronRight size={16} strokeWidth={3} />
