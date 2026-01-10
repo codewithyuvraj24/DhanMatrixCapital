@@ -15,7 +15,7 @@ function HowItWorks() {
                 <div className="max-w-4xl mx-auto px-4 relative z-10">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl sm:text-6xl font-black mb-4 leading-tight">Investment <span className="text-blue-400">Strategy</span></h2>
+                            <h2 className="font-heading text-4xl sm:text-6xl font-black mb-4 leading-tight">Investment <span className="text-blue-400">Strategy</span></h2>
                             <p className="text-lg sm:text-xl text-blue-200 font-bold tracking-widest uppercase mb-6">Our Diversified Portfolio</p>
                             <p className="text-blue-200/60 max-w-2xl mx-auto leading-relaxed">
                                 We intentionally spread capital across multiple asset classes—Large Caps for stability, Mid/Small Caps for growth, and Gold for hedging—to maximize returns while minimizing risk.
@@ -60,7 +60,7 @@ function HowItWorks() {
             <section id="how-it-works" className="py-20 sm:py-32 bg-slate-50 dark:bg-black/20 overflow-hidden relative">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-20 sm:mb-28">
-                        <h2 className="text-4xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Start Growing in <br className="sm:hidden" /> <span className="text-blue-600">4 Simple Steps</span></h2>
+                        <h2 className="font-heading text-4xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Start Growing in <br className="sm:hidden" /> <span className="text-blue-600">4 Simple Steps</span></h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
@@ -78,7 +78,7 @@ function HowItWorks() {
                                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-indigo-700 text-white text-2xl sm:text-3xl font-black flex items-center justify-center mb-8 mx-auto lg:mx-0 shadow-2xl shadow-blue-500/40 group-hover:scale-110 transition-transform duration-500">
                                         {item.step}
                                     </div>
-                                    <h3 className="text-2xl sm:text-3xl font-black mb-4 dark:text-white group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                                    <h3 className="font-heading text-2xl sm:text-3xl font-black mb-4 dark:text-white group-hover:text-blue-600 transition-colors">{item.title}</h3>
                                     <p className="text-slate-600 dark:text-slate-300 font-medium text-base sm:text-lg leading-relaxed">{item.desc}</p>
                                 </div>
                             </FadeIn>

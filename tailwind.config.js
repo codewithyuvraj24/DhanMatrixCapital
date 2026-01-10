@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-outfit)', 'Outfit', 'sans-serif'],
-        heading: ['var(--font-space)', 'Space Grotesk', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        heading: ['var(--font-plus-jakarta)', 'Plus Jakarta Sans', 'sans-serif'],
       },
       colors: {
         brand: {

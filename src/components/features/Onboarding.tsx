@@ -144,7 +144,7 @@ export default function OnboardingWizard() {
                                 <Rocket size={40} />
                             </div>
                             <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">
-                                Welcome to Dhanmatrix, <br /> {user?.displayName || 'Investor'}!
+                                Welcome to DhanMatrixCapital, <br /> {user?.displayName || 'Investor'}!
                             </h2>
                             <p className="text-slate-600 dark:text-slate-300 text-lg mb-8 leading-relaxed">
                                 Let's customize your investment journey. This will only take about 60 seconds and helps our AI tailor the best strategies for you.

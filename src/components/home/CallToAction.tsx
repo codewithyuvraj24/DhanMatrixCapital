@@ -9,7 +9,7 @@ function CallToAction() {
             <div className="absolute inset-0 bg-gradient-to-br from-blue-700 to-indigo-900"></div>
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
             <div className="max-w-5xl mx-auto px-4 relative z-10 text-center text-white">
-                <h2 className="text-4xl sm:text-7xl font-black mb-12 leading-[1] tracking-tighter">Ready to Start Your <br /> Wealth Journey?</h2>
+                <h2 className="font-heading text-4xl sm:text-7xl font-black mb-12 leading-[1] tracking-tighter">Ready to Start Your <br /> Wealth Journey?</h2>
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
                     <Link href="/register" className="w-full sm:w-auto px-12 py-5 bg-white text-blue-600 rounded-2xl font-black text-lg sm:text-xl hover:bg-slate-50 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.2)] active:scale-95 flex items-center justify-center">
                         Create Free Account

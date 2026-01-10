@@ -9,7 +9,7 @@ function PlansPreview() {
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="text-center mb-16 sm:mb-24">
-                    <h2 className="text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Investment <span className="text-blue-600">Plans</span></h2>
+                    <h2 className="font-heading text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Investment <span className="text-blue-600">Plans</span></h2>
                     <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">Simple, transparent plans designed for consistent growth.</p>
                 </div>
 
@@ -39,7 +39,7 @@ function PlansPreview() {
                                 </div>
                             )}
                             <div className="flex justify-between items-start mb-6">
-                                <h3 className="text-2xl sm:text-3xl font-black">{plan.name}</h3>
+                                <h3 className="font-heading text-2xl sm:text-3xl font-black">{plan.name}</h3>
                                 {plan.popular && <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm"><Check size={20} /></div>}
                             </div>
                             <div className="flex items-baseline gap-1 mb-8">

@@ -12,7 +12,7 @@ function TrustStats() {
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
                     <div>
-                        <h2 className="text-4xl sm:text-7xl font-black mb-12 sm:mb-16 leading-[1] text-slate-900 dark:text-white tracking-tighter">
+                        <h2 className="font-heading text-4xl sm:text-7xl font-black mb-12 sm:mb-16 leading-[1] text-slate-900 dark:text-white tracking-tighter">
                             Institutional <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Secure Protocol.</span>
                         </h2>

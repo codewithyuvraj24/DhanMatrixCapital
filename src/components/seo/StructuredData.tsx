@@ -8,7 +8,7 @@ interface OrganizationSchemaProps {
 }
 
 export function OrganizationSchema({
-    name = "Dhanmatrixcapital",
+    name = "DhanMatrixCapital",
     url = "https://dhanmatrixcapital.vercel.app",
     logo = "https://dhanmatrixcapital.vercel.app/icon-192.png",
     description = "SEBI-regulated wealth management platform offering professional portfolio management and guaranteed returns starting from just ₹500/month."
@@ -91,7 +91,7 @@ export function InvestmentProductSchema({
         "description": description,
         "provider": {
             "@type": "FinancialService",
-            "name": "Dhanmatrixcapital"
+            "name": "DhanMatrixCapital"
         },
         "feesAndCommissionsSpecification": minInvestment,
         "annualPercentageRate": expectedReturn

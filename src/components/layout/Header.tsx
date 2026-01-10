@@ -53,96 +53,101 @@ export default function Header() {
         : 'bg-white/80 dark:bg-transparent backdrop-blur-sm py-3 border-b border-transparent dark:border-white/5'
         }`}
     >
-      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 flex justify-between items-center h-12">
-
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 flex items-center h-12">
         {/* Left: Branding */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
-            Dhanmatrix<span className="font-black text-blue-600 dark:text-blue-500">Capital</span>
-          </span>
-        </Link>
-
-        {/* Center: Navigation */}
-        <nav className="hidden md:flex items-center bg-slate-100/50 dark:bg-white/5 px-1.5 py-1 rounded-full border border-slate-200/50 dark:border-white/5 backdrop-blur-md">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${isActive
-                  ? 'bg-white dark:bg-white/10 text-blue-600 dark:text-white shadow-sm font-bold'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
-                  }`}
-              >
-                {item.label}
-              </Link>
-            )
-          })}
-        </nav>
-
-        {/* Right: Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-all"
-            aria-label="Toggle Theme"
-          >
-            {!mounted ? null : (theme === 'dark' ? <Sun size={18} strokeWidth={2} /> : <Moon size={18} strokeWidth={2} />)}
-          </button>
-
-          <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
-
-          {user ? (
-            <div className="flex items-center gap-3">
-              {role === 'admin' && (
-                <Link href="/admin" className="px-4 py-2 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm font-bold rounded-xl hover:bg-red-100 dark:hover:bg-red-500/20 transition-all">
-                  Admin
-                </Link>
-              )}
-
-              <Link
-                href="/dashboard"
-                className="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-sm shadow-xl shadow-slate-900/10 dark:shadow-white/5 hover:scale-105 hover:shadow-slate-900/20 hover:-translate-y-0.5 transition-all duration-300"
-              >
-                Go to Dashboard
-                <Layout size={16} className="text-slate-400 dark:text-slate-500 group-hover:text-white dark:group-hover:text-slate-900 transition-colors" />
-              </Link>
-
-              <div className="flex items-center gap-1">
-                <Link href="/profile" className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-all" aria-label="View profile">
-                  <UserIcon size={20} aria-hidden="true" />
-                </Link>
-                <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-all" aria-label="Logout">
-                  <LogOut size={20} aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link href="/login" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors">
-                Log In
-              </Link>
-              <Link
-                href="/register"
-                className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-xl shadow-blue-600/30 hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300"
-              >
-                Start Investing
-                <ChevronRight size={16} strokeWidth={3} />
-              </Link>
-            </div>
-          )}
+        <div className="flex-1 flex justify-start">
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="font-heading text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
+              DhanMatrix<span className="font-black text-blue-600 dark:text-blue-500">Capital</span>
+            </span>
+          </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center text-slate-900 dark:text-white bg-slate-100 dark:bg-white/10 rounded-xl"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-        </button>
+        {/* Center: Navigation */}
+        <div className="hidden lg:flex flex-1 justify-center">
+          <nav className="flex items-center bg-slate-100/50 dark:bg-white/5 px-1.5 py-1 rounded-full border border-slate-200/50 dark:border-white/5 backdrop-blur-md">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${isActive
+                    ? 'bg-white dark:bg-white/10 text-blue-600 dark:text-white shadow-sm font-bold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex-1 flex justify-end items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-all"
+              aria-label="Toggle Theme"
+            >
+              {!mounted ? null : (theme === 'dark' ? <Sun size={18} strokeWidth={2} /> : <Moon size={18} strokeWidth={2} />)}
+            </button>
+
+            <div className="w-px h-6 bg-slate-200 dark:bg-white/10" />
+
+            {user ? (
+              <div className="flex items-center gap-3">
+                {role === 'admin' && (
+                  <Link href="/admin" className="px-4 py-2 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm font-bold rounded-xl hover:bg-red-100 dark:hover:bg-red-500/20 transition-all">
+                    Admin
+                  </Link>
+                )}
+
+                <Link
+                  href="/dashboard"
+                  className="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold text-sm shadow-xl shadow-slate-900/10 dark:shadow-white/5 hover:scale-105 hover:shadow-slate-900/20 hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  Go to Dashboard
+                  <Layout size={16} className="text-slate-400 dark:text-slate-500 group-hover:text-white dark:group-hover:text-slate-900 transition-colors" />
+                </Link>
+
+                <div className="flex items-center gap-1">
+                  <Link href="/profile" className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-all" aria-label="View profile">
+                    <UserIcon size={20} aria-hidden="true" />
+                  </Link>
+                  <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-all" aria-label="Logout">
+                    <LogOut size={20} aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Link href="/login" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors">
+                  Log In
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-xl shadow-blue-600/30 hover:shadow-blue-600/40 hover:-translate-y-0.5 hover:scale-105 transition-all duration-300"
+                >
+                  Start Investing
+                  <ChevronRight size={16} strokeWidth={3} />
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center text-slate-900 dark:text-white bg-slate-100 dark:bg-white/10 rounded-xl"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

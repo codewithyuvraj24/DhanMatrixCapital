@@ -176,7 +176,7 @@ function AdminPanel() {
               <Shield size={14} />
               <span>System Control</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+            <h1 className="font-heading text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
               Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Command Center</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium text-sm sm:text-base">
@@ -219,7 +219,7 @@ function AdminPanel() {
                   {stat.icon}
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1 sm:mb-2">{stat.label}</p>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1 sm:mb-2">{stat.value}</h3>
+                <h3 className="font-heading text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-1 sm:mb-2">{stat.value}</h3>
                 <p className="text-slate-400 dark:text-slate-500 text-[10px] font-bold">{stat.sub}</p>
               </div>
             </StaggerItem>
@@ -232,7 +232,7 @@ function AdminPanel() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           <div className="lg:col-span-2 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-2 rounded-[2.5rem] overflow-hidden min-h-[400px]">
             <div className="p-8 pb-0">
-              <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Global AUM Vector</h3>
+              <h3 className="font-heading text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Global AUM Vector</h3>
               <p className="text-xs text-slate-500 font-bold">Consolidated growth across all user accounts</p>
             </div>
             <div className="h-[320px]">
@@ -243,7 +243,7 @@ function AdminPanel() {
           <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-[2.5rem] p-8 text-white flex flex-col justify-between shadow-2xl shadow-red-500/20">
             <div>
               <Shield size={40} className="mb-6 opacity-50" />
-              <h3 className="text-2xl font-black mb-2">Platform Health</h3>
+              <h3 className="font-heading text-2xl font-black mb-2">Platform Health</h3>
               <p className="text-red-100 text-sm font-medium leading-relaxed">
                 All systems active. Encryption levels nominal. Database syncing with 0% latency across all regions.
               </p>
@@ -292,7 +292,7 @@ function AdminPanel() {
             className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-10 rounded-3xl sm:rounded-[2.5rem] overflow-hidden mb-12"
           >
             <div className="mb-8">
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <h2 className="font-heading text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
                 <Activity className="text-red-600 w-5 h-5 sm:w-6 sm:h-6" strokeWidth={3} />
                 Strategic Position Matrix
               </h2>
@@ -360,7 +360,7 @@ function AdminPanel() {
             className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 sm:p-10 rounded-3xl sm:rounded-[2.5rem] overflow-hidden mb-12"
           >
             <div className="mb-8">
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <h2 className="font-heading text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
                 <Users className="text-red-600 w-5 h-5 sm:w-6 sm:h-6" strokeWidth={3} />
                 Registered Investor Registry
               </h2>

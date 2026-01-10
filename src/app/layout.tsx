@@ -8,31 +8,31 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from 'react'
-import { Outfit, Space_Grotesk } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { OrganizationSchema } from '@/components/seo/StructuredData'
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-outfit',
+  variable: '--font-inter',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-space',
+  variable: '--font-plus-jakarta',
 })
 
 export const metadata = {
   title: {
-    default: 'Dhanmatrixcapital - SEBI Regulated Wealth Management',
-    template: '%s | Dhanmatrixcapital'
+    default: 'DhanMatrixCapital - SEBI Regulated Wealth Management',
+    template: '%s | DhanMatrixCapital'
   },
   description: 'Premium SEBI-regulated wealth management platform. Start investing from just \u20B9500/month with professional portfolio management and guaranteed returns.',
   keywords: ['wealth management', 'investment', 'SEBI regulated', 'portfolio management', 'mutual funds', 'India', 'financial planning'],
-  authors: [{ name: 'Dhanmatrixcapital Team' }],
-  creator: 'Dhanmatrixcapital',
-  publisher: 'Dhanmatrixcapital',
+  authors: [{ name: 'DhanMatrixCapital Team' }],
+  creator: 'DhanMatrixCapital',
+  publisher: 'DhanMatrixCapital',
   icons: {
     icon: '/icon-192.png',
     shortcut: '/icon-192.png',
@@ -48,10 +48,10 @@ export const metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Dhanmatrixcapital - SEBI Regulated Wealth Management',
-    description: 'Premium wealth management platform. Start investing from just \u20B9500/month with professional portfolio management.',
+    title: 'DhanMatrixCapital - SEBI Regulated Wealth Management',
+    description: 'Institutional-grade wealth management platform. SEBI regulated high-performance investment models.',
     url: 'https://dhanmatrixcapital.vercel.app',
-    siteName: 'Dhanmatrixcapital',
+    siteName: 'DhanMatrixCapital',
     locale: 'en_IN',
     type: 'website',
     images: [
@@ -59,13 +59,13 @@ export const metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Dhanmatrixcapital - Wealth Management Platform',
+        alt: 'DhanMatrixCapital - Wealth Management Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dhanmatrixcapital - SEBI Regulated Wealth Management',
+    title: 'DhanMatrixCapital - SEBI Regulated Wealth Management',
     description: 'Premium wealth management platform. Start investing from just \u20B9500/month.',
     images: ['/og-image.png'],
   },
@@ -84,7 +84,7 @@ export const metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Dhanmatrixcapital',
+    title: 'DhanMatrixCapital',
   },
 }
 
@@ -92,7 +92,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={outfit.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
         <meta name="theme-color" content="#3B82F6" />
@@ -101,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body
-        className={`${outfit.className} min-h-screen relative overflow-x-hidden transition-colors duration-500`}
+        className={`${inter.className} min-h-screen relative overflow-x-hidden transition-colors duration-500`}
         suppressHydrationWarning
       >
         <ThemeProvider>
@@ -126,7 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "FinancialService",
-              "name": "Dhanmatrixcapital",
+              "name": "DhanMatrixCapital",
               "alternateName": "DMC",
               "description": "SEBI Regulated Wealth Management Platform - Smart Investing & Structured Growth",
               "url": "https://dhanmatrixcapital.vercel.app",

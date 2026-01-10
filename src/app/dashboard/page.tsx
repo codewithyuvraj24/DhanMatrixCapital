@@ -188,7 +188,7 @@ function Dashboard() {
         <FadeIn>
           <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div className="space-y-1">
-              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              <h1 className="font-heading text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
                 Welcome back, {user?.displayName?.split(' ')[0] || user?.email?.split('@')[0] || 'Operative'}
               </h1>
               <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">Here's your financial overview for today.</p>
@@ -227,7 +227,7 @@ function Dashboard() {
                     <Wallet size={80} />
                   </div>
                   <p className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest mb-2">Total Portfolio Value</p>
-                  <h3 className="text-4xl font-black text-slate-900 dark:text-white mb-1 tracking-tight">{formatCurrency(totalInvested)}</h3>
+                  <h3 className="font-heading text-4xl font-black text-slate-900 dark:text-white mb-1 tracking-tight">{formatCurrency(totalInvested)}</h3>
                   <p className="text-slate-400 dark:text-slate-500 text-xs font-medium">Updated in real-time</p>
                 </div>
               </StaggerItem>
@@ -290,7 +290,7 @@ function Dashboard() {
           ) : (
             <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h2 className="font-heading text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   Active Positions
                 </h2>
                 <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
@@ -385,7 +385,7 @@ function Dashboard() {
               >
                 <div className="flex justify-between items-center mb-10">
                   <div>
-                    <h3 className="text-3xl font-black text-slate-900 dark:text-white">New Position</h3>
+                    <h3 className="font-heading text-3xl font-black text-slate-900 dark:text-white">New Position</h3>
                     <p className="text-slate-500 dark:text-slate-400 font-medium">Configure your AI-driven investment logic.</p>
                   </div>
                   <button

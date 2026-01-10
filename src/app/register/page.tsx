@@ -123,7 +123,7 @@ export default function Register() {
 
         {/* Header */}
         <div className="text-center mb-6 pt-2">
-          <h1 className="text-2xl font-semibold text-slate-900">
+          <h1 className="font-heading text-2xl font-semibold text-slate-900">
             Create Account
           </h1>
           <p className="text-sm text-slate-500 mt-1">

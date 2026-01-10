@@ -10,9 +10,9 @@ export default function Footer() {
       <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
-            <Link href="/" className="inline-block" aria-label="Dhanmatrixcapital home">
-              <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                Dhanmatrixcapital
+            <Link href="/" className="inline-block" aria-label="DhanMatrixCapital home">
+              <span className="font-heading text-2xl font-black text-slate-900 dark:text-white tracking-tighter">
+                DhanMatrixCapital
               </span>
             </Link>
             <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
@@ -41,7 +41,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Platform & Tools</h4>
+            <h4 className="font-heading font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Platform & Tools</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
               <li><Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</Link></li>
               <li><Link href="/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Client Dashboard</Link></li>
@@ -51,9 +51,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Company & Support</h4>
+            <h4 className="font-heading font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Company & Support</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
-              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About Dhanmatrixcapital</Link></li>
+              <li><Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About DhanMatrixCapital</Link></li>
               <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Help Center</Link></li>
               <li><Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Partner with Us</Link></li>
               <li><Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Data & Trust</h4>
+            <h4 className="font-heading font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-xs">Data & Trust</h4>
             <ul className="space-y-4 font-medium text-slate-600 dark:text-slate-300">
               <li>
                 <a href="https://www.sebi.gov.in" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2">
@@ -86,11 +86,11 @@ export default function Footer() {
               Market Risk Disclaimer
             </h5>
             <p className="text-xs sm:text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed sm:leading-loose font-medium">
-              Investment in securities market are subject to market risks, read all the related documents carefully before investing. The information provided is for educational and illustrative purposes only and does not constitute investment advice. Past performance is not indicative of future results. The analytics and strategic insights provided by Dhanmatrixcapital are tools to assist investors and do not guarantee specific returns.
+              Investment in securities market are subject to market risks, read all the related documents carefully before investing. The information provided is for educational and illustrative purposes only and does not constitute investment advice. Past performance is not indicative of future results. The analytics and strategic insights provided by DhanMatrixCapital are tools to assist investors and do not guarantee specific returns.
             </p>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs sm:text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">
-            <p className="text-center md:text-left">&copy; 2025 Dhanmatrixcapital Platform Inc. All rights reserved.</p>
+            <p className="text-center md:text-left">&copy; 2025 DhanMatrixCapital Platform Inc. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="/cookies" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cookies</Link>
             </div>

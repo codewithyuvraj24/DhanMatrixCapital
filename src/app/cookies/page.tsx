@@ -47,7 +47,7 @@ export default function CookiesPage() {
                                     How We Use Cookies
                                 </h2>
                                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                                    Dhanmatrixcapital uses cookies for several reasons:
+                                    DhanMatrixCapital uses cookies for several reasons:
                                 </p>
                                 <ul className="list-none space-y-3 pl-0">
                                     {[
@@ -73,7 +73,7 @@ export default function CookiesPage() {
 
                             <div className="pt-8 border-t border-slate-100 dark:border-white/10">
                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">
-                                    © 2026 Dhanmatrixcapital Platform Inc.
+                                    &copy; 2026 DhanMatrixCapital Platform Inc.
                                 </p>
                             </div>
                         </div>

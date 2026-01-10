@@ -9,7 +9,7 @@ function ValueProps() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-blue-500/5 blur-[120px] pointer-events-none"></div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <div className="text-center mb-16 sm:mb-24">
-                    <h2 className="text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">
+                    <h2 className="font-heading text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">
                         Why Choose <span className="text-blue-600 dark:text-blue-400">DMC?</span>
                     </h2>
                     <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">
@@ -46,7 +46,7 @@ function ValueProps() {
                                     <div className="mb-8 p-4 rounded-2xl bg-white dark:bg-slate-900 shadow-xl shadow-black/5 w-fit group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
                                         {prop.icon}
                                     </div>
-                                    <h3 className="text-2xl font-black mb-6 dark:text-white">{prop.title}</h3>
+                                    <h3 className="font-heading text-2xl font-black mb-6 dark:text-white">{prop.title}</h3>
                                     <p className="text-slate-600 dark:text-slate-300 leading-loose font-medium text-sm sm:text-base">{prop.desc}</p>
                                 </div>
                             </StaggerItem>

@@ -2,8 +2,8 @@ import { FadeIn } from '@/components/ui/Animations'
 import { Scale, FileSignature, AlertCircle, Gavel, CheckCircle2 } from 'lucide-react'
 
 export const metadata = {
-    title: 'Terms of Engagement | Dhanmatrixcapital',
-    description: 'Terms of Service for Dhanmatrixcapital Platform.',
+    title: 'Terms of Engagement | DhanMatrixCapital',
+    description: 'Terms of Service for DhanMatrixCapital Platform.',
 }
 
 export default function TermsPage() {
@@ -21,7 +21,7 @@ export default function TermsPage() {
                             <Scale size={14} />
                             <span>Legal Document: TOS_Contract_v3</span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
+                        <h1 className="font-heading text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
                             Terms of <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600">Engagement</span>
                         </h1>
                         <p className="text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl mx-auto">
@@ -41,7 +41,7 @@ export default function TermsPage() {
                                         <Gavel size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-black text-slate-900 dark:text-white">Master Service Agreement</h3>
+                                        <h3 className="font-heading text-lg font-black text-slate-900 dark:text-white">Master Service Agreement</h3>
                                         <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Effective Date: Jan 1, 2025</p>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@ export default function TermsPage() {
 
                                 {/* Clause 1: Risk */}
                                 <div className="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-500/10">
-                                    <h3 className="text-lg font-black text-amber-900 dark:text-amber-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
+                                    <h3 className="font-heading text-lg font-black text-amber-900 dark:text-amber-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
                                         <AlertCircle size={20} />
                                         01. Risk Disclosure
                                     </h3>
@@ -63,9 +63,9 @@ export default function TermsPage() {
 
                                 {/* Clause 2: Account Security */}
                                 <div className="pl-6 border-l-2 border-slate-200 dark:border-slate-800">
-                                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4">02. Account Liability</h3>
+                                    <h3 className="font-heading text-xl font-black text-slate-900 dark:text-white mb-4">02. Account Liability</h3>
                                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                                        You are the sole custodian of your access credentials. Dhanmatrixcapital is not liable for unauthorized access resulting from your failure to secure your device or credentials.
+                                        You are the sole custodian of your access credentials. DhanMatrixCapital is not liable for unauthorized access resulting from your failure to secure your device or credentials.
                                     </p>
                                     <ul className="space-y-2">
                                         <li className="flex items-center gap-2 text-sm font-bold text-slate-500">
@@ -81,7 +81,7 @@ export default function TermsPage() {
 
                                 {/* Clause 3: Termination */}
                                 <div className="pl-6 border-l-2 border-slate-200 dark:border-slate-800">
-                                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4">03. Termination of Service</h3>
+                                    <h3 className="font-heading text-xl font-black text-slate-900 dark:text-white mb-4">03. Termination of Service</h3>
                                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                                         We reserve the right to suspend or terminate accounts found to be engaging in fraudulent activity, money laundering, or violation of SEBI regulations, without prior notice.
                                     </p>

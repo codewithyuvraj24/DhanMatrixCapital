@@ -2,8 +2,8 @@ import { FadeIn } from '@/components/ui/Animations'
 import { ShieldCheck, Lock, Eye, FileText, Server, AlertTriangle } from 'lucide-react'
 
 export const metadata = {
-    title: 'Privacy Protocols | Dhanmatrixcapital',
-    description: 'Privacy Policy for Dhanmatrixcapital - How we handle your data.',
+    title: 'Privacy Protocols | DhanMatrixCapital',
+    description: 'Privacy Policy for DhanMatrixCapital - How we handle your data.',
 }
 
 export default function PrivacyPage() {
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
                             <ShieldCheck size={14} />
                             <span>Protocol: Matrix_Encryption_v9.0</span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
+                        <h1 className="font-heading text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter">
                             Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-lime-500">Core</span>
                         </h1>
                         <p className="text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
                                         <Lock size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-black text-slate-900 dark:text-white">DMC Data Fortress</h3>
+                                        <h3 className="font-heading text-lg font-black text-slate-900 dark:text-white">DMC Data Fortress</h3>
                                         <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Status: Active & Encrypted</p>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
                                         <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-xs">01</div>
                                     </div>
                                     <div className="space-y-4">
-                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                        <h2 className="font-heading text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
                                             Data Collection Principles
                                             <FileText size={18} className="text-slate-400" />
                                         </h2>
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
                                         <div className="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 font-black text-xs">02</div>
                                     </div>
                                     <div className="space-y-4">
-                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                        <h2 className="font-heading text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
                                             Zero-Knowledge Sharing
                                             <Eye size={18} className="text-slate-400" />
                                         </h2>
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
                                         <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black text-xs">03</div>
                                     </div>
                                     <div className="space-y-4">
-                                        <h2 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                        <h2 className="font-heading text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
                                             Bank-Grade Encryption
                                             <Server size={18} className="text-slate-400" />
                                         </h2>
