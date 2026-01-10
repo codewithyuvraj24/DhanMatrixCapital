@@ -11,15 +11,12 @@ import { FadeIn } from '@/components/ui/Animations'
 import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AnimatePresence } from 'framer-motion'
-import PhoneAuth from '@/components/auth/PhoneAuth'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('phone')
   const { user: currentUser, profile, role } = useAuth()
   const router = useRouter()
 
@@ -62,7 +59,21 @@ export default function Login() {
         }
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to sign in.')
+      console.error('Login error:', err.code, err.message)
+      switch (err.code) {
+        case 'auth/user-not-found':
+          setError('No account found with this email.')
+          break
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          setError('Invalid email or password.')
+          break
+        case 'auth/too-many-requests':
+          setError('Too many failed attempts. Please try again later.')
+          break
+        default:
+          setError('Failed to sign in. Please check your credentials.')
+      }
     } finally {
       setLoading(false)
     }
@@ -86,19 +97,26 @@ export default function Login() {
           router.push('/dashboard')
         }
       } else {
+        // Only create the user document if it doesn't exist to ensure uniqueness
         if (!userDoc.exists()) {
           await setDoc(doc(db, 'users', user.uid), {
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
-            role: 'user',
-            createdAt: new Date().toISOString()
+            role: 'user', // Default role for new signups
+            createdAt: new Date().toISOString(),
+            onboardingComplete: false
           })
         }
         router.push('/onboarding')
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to sign in with Google')
+      console.error('Google Sign-In error:', err.code, err.message)
+      if (err.code === 'auth/popup-closed-by-user') {
+        setError('Sign-in cancelled.')
+      } else {
+        setError('Failed to sign in with Google. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -124,79 +142,44 @@ export default function Login() {
           </div>
         )}
 
-        {/* Login method toggle */}
-        <div className="flex bg-slate-100 rounded-xl p-1 mb-5">
-          <button
-            onClick={() => setAuthMethod('phone')}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'phone' ? 'bg-white shadow text-brand-primary' : 'text-slate-500'}`}
-          >
-            Mobile OTP
-          </button>
-          <button
-            onClick={() => setAuthMethod('email')}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'email' ? 'bg-white shadow text-brand-primary' : 'text-slate-500'}`}
-          >
-            Email
-          </button>
-        </div>
+        <form onSubmit={handleLogin}>
+          <div className="space-y-4">
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                placeholder="Email address"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                placeholder="Password"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
+              />
+            </div>
 
-        <AnimatePresence mode="wait">
-          {authMethod === 'phone' ? (
-            <motion.div
-              key="phone-login"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-brand-primary py-3 text-white font-semibold active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
             >
-              <PhoneAuth />
-            </motion.div>
-          ) : (
-            <motion.form
-              key="email-login"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              onSubmit={handleLogin}
-            >
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    placeholder="Email address"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    placeholder="Password"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
-                  />
-                </div>
+              {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Sign In'}
+            </button>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full rounded-xl bg-brand-primary py-3 text-white font-semibold active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
-                >
-                  {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Sign In'}
-                </button>
-
-                <div className="text-center">
-                  <Link href="#" className="text-xs font-medium text-brand-primary hover:underline">
-                    Forgot Password?
-                  </Link>
-                </div>
-              </div>
-            </motion.form>
-          )}
-        </AnimatePresence>
+            <div className="text-center">
+              <Link href="#" className="text-xs font-medium text-brand-primary hover:underline">
+                Forgot Password?
+              </Link>
+            </div>
+          </div>
+        </form>
 
 
         {/* Divider */}

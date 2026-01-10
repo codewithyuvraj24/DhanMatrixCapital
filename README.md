@@ -1,158 +1,120 @@
-# 🚀 Dhanmatrixcapital
+# DHANMATRIXCAPITAL
 
-> **Institutional-grade wealth management for the modern investor.**  
-> Built on a multi-core architecture mixing Next.js 14, Python AI, and Rust execution protocols.
-
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-dhanmatrixcapital.vercel.app-blue?style=for-the-badge&logo=vercel)](https://dhanmatrixcapital.vercel.app)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production-success?style=for-the-badge)]()
+Institutional-grade wealth management for the modern investor.
+Built with Next.js 14, Firebase, and Matrix AI Core.
 
 ---
 
-## 📑 Table of Contents
+## TABLE OF CONTENTS
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [The Matrix Architecture](#-the-matrix-architecture)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Deployment](#-deployment)
-- [Community & Support](#-community--support)
-
----
-
-## 💎 Overview
-
-**Dhanmatrixcapital** is not just a dashboard; it's a sophisticated financial protocol designed for high-resolution wealth tracking. We bridge the gap between complex institutional tools and accessible personal finance.
-
-- **For Investors**: A layout optimized for 1600px+ ultra-wide screens, giving you the full picture without the clutter.
-- **For Developers**: A masterclass in modern JAMstack architecture, featuring a hybrid Next.js frontend and a Python/Rust computational backend.
+- PROJECT OVERVIEW
+- CORE ARCHITECTURE
+- TECHNOLOGY STACK
+- KEY FEATURES
+- SETUP AND INSTALLATION
+- SECURITY PROTOCOLS
+- RECENT UPDATES
 
 ---
 
-## ✨ Key Features
+## PROJECT OVERVIEW
 
-### 📊 **Ultra-Wide Institutional Dashboard**
-Specifically engineered for high-DPI displays.
-- **12-Column Grid**: Information density optimized for pro users.
-- **Physics-Based UI**: Framer Motion elements that react to cursor proximity.
-- **Sticky Widgets**: Keep AI predictions and news streams in view while analyzing data.
+Dhanmatrixcapital is a sophisticated financial protocol designed for high-resolution wealth tracking. The platform bridges the gap between complex institutional tools and accessible personal finance by providing an ultra-wide dashboard experience optimized for professional analysis.
 
-### 🤖 **Matrix Prophet AI**
-Our proprietary forecasting engine (`matrix_core`).
-- **Monte Carlo Simulations**: Runs 1,000+ paths to predict ROI with 95% confidence.
-- **Vectorized Compute**: NumPy-optimized backend for sub-millisecond calculations.
-- **Real-Time Insight**: Live projections based on current portfolio health.
-
-### 🛡️ **Enterprise-Grade Security**
-- **Authentication**: Multi-factor via Phone/OTP and Google OAuth (Firebase).
-- **Compliance**: Structured for SEBI-compliant double-entry ledger auditing.
-- **Privacy**: Local-first Firestore persistence for privacy and offline access.
+The system is engineered to handle large-scale data density with sub-millisecond precision, offering investors a comprehensive view of their portfolio health and growth projections.
 
 ---
 
-## 🏗️ The Matrix Architecture
+## CORE ARCHITECTURE
 
-Dhanmatrixcapital uses a specialized multi-language backend to handle different aspects of wealth management:
-
-| Core Component | Language | Role |
-| :--- | :--- | :--- |
-| **Matrix Prophet** | Python (FastAPI) | AI growth forecasting & risk simulation |
-| **Execution Engine** | Rust | High-frequency calculation scaffold |
-| **Yield Vault** | Solidity | Decentralized asset allocation contracts |
-| **Audit Vault** | SQL | Immutable financial ledgers |
+The project follows a modular architecture where the frontend serves as a real-time data mirror of the cloud vault, while the AI core handles intensive forecasting tasks.
 
 ```mermaid
 graph TD
-  A[User Dashboard] -->|Next.js 14| B(Matrix API Gateway)
-  B -->|Auth| C{Firebase}
-  B -->|Analyze| D[Python Prophet AI]
-  B -->|Execute| E[Rust Engine]
-  E -->|Verify| F[SQL Audit Vault]
+  A[USER INTERFACE] -->|NEXT.JS| B(API GATEWAY)
+  B -->|AUTHENTICATION| C[SECURED IDENTITY]
+  B -->|DATA PERSISTENCE| D[FIRESTORE VAULT]
+  A -->|ANALYTICS| E[MATRIX AI CORE]
+  E -->|STRATEGIC INSIGHT| A
 ```
 
 ---
 
-## ⚡ Tech Stack
+## TECHNOLOGY STACK
 
-**Frontend**
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript 5.9 (Strict typing)
-- **Styling**: Tailwind CSS 3.0 + Framer Motion 12
-- **State**: React Context + Firestore Realtime
+### INTERFACE LAYER
+- Framework: Next.js 14 (App Router)
+- Typography: Specialized modern font stacks
+- Aesthetics: Tailwind CSS + Framer Motion
+- State: React Context + Real-time Listeners
 
-**Backend & Ops**
-- **Database**: Google Firestore (NoSQL)
-- **Compute**: Python 3.11 + NumPy
-- **Monitoring**: Sentry + Vercel Speed Insights
-- **Hosting**: Vercel Edge Network
+### ENGINE LAYER
+- Database: Google Firestore (NoSQL)
+- Computation: Python 3.11 (Located in matrix_core)
+- Performance: Vectorized NumPy operations
+- Analytics: Sentry + Vercel Web Analytics
 
 ---
 
-## 🚀 Getting Started
+## KEY FEATURES
 
-### Prerequisites
-- Node.js 18+
-- Python 3.11 (for AI core)
+### PROFESSIONAL DASHBOARD
+The dashboard is meticulously designed for high-resolution displays, utilizing a twelve-column grid system that prioritizes information density and visual clarity. Sticky widgets ensure that AI predictions and news streams remain accessible during deep data dives.
+
+### MATRIX PROPHET
+Located within the matrix_core directory, this system runs complex forecasting models to predict investment outcomes. It uses historical performance data to provide realistic growth scenarios for the Growth Plan.
+
+### GROWTH DYNAMICS
+The platform currently focuses on a high-performing Growth Plan with verified returns:
+- Target ROI: 5.0 to 9.0 percent per month
+- Liquidity: Flexible withdrawal terms
+- Management: AI-driven risk mitigation
+
+---
+
+## SETUP AND INSTALLATION
+
+### PREREQUISITES
+- Node.js version 18 or higher
+- Python version 3.11 for AI components
 - Firebase Project Credentials
 
-### 1. Clone & Install
-```bash
-git clone https://github.com/codewithyuvraj24/TheDhanMatrix.git
-cd TheDhanMatrix
-npm install
-```
+### INSTALLATION STEPS
+1. Clone the repository
+   git clone https://github.com/codewithyuvraj24/TheDhanMatrix.git
 
-### 2. Configure Environment
-Create a `.env.local` file in the root:
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=your_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_id
-NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_id
-```
+2. Install dependencies
+   npm install
 
-### 3. Run Development Server
-```bash
-npm run dev
-# Visit http://localhost:3001
-```
+3. Configure Environment Variables
+   Create a .env.local file with your Firebase API keys and project identifiers.
 
-### 4. Run AI Core (Optional)
-```bash
-cd matrix_core/analytics
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+4. Start Development Server
+   npm run dev
 
 ---
 
-## 🚢 Deployment
+## SECURITY PROTOCOLS
 
-The project is optimized for **Vercel**.
+### IDENTITY PROTECTION
+The platform exclusively utilizes a free-tier authentication stack comprising Email/Password and Google OAuth. This ensures high-grade security without the overhead of SMS billing.
 
-1. Push your code to the `main` branch.
-2. Import the project in Vercel.
-3. Add the Environment Variables.
-4. Deploy!
+### DATA INTEGRITY
+To maintain absolute data uniqueness, all user records are strictly mapped to their unique Firebase UID. Safeguards are in place to prevent document overwrites during repeated login sessions, ensuring that your profile and onboarding data remains intact.
 
-*PWA features and sitemap generation happen automatically during the build process.*
-
----
-
-## 🤝 Community & Support
-
-We believe in open finance. Join our community to contribute or get help.
-
-- 📜 [**Code of Conduct**](CODE_OF_CONDUCT.md): Our pledge for a healthy community.
-- 🛠️ [**Contributing Guide**](CONTRIBUTING.md): How to set up and submit PRs.
-- 🐛 [**Security Policy**](SECURITY.md): Reporting vulnerabilities.
-- 📄 [**License**](LICENSE): MIT License.
+### ENCRYPTION
+All data transport is secured with bank-grade 256-bit encryption, maintaining confidentiality between the user agent and the cloud infrastructure.
 
 ---
 
-<p align="center">
-  Built with ❤️ for the 🇮🇳 Indian Investor Community.
-  <br>
-  <strong>Dhanmatrixcapital Engineering</strong>
-</p>
+## RECENT UPDATES
+
+- Refactored authentication flow to remove billing-intensive SMS dependencies.
+- Synchronized ROI display across all components to 5-9 percent per month.
+- Implemented professional error mapping to replace technical system codes.
+- Optimized ultra-wide layout for 1600 pixel and 4K displays.
+
+---
+
+Built for the Indian Investor Community.
+Dhanmatrixcapital Engineering

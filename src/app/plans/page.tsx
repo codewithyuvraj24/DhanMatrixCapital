@@ -143,7 +143,7 @@ export default function Plans() {
                   <div className="mb-8 p-6 bg-slate-50 dark:bg-black/20 rounded-2xl border border-slate-100 dark:border-white/5">
                     <div className="flex items-baseline gap-2 mb-2">
                       <span className="text-5xl sm:text-6xl font-black text-blue-600 dark:text-blue-500 tracking-tighter">{plan.annualReturn}</span>
-                      <span className="text-lg font-bold text-slate-400 uppercase tracking-tight">Returns</span>
+                      <span className="text-lg font-bold text-slate-400 uppercase tracking-tight">Returns / Month</span>
                     </div>
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
                       <AlertTriangle size={10} /> Historical Range • Past perf. not guaranteed

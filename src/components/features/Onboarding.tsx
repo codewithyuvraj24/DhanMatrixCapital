@@ -301,8 +301,8 @@ export default function OnboardingWizard() {
                                             <h3 className="text-3xl font-black mt-2">Growth Plan</h3>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-3xl font-bold">15%</p>
-                                            <p className="text-xs opacity-80 uppercase font-bold">Exp. ROI</p>
+                                            <p className="text-3xl font-bold">5-9%</p>
+                                            <p className="text-xs opacity-80 uppercase font-bold">ROI per month</p>
                                         </div>
                                     </div>
                                     <ul className="space-y-2 mb-6 text-sm font-medium opacity-90">

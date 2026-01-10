@@ -6,12 +6,11 @@ import { useAuth } from '@/context/AuthContext'
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { setDoc, doc, getDoc } from 'firebase/firestore'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { FadeIn } from '@/components/ui/Animations'
 import { Mail, Lock, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import PhoneAuth from '@/components/auth/PhoneAuth'
 
 export default function Register() {
   const [email, setEmail] = useState('')
@@ -19,7 +18,6 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('phone')
   const { user, profile, role } = useAuth()
   const router = useRouter()
 
@@ -47,17 +45,35 @@ export default function Register() {
       const cred = await createUserWithEmailAndPassword(auth, email, password)
       const u = cred.user
 
-      await setDoc(doc(db, 'users', u.uid), {
-        uid: u.uid,
-        email: email,
-        role: 'user',
-        onboardingComplete: false,
-        createdAt: new Date().toISOString()
-      }, { merge: true })
+      // Check if document exists despite being a new auth user (safety check for uniqueness)
+      const userDoc = await getDoc(doc(db, 'users', u.uid))
+
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', u.uid), {
+          uid: u.uid,
+          email: email,
+          role: 'user',
+          onboardingComplete: false,
+          createdAt: new Date().toISOString()
+        })
+      }
 
       router.push('/onboarding')
     } catch (err: any) {
-      setError(err.message)
+      console.error('Registration error:', err.code, err.message)
+      switch (err.code) {
+        case 'auth/email-already-in-use':
+          setError('This email is already registered. Please sign in instead.')
+          break
+        case 'auth/invalid-email':
+          setError('Please enter a valid email address.')
+          break
+        case 'auth/weak-password':
+          setError('Password should be at least 6 characters long.')
+          break
+        default:
+          setError(err.message || 'Failed to create account. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -90,7 +106,12 @@ export default function Register() {
         router.push('/onboarding')
       }
     } catch (err: any) {
-      setError(err.message)
+      console.error('Google Sign-In error:', err.code, err.message)
+      if (err.code === 'auth/popup-closed-by-user') {
+        setError('Sign-in cancelled.')
+      } else {
+        setError('Failed to sign in with Google. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -116,83 +137,48 @@ export default function Register() {
           </div>
         )}
 
-        {/* Login method toggle */}
-        <div className="flex bg-slate-100 rounded-xl p-1 mb-5">
-          <button
-            onClick={() => setAuthMethod('phone')}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'phone' ? 'bg-white shadow text-brand-primary' : 'text-slate-500'}`}
-          >
-            Mobile OTP
-          </button>
-          <button
-            onClick={() => setAuthMethod('email')}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'email' ? 'bg-white shadow text-brand-primary' : 'text-slate-500'}`}
-          >
-            Email
-          </button>
-        </div>
+        <form onSubmit={handleRegister}>
+          <div className="space-y-4">
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                placeholder="Email address"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                placeholder="Create Password"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                required
+                placeholder="Confirm Password"
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
+              />
+            </div>
 
-        <AnimatePresence mode="wait">
-          {authMethod === 'phone' ? (
-            <motion.div
-              key="phone-login"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-brand-primary py-3 text-white font-semibold active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
             >
-              <PhoneAuth />
-            </motion.div>
-          ) : (
-            <motion.form
-              key="email-form"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              onSubmit={handleRegister}
-            >
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    placeholder="Email address"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    placeholder="Create Password"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={e => setConfirmPassword(e.target.value)}
-                    required
-                    placeholder="Confirm Password"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-brand-primary outline-none text-slate-900"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full rounded-xl bg-brand-primary py-3 text-white font-semibold active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
-                >
-                  {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Create Account'}
-                </button>
-              </div>
-            </motion.form>
-          )}
-        </AnimatePresence>
+              {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Create Account'}
+            </button>
+          </div>
+        </form>
 
 
         {/* Divider */}
