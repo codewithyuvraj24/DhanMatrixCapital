@@ -18,7 +18,7 @@ const firebaseConfig = {
 
 // Validate that required environment variables are set
 if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-  console.warn('⚠️ Firebase environment variables are missing. Please create a .env.local file with Firebase credentials.')
+  console.warn('Firebase environment variables are missing. Please create a .env.local file with Firebase credentials.')
   console.warn('See .env.local.example for required variables.')
 }
 

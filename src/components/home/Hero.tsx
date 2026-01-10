@@ -139,7 +139,7 @@ export default function Hero() {
                                         </div>
                                         <div className="space-y-3">
                                             {[
-                                                { name: 'Bitcoin Purchase', date: 'Today, 10:23 AM', amount: '-₹25,000', icon: '₿', color: 'bg-orange-100 text-orange-600' },
+                                                { name: 'Bitcoin Purchase', date: 'Today, 10:23 AM', amount: '-₹25,000', icon: 'B', color: 'bg-orange-100 text-orange-600' },
                                                 { name: 'SIP Deposit', date: 'Yesterday', amount: '+₹10,000', icon: '₹', color: 'bg-green-100 text-green-600' },
                                                 { name: 'Apple Stock', date: 'Jan 2, 2024', amount: '+₹5,400', icon: 'A', color: 'bg-slate-200 text-slate-600' },
                                             ].map((item, i) => (
