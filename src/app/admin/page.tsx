@@ -22,11 +22,17 @@ import {
   LogOut,
   Home,
   Shield,
-  Cog
+  Cog,
+  Eye,
+  Ban,
+  Unlock
 } from 'lucide-react'
 
 const InvestmentTrendChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.InvestmentTrendChart })))
 const DeploymentSettings = lazy(() => import('@/components/admin/DeploymentSettings'))
+const AuditLogViewer = lazy(() => import('@/components/admin/AuditLogViewer'))
+import SearchFilter from '@/components/admin/SearchFilter'
+import { logAdminAction } from '@/lib/audit'
 
 export default function AdminPage() {
   return (
@@ -52,16 +58,52 @@ type UserProfile = {
   role: string
   onboardingComplete: boolean
   createdAt: string
+  status?: 'active' | 'suspended'
 }
 
+const INVESTMENT_SEARCH_FIELDS = ['userId', 'depositAmount', 'withdrawalDate']
+const INVESTMENT_FILTER_OPTIONS = [
+  {
+    field: 'status',
+    label: 'Status',
+    options: [
+      { value: 'active', label: 'Active' },
+      { value: 'pending', label: 'Pending' },
+      { value: 'withdrawn', label: 'Withdrawn' }
+    ]
+  }
+]
+
+const USER_SEARCH_FIELDS = ['displayName', 'email', 'phoneNumber', 'id']
+const USER_FILTER_OPTIONS = [
+  {
+    field: 'role',
+    label: 'Role',
+    options: [
+      { value: 'user', label: 'User' },
+      { value: 'admin', label: 'Admin' }
+    ]
+  },
+  {
+    field: 'onboardingComplete',
+    label: 'Status',
+    options: [
+      { value: 'true', label: 'Active' },
+      { value: 'false', label: 'Pending Setup' }
+    ]
+  }
+]
+
 function AdminPanel() {
-  const { role } = useAuth()
+  const { role, user } = useAuth()
   const router = useRouter()
   const { showToast } = useToast()
   const [investments, setInvestments] = useState<Investment[]>([])
   const [users, setUsers] = useState<UserProfile[]>([])
+  const [filteredInvestments, setFilteredInvestments] = useState<Investment[]>([])
+  const [filteredUsers, setFilteredUsers] = useState<UserProfile[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'investments' | 'users' | 'settings'>('investments')
+  const [activeTab, setActiveTab] = useState<'investments' | 'users' | 'settings' | 'audit'>('investments')
   const [editingId, setEditingId] = useState<string | null>(null)
 
   async function handleLogout() {
@@ -89,7 +131,18 @@ function AdminPanel() {
           setUsers(userSnap.docs.map(d => ({ id: d.id, ...d.data() } as UserProfile)))
 
         } catch (err: any) {
+          console.error('[ADMIN_DEBUG] Auth Context:', {
+            uid: user?.uid,
+            email: user?.email,
+            role: role,
+            emailVerified: user?.emailVerified
+          })
           console.warn('Admin Data Fetch Issue:', err.message)
+          if (err.code === 'permission-denied') {
+            showToast('Permission Denied: Ensure firestore.rules are published.', 'error')
+          } else {
+            showToast(`Failed to load registry: ${err.message}`, 'error')
+          }
         } finally {
           setLoading(false)
         }
@@ -104,6 +157,16 @@ function AdminPanel() {
       ))
       setEditingId(null)
       showToast('Investment updated successfully', 'success')
+
+      // Audit log
+      await logAdminAction({
+        adminId: user?.uid || 'unknown',
+        adminEmail: user?.email || undefined,
+        action: 'UPDATE_INVESTMENT',
+        targetId: id,
+        targetType: 'investment',
+        details: { field, value }
+      })
     } catch (err) {
       showToast('Failed to update investment', 'error')
     }
@@ -116,6 +179,15 @@ function AdminPanel() {
       await deleteDoc(doc(db, 'investments', id))
       setInvestments(prev => prev.filter(inv => inv.id !== id))
       showToast('Investment deleted successfully', 'success')
+
+      // Audit log
+      await logAdminAction({
+        adminId: user?.uid || 'unknown',
+        adminEmail: user?.email || undefined,
+        action: 'DELETE_INVESTMENT',
+        targetId: id,
+        targetType: 'investment'
+      })
     } catch (err) {
       showToast('Failed to delete investment', 'error')
     }
@@ -127,9 +199,63 @@ function AdminPanel() {
       await updateDoc(doc(db, 'users', userId), { role: newRole })
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u))
       showToast(`User role updated to ${newRole}`, 'success')
+
+      // Audit log
+      await logAdminAction({
+        adminId: user?.uid || 'unknown',
+        adminEmail: user?.email || undefined,
+        action: 'CHANGE_USER_ROLE',
+        targetId: userId,
+        targetType: 'user',
+        details: { previousRole: currentRole, newRole }
+      })
     } catch (err) {
       showToast('Failed to update role', 'error')
     }
+  }
+
+  async function handleToggleUserStatus(userId: string, currentStatus?: string) {
+    const newStatus = currentStatus === 'suspended' ? 'active' : 'suspended'
+    const newOnboardingStatus = newStatus === 'active' // If active, keep existing onboarding, or maybe don't touch it. 
+    // Actually status is separate from onboarding.
+
+    try {
+      await updateDoc(doc(db, 'users', userId), { status: newStatus })
+      setUsers(prev => prev.map(u => u.id === userId ? { ...u, status: newStatus as any } : u))
+
+      if (newStatus === 'suspended') {
+        showToast('User has been suspended', 'error')
+      } else {
+        showToast('User access restored', 'success')
+      }
+
+      // Audit log
+      await logAdminAction({
+        adminId: user?.uid || 'unknown',
+        adminEmail: user?.email || undefined,
+        action: newStatus === 'suspended' ? 'SUSPEND_USER' : 'UNSUSPEND_USER',
+        targetId: userId,
+        targetType: 'user',
+        details: { previousStatus: currentStatus, newStatus }
+      })
+    } catch (err) {
+      showToast('Failed to update user status', 'error')
+    }
+  }
+
+  function handleViewAsUser(userId: string) {
+    sessionStorage.setItem('impersonatedUserId', userId)
+    router.push('/dashboard')
+    showToast('Entering View Mode', 'info')
+
+    // Audit log (fire and forget)
+    logAdminAction({
+      adminId: user?.uid || 'unknown',
+      adminEmail: user?.email || undefined,
+      action: 'IMPERSONATE_USER',
+      targetId: userId,
+      targetType: 'user'
+    })
   }
 
   // Calculate stats
@@ -272,22 +398,28 @@ function AdminPanel() {
       </FadeIn>
 
       {/* Management Tabs */}
-      <div className="flex gap-4 mb-8">
+      <div className="flex gap-4 mb-8 overflow-x-auto">
         <button
           onClick={() => setActiveTab('investments')}
-          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === 'investments' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
+          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'investments' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
         >
           Investment Matrix
         </button>
         <button
           onClick={() => setActiveTab('users')}
-          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === 'users' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
+          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'users' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
         >
           User Registry ({users.length})
         </button>
         <button
+          onClick={() => setActiveTab('audit')}
+          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'audit' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
+        >
+          Audit Logs
+        </button>
+        <button
           onClick={() => setActiveTab('settings')}
-          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === 'settings' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
+          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'settings' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
         >
           Platform Settings
         </button>
@@ -310,6 +442,15 @@ function AdminPanel() {
               </h2>
             </div>
 
+            {!loading && investments.length > 0 && (
+              <SearchFilter
+                data={investments}
+                onFilteredDataChange={setFilteredInvestments}
+                searchFields={INVESTMENT_SEARCH_FIELDS}
+                filterOptions={INVESTMENT_FILTER_OPTIONS}
+              />
+            )}
+
             {loading ? (
               <TableSkeleton />
             ) : investments.length === 0 ? (
@@ -327,7 +468,7 @@ function AdminPanel() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50 dark:divide-white/5">
-                    {investments.map(inv => (
+                    {(filteredInvestments.length > 0 ? filteredInvestments : investments).map(inv => (
                       <tr key={inv.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                         <td className="py-6 font-mono text-xs text-slate-600 dark:text-slate-400 underline decoration-red-500/20 decoration-2 underline-offset-4">{inv.userId.slice(0, 8)}...</td>
                         <td className="py-6">
@@ -377,6 +518,16 @@ function AdminPanel() {
                 Registered Investor Registry
               </h2>
             </div>
+
+            {users.length > 0 && (
+              <SearchFilter
+                data={users}
+                onFilteredDataChange={setFilteredUsers}
+                searchFields={USER_SEARCH_FIELDS}
+                filterOptions={USER_FILTER_OPTIONS}
+              />
+            )}
+
             {/* ... table content remains same ... */}
             <div className="overflow-x-auto">
               <table className="w-full text-left">
@@ -389,12 +540,17 @@ function AdminPanel() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50 dark:divide-white/5">
-                  {users.map(u => (
-                    <tr key={u.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                  {(filteredUsers.length > 0 ? filteredUsers : users).map(u => (
+                    <tr key={u.id} className={`group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors ${u.status === 'suspended' ? 'opacity-70 bg-red-50/50 dark:bg-red-900/10' : ''}`}>
                       <td className="py-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center font-black text-slate-500">
+                          <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center font-black text-slate-500 relative">
                             {u.displayName?.[0] || u.email?.[0] || '?'}
+                            {u.status === 'suspended' && (
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white border-2 border-white dark:border-slate-900">
+                                <Ban size={10} />
+                              </div>
+                            )}
                           </div>
                           <div>
                             <p className="font-black text-slate-900 dark:text-white text-sm">{u.displayName || 'Anonymous Vector'}</p>
@@ -406,23 +562,60 @@ function AdminPanel() {
                         {u.email || u.phoneNumber || u.id.slice(0, 12)}
                       </td>
                       <td className="py-6">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${u.onboardingComplete ? 'bg-emerald-500/10 text-emerald-600' : 'bg-orange-500/10 text-orange-600'}`}>
-                          {u.onboardingComplete ? 'Active' : 'Awaiting Setup'}
-                        </span>
+                        <div className="flex flex-col gap-1">
+                          <span className={`w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${u.onboardingComplete ? 'bg-emerald-500/10 text-emerald-600' : 'bg-orange-500/10 text-orange-600'}`}>
+                            {u.onboardingComplete ? 'Setup Complete' : 'Pending Setup'}
+                          </span>
+                          {u.status === 'suspended' && (
+                            <span className="w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-red-500/10 text-red-600 flex items-center gap-1">
+                              <Ban size={10} /> Suspended
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="py-6">
-                        <button
-                          onClick={() => handleToggleUserRole(u.id, u.role)}
-                          className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${u.role === 'admin' ? 'bg-red-600 text-white border-red-600' : 'border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-red-500 hover:text-red-500'}`}
-                        >
-                          {u.role === 'admin' ? 'Revoke Admin' : 'Grant Admin'}
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleViewAsUser(u.id)}
+                            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
+                            title="View Dashboard As User"
+                          >
+                            <Eye size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleToggleUserStatus(u.id, u.status)}
+                            className={`p-2 rounded-lg transition-all ${u.status === 'suspended'
+                              ? 'text-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+                              : 'text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'}`}
+                            title={u.status === 'suspended' ? "Unsuspend User" : "Suspend User"}
+                          >
+                            {u.status === 'suspended' ? <Unlock size={18} /> : <Ban size={18} />}
+                          </button>
+                          <button
+                            onClick={() => handleToggleUserRole(u.id, u.role)}
+                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-all ${u.role === 'admin' ? 'bg-red-600 text-white border-red-600' : 'border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-400'}`}
+                          >
+                            {u.role === 'admin' ? 'Revoke Admin' : 'Make Admin'}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+          </motion.div>
+        ) : activeTab === 'audit' ? (
+          <motion.div
+            key="audit-tab"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="mb-12"
+          >
+            <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
+              <AuditLogViewer />
+            </Suspense>
           </motion.div>
         ) : (
           <motion.div

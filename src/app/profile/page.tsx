@@ -2,12 +2,15 @@
 import ProtectedRoute from '@/components/auth/ProtectedRoute'
 import { useAuth } from '@/context/AuthContext'
 import { useState } from 'react'
-import { updateProfile } from 'firebase/auth'
+import { updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FadeIn, Stagger, ScaleIn } from '@/components/ui/Animations'
 import { User, Shield, Activity, Save, Mail, CreditCard, Calendar, LogOut, CheckCircle2 } from 'lucide-react'
+import ProfilePictureUpload from '@/components/ui/ProfilePictureUpload'
+import EmailVerificationBanner from '@/components/ui/EmailVerificationBanner'
+import TwoFactorSetup from '@/components/ui/TwoFactorSetup'
 
 export default function ProfilePage() {
   return (
@@ -20,21 +23,74 @@ export default function ProfilePage() {
 }
 
 function ProfileContent() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth() // Get profile from context for 2FA status
   const [displayName, setDisplayName] = useState(user?.displayName || '')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('profile')
+
+  // Password Change State
+  const [showPasswordForm, setShowPasswordForm] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmNewPassword, setConfirmNewPassword] = useState('')
+
+  // 2FA State
+  const [showTwoFactorSetup, setShowTwoFactorSetup] = useState(false)
 
   async function handleUpdateProfile() {
     if (!user) return
     setLoading(true)
+    setMessage('')
+    setError('')
     try {
       await updateProfile(user, { displayName })
       setMessage('Profile updated successfully!')
       setTimeout(() => setMessage(''), 3000)
-    } catch (err) {
-      setMessage('Error updating profile')
+    } catch (err: any) {
+      setError('Error updating profile: ' + err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleChangePassword() {
+    if (!user || !user.email) return
+    if (newPassword !== confirmNewPassword) {
+      setError('New passwords do not match')
+      return
+    }
+    if (newPassword.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+
+    setLoading(true)
+    setError('')
+    setMessage('')
+
+    try {
+      // Re-authenticate first
+      const credential = EmailAuthProvider.credential(user.email, currentPassword)
+      await reauthenticateWithCredential(user, credential)
+
+      // Update password
+      await updatePassword(user, newPassword)
+
+      setMessage('Password updated successfully!')
+      setShowPasswordForm(false)
+      setCurrentPassword('')
+      setNewPassword('')
+      setConfirmNewPassword('')
+      setTimeout(() => setMessage(''), 3000)
+    } catch (err: any) {
+      console.error(err)
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+        setError('Incorrect current password')
+      } else {
+        setError('Failed to update password: ' + err.message)
+      }
     } finally {
       setLoading(false)
     }
@@ -58,6 +114,12 @@ function ProfileContent() {
         </p>
       </FadeIn>
 
+      {/* Email Verification Banner */}
+      <EmailVerificationBanner
+        isVerified={user?.emailVerified || false}
+        userEmail={user?.email}
+      />
+
       {/* Main Content Card */}
       <div className="flex flex-col lg:flex-row gap-8">
 
@@ -72,8 +134,8 @@ function ProfileContent() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all relative overflow-hidden ${isActive
-                      ? 'text-white'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5'
+                    ? 'text-white'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                 >
                   {isActive && (
@@ -97,12 +159,19 @@ function ProfileContent() {
               <User size={100} />
             </div>
             <div className="relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mb-4 border border-white/10">
-                <span className="text-2xl font-black">{displayName.charAt(0).toUpperCase()}</span>
+              <div className="mb-4">
+                <ProfilePictureUpload
+                  currentPhotoURL={user?.photoURL}
+                  displayName={displayName || user?.email || 'User'}
+                  onUploadComplete={() => {
+                    setMessage('Profile picture updated successfully!')
+                    setTimeout(() => setMessage(''), 3000)
+                  }}
+                />
               </div>
-              <h3 className="font-bold text-lg">{displayName}</h3>
-              <p className="text-blue-200 text-sm mb-4">{user?.email}</p>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 py-1 px-3 rounded-full w-fit">
+              <h3 className="font-bold text-lg text-center">{displayName}</h3>
+              <p className="text-blue-200 text-sm mb-4 text-center">{user?.email}</p>
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-300 py-1 px-3 rounded-full w-fit mx-auto">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 Active
               </div>
@@ -143,7 +212,7 @@ function ProfileContent() {
 
                     <div className="space-y-2">
                       <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Email Identity</label>
-                      <div className="relative opacity-70">
+                      <div className="relative">
                         <input
                           type="email"
                           value={user?.email || ''}
@@ -151,6 +220,17 @@ function ProfileContent() {
                           className="w-full px-5 py-3 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-500 dark:text-slate-400 font-medium cursor-not-allowed pl-12"
                         />
                         <Mail className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                        {user?.emailVerified ? (
+                          <div className="absolute right-4 top-3.5 flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                            <CheckCircle2 size={16} strokeWidth={2.5} />
+                            <span className="text-xs font-bold">Verified</span>
+                          </div>
+                        ) : (
+                          <div className="absolute right-4 top-3.5 flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
+                            <Mail size={16} strokeWidth={2.5} />
+                            <span className="text-xs font-bold">Not Verified</span>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -227,22 +307,139 @@ function ProfileContent() {
                     Security Settings
                   </h3>
 
-                  <div className="space-y-4">
-                    {[
-                      { title: 'Password', desc: 'Last changed 3 months ago', action: 'Update' },
-                      { title: 'Two-Factor Auth', desc: 'Currently disabled', action: 'Enable' },
-                      { title: 'Login Notifications', desc: 'Email alerts on new device', action: 'Manage' },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                  <div className="space-y-6">
+                    {error && (
+                      <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 text-sm font-bold">
+                        {error}
+                      </div>
+                    )}
+
+                    {message && (
+                      <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-600 dark:text-emerald-400 text-sm font-bold">
+                        {message}
+                      </div>
+                    )}
+
+                    {/* Password Change Section */}
+                    <div className="p-6 border border-slate-100 dark:border-white/5 rounded-2xl bg-white/50 dark:bg-white/5">
+                      <div className="flex items-center justify-between mb-4">
                         <div>
-                          <p className="font-bold text-slate-900 dark:text-white">{item.title}</p>
-                          <p className="text-sm text-slate-500">{item.desc}</p>
+                          <h4 className="font-bold text-slate-900 dark:text-white">Password</h4>
+                          <p className="text-sm text-slate-500">Ensure your account is using a strong password</p>
                         </div>
-                        <button className="text-sm font-bold text-emerald-600 hover:text-emerald-500 px-4 py-2 bg-emerald-50 dark:bg-emerald-500/10 rounded-lg">
-                          {item.action}
+                        <button
+                          onClick={() => setShowPasswordForm(!showPasswordForm)}
+                          className="text-sm font-bold text-blue-600 hover:text-blue-500 px-4 py-2 bg-blue-50 dark:bg-blue-500/10 rounded-lg transition-colors"
+                        >
+                          {showPasswordForm ? 'Cancel' : 'Update Password'}
                         </button>
                       </div>
-                    ))}
+
+                      <AnimatePresence>
+                        {showPasswordForm && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-4 space-y-4 border-t border-slate-100 dark:border-white/5 mt-4">
+                              <div>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Current Password</label>
+                                <input
+                                  type="password"
+                                  value={currentPassword}
+                                  onChange={(e) => setCurrentPassword(e.target.value)}
+                                  className="w-full px-4 py-3 bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl"
+                                  placeholder="Enter current password to verify"
+                                />
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">New Password</label>
+                                  <input
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    className="w-full px-4 py-3 bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl"
+                                    placeholder="Min 8 chars"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Confirm New</label>
+                                  <input
+                                    type="password"
+                                    value={confirmNewPassword}
+                                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                    className="w-full px-4 py-3 bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl"
+                                    placeholder="Re-enter new password"
+                                  />
+                                </div>
+                              </div>
+                              <button
+                                onClick={handleChangePassword}
+                                disabled={loading || !currentPassword || !newPassword}
+                                className="w-full py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:opacity-90 transition disabled:opacity-50"
+                              >
+                                {loading ? 'Updating...' : 'Save New Password'}
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* 2FA Section */}
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className="font-bold text-slate-900 dark:text-white">Two-Factor Authentication</p>
+                          {profile?.twoFactorEnabled && (
+                            <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full">Active</span>
+                          )}
+                        </div>
+                        <p className="text-sm text-slate-500">{profile?.twoFactorEnabled ? 'Your account is secured with 2FA' : 'Add an extra layer of security'}</p>
+                      </div>
+                      {profile?.twoFactorEnabled ? (
+                        <button
+                          disabled
+                          className="text-sm font-bold text-slate-400 cursor-not-allowed px-4 py-2 bg-slate-100 dark:bg-white/5 rounded-lg border border-slate-200 dark:border-white/5"
+                        >
+                          Enabled
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setShowTwoFactorSetup(true)}
+                          className="text-sm font-bold text-emerald-600 hover:text-emerald-500 px-4 py-2 bg-emerald-50 dark:bg-emerald-500/10 rounded-lg transition-colors"
+                        >
+                          Enable
+                        </button>
+                      )}
+                    </div>
+
+                    <AnimatePresence>
+                      {showTwoFactorSetup && (
+                        <TwoFactorSetup
+                          onClose={() => setShowTwoFactorSetup(false)}
+                          onEnable={() => {
+                            setMessage('Two-Factor Authentication enabled successfully!')
+                            setTimeout(() => setMessage(''), 3000)
+                          }}
+                        />
+                      )}
+                    </AnimatePresence>
+
+                    {/* Notifications Placeholder */}
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                      <div>
+                        <p className="font-bold text-slate-900 dark:text-white">Login Notifications</p>
+                        <p className="text-sm text-slate-500">Email alerts on new device</p>
+                      </div>
+                      <button className="text-sm font-bold text-slate-600 hover:text-slate-500 px-4 py-2 bg-slate-100 dark:bg-white/5 rounded-lg">
+                        Manage
+                      </button>
+                    </div>
+
                   </div>
                 </div>
 

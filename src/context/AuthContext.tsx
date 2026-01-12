@@ -8,18 +8,34 @@ type AuthContextType = {
   user: User | null
   profile: any | null
   role: 'admin' | 'user' | null
+  isImpersonating: boolean
   loading: boolean     // Overall loading (waits for role & profile)
   userLoading: boolean // Only waits for auth state
+  exitImpersonation: () => void
 }
 
-const AuthContext = createContext<AuthContextType>({ user: null, profile: null, role: null, loading: true, userLoading: true })
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  profile: null,
+  role: null,
+  isImpersonating: false,
+  loading: true,
+  userLoading: true,
+  exitImpersonation: () => { }
+})
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<any | null>(null)
   const [role, setRole] = useState<'admin' | 'user' | null>(null)
+  const [isImpersonating, setIsImpersonating] = useState(false)
   const [loading, setLoading] = useState(true)
   const [userLoading, setUserLoading] = useState(true)
+
+  const exitImpersonation = () => {
+    sessionStorage.removeItem('impersonatedUserId')
+    window.location.reload() // Reload to reset all snapshots
+  }
 
   useEffect(() => {
     // Check for auth hint on mount to speed up protected routes
@@ -41,7 +57,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUserLoading(false)
 
         // 1. Listen to Profile (Users Collection)
-        profileUnsub = onSnapshot(doc(db, 'users', u.uid), (snap) => {
+        const impersonatedId = sessionStorage.getItem('impersonatedUserId')
+        const targetUid = impersonatedId || u.uid
+        setIsImpersonating(!!impersonatedId)
+
+        profileUnsub = onSnapshot(doc(db, 'users', targetUid), (snap) => {
           if (snap.exists()) {
             setProfile(snap.data())
           } else {
@@ -84,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, profile, role, loading, userLoading }}>
+    <AuthContext.Provider value={{ user, profile, role, isImpersonating, loading, userLoading, exitImpersonation }}>
       {children}
     </AuthContext.Provider>
   )

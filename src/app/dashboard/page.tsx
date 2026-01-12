@@ -35,6 +35,7 @@ import { Suspense, lazy } from 'react'
 import { DashboardCharts } from '@/components/features/DashboardCharts'
 const AIPredictionWidget = lazy(() => import('@/components/features/AIPredictionWidget'))
 const NewsWidget = lazy(() => import('@/components/features/NewsWidget'))
+import EmailVerificationBanner from '@/components/ui/EmailVerificationBanner'
 
 type Investment = {
   id: string
@@ -58,7 +59,7 @@ export default function DashboardPage() {
 }
 
 function Dashboard() {
-  const { user, profile } = useAuth()
+  const { user, profile, isImpersonating, exitImpersonation } = useAuth()
   const router = useRouter()
   const { showToast } = useToast()
   const [investments, setInvestments] = useState<Investment[]>([])
@@ -185,6 +186,20 @@ function Dashboard() {
 
   return (
     <>
+      {isImpersonating && (
+        <div className="fixed top-20 left-0 right-0 z-[100] bg-blue-600 text-white py-2 px-4 shadow-lg flex items-center justify-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-black uppercase tracking-widest bg-white/20 px-2 py-0.5 rounded">View Mode</span>
+            <p className="text-sm font-bold">You are viewing as {profile?.displayName || profile?.email}</p>
+          </div>
+          <button
+            onClick={exitImpersonation}
+            className="text-xs font-black uppercase tracking-widest bg-white text-blue-600 px-4 py-1.5 rounded-lg hover:bg-white/90 transition-colors"
+          >
+            Exit View
+          </button>
+        </div>
+      )}
       <div className="max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 2xl:px-16 pb-16 sm:pb-20 relative z-10 w-full pt-20">
         <FadeIn>
           <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
@@ -214,6 +229,12 @@ function Dashboard() {
             </div>
           </div>
         </FadeIn>
+
+        {/* Email Verification Banner */}
+        <EmailVerificationBanner
+          isVerified={user?.emailVerified || false}
+          userEmail={user?.email}
+        />
 
         {/* Stats Grid - Visual Hierarchy Applied */}
         <StaggerContainer>

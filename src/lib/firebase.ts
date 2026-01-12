@@ -6,6 +6,7 @@ import {
   persistentLocalCache,
   persistentMultipleTabManager
 } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || '',
@@ -44,3 +45,6 @@ export const getMessagingInstance = async () => {
   }
   return null;
 };
+
+// Initialize Storage
+export const storage = getStorage(app)
