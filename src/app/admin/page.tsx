@@ -11,7 +11,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animation
 import { useToast } from '@/components/ui/PremiumToast'
 import { StatsSkeleton, TableSkeleton, ChartSkeleton } from '@/components/ui/Skeleton'
 import MagneticButton from '@/components/ui/MagneticButton'
-import { InvestmentTrendChart } from '@/components/features/Charts'
+import { Suspense, lazy } from 'react'
 import {
   TrendingUp,
   Users,
@@ -21,8 +21,12 @@ import {
   Trash2,
   LogOut,
   Home,
-  Shield
+  Shield,
+  Cog
 } from 'lucide-react'
+
+const InvestmentTrendChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.InvestmentTrendChart })))
+const DeploymentSettings = lazy(() => import('@/components/admin/DeploymentSettings'))
 
 export default function AdminPage() {
   return (
@@ -57,7 +61,7 @@ function AdminPanel() {
   const [investments, setInvestments] = useState<Investment[]>([])
   const [users, setUsers] = useState<UserProfile[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'investments' | 'users'>('investments')
+  const [activeTab, setActiveTab] = useState<'investments' | 'users' | 'settings'>('investments')
   const [editingId, setEditingId] = useState<string | null>(null)
 
   async function handleLogout() {
@@ -236,7 +240,9 @@ function AdminPanel() {
               <p className="text-xs text-slate-500 font-bold">Consolidated growth across all user accounts</p>
             </div>
             <div className="h-[320px]">
-              <InvestmentTrendChart />
+              <Suspense fallback={<ChartSkeleton />}>
+                <InvestmentTrendChart />
+              </Suspense>
             </div>
           </div>
 
@@ -278,6 +284,12 @@ function AdminPanel() {
           className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === 'users' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
         >
           User Registry ({users.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === 'settings' ? 'bg-red-600 text-white shadow-xl shadow-red-500/20' : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10'}`}
+        >
+          Platform Settings
         </button>
       </div>
 
@@ -351,7 +363,7 @@ function AdminPanel() {
               </div>
             )}
           </motion.div>
-        ) : (
+        ) : activeTab === 'users' ? (
           <motion.div
             key="users-tab"
             initial={{ opacity: 0, y: 10 }}
@@ -365,7 +377,7 @@ function AdminPanel() {
                 Registered Investor Registry
               </h2>
             </div>
-
+            {/* ... table content remains same ... */}
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
@@ -411,6 +423,18 @@ function AdminPanel() {
                 </tbody>
               </table>
             </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="settings-tab"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="space-y-8 mb-12"
+          >
+            <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
+              <DeploymentSettings />
+            </Suspense>
           </motion.div>
         )}
       </AnimatePresence>

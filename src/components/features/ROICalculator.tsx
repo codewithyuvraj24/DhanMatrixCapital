@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 import { Calculator, TrendingUp } from 'lucide-react'
 
@@ -29,7 +29,7 @@ export default function ROICalculator() {
         return data
     }
 
-    const data = calculateGrowth()
+    const data = useMemo(calculateGrowth, [initial, monthly, rate, years])
     const finalValue = data[data.length - 1]?.value || 0
     const totalContributions = initial + (monthly * years * 12)
     const totalGains = finalValue - totalContributions

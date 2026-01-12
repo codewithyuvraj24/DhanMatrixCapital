@@ -6,7 +6,7 @@ Sentry.init({
     dsn: SENTRY_DSN,
 
     // Performance Monitoring
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.1,
 
     // Session Replay
     replaysOnErrorSampleRate: 1.0,

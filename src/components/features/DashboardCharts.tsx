@@ -3,8 +3,8 @@
 import { Suspense, lazy } from 'react'
 import { ChartSkeleton } from '@/components/ui/Skeleton'
 
-import { InvestmentTrendChart, PortfolioBreakdownChart } from '@/components/features/Charts'
-
+const InvestmentTrendChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.InvestmentTrendChart })))
+const PortfolioBreakdownChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.PortfolioBreakdownChart })))
 const GoalTracker = lazy(() => import('@/components/features/GoalTracker'))
 const ROICalculator = lazy(() => import('@/components/features/ROICalculator'))
 const PortfolioHealth = lazy(() => import('@/components/features/PortfolioHealth'))
@@ -29,9 +29,11 @@ export function DashboardCharts({ totalInvested, activeInvestments, totalInvestm
                     </div>
                 </Suspense>
 
-                <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2 rounded-3xl overflow-hidden h-full min-h-[350px] shadow-sm">
-                    <PortfolioBreakdownChart />
-                </div>
+                <Suspense fallback={<ChartSkeleton />}>
+                    <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-2 rounded-3xl overflow-hidden h-full min-h-[350px] shadow-sm">
+                        <PortfolioBreakdownChart />
+                    </div>
+                </Suspense>
             </div>
 
             {/* Wealth Tracking Tools */}

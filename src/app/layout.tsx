@@ -90,6 +90,8 @@ export const metadata = {
 
 
 
+import { FramerMotionProvider } from '@/components/providers/FramerMotionProvider'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`} suppressHydrationWarning>
@@ -101,18 +103,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body
-        className={`${inter.className} min-h-screen relative overflow-x-hidden transition-colors duration-500`}
+        className={`${inter.className} min-h-screen transition-colors duration-300`}
         suppressHydrationWarning
       >
         <ThemeProvider>
           <AuthProvider>
             <ToastProvider>
-              <BackgroundOrbs />
-              <div className="relative z-10 flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-              </div>
+              <FramerMotionProvider>
+                <BackgroundOrbs />
+                <div className="relative z-10 flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-grow">{children}</main>
+                  <Footer />
+                </div>
+              </FramerMotionProvider>
             </ToastProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -31,9 +31,10 @@ import {
 import { StatsSkeleton, ChartSkeleton, TableSkeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/PremiumToast'
 import MagneticButton from '@/components/ui/MagneticButton'
+import { Suspense, lazy } from 'react'
 import { DashboardCharts } from '@/components/features/DashboardCharts'
-import AIPredictionWidget from '@/components/features/AIPredictionWidget'
-import NewsWidget from '@/components/features/NewsWidget'
+const AIPredictionWidget = lazy(() => import('@/components/features/AIPredictionWidget'))
+const NewsWidget = lazy(() => import('@/components/features/NewsWidget'))
 
 type Investment = {
   id: string
@@ -276,8 +277,12 @@ function Dashboard() {
               </div>
 
               <div className="space-y-6 sticky top-24">
-                <AIPredictionWidget totalInvested={totalInvested} />
-                <NewsWidget />
+                <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
+                  <AIPredictionWidget totalInvested={totalInvested} />
+                </Suspense>
+                <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
+                  <NewsWidget />
+                </Suspense>
               </div>
             </div>
           )}

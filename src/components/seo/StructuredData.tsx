@@ -99,7 +99,7 @@ export function InvestmentProductSchema({
 
     return (
         <Script
-            id="investment-product-schema"
+            id={`investment-product-schema-${name.toLowerCase().replace(/\s+/g, '-')}`}
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />

@@ -51,3 +51,20 @@ body,
     transform: scale(1.02);
   }
 }
+
+/* Background Orb Animations */
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 30px) scale(1.1); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -60px) scale(1.2); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, 40px); }
+}
+.orb-1 { animation: float1 15s linear infinite; }
+.orb-2 { animation: float2 18s linear infinite; }
+.orb-3 { animation: float3 20s linear infinite; }
