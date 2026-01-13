@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { getMarketNews, NewsItem } from '@/lib/newsApi'
 import { Newspaper, ExternalLink, RefreshCw, Clock } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 
 export default function NewsWidget() {
@@ -42,19 +42,25 @@ export default function NewsWidget() {
             </div>
 
             <div className="flex-1 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
-                <AnimatePresence mode='wait'>
+                <AnimatePresence>
                     {loading && news.length === 0 ? (
-                        <div className="space-y-4">
+                        <m.div
+                            key="loading"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="space-y-4"
+                        >
                             {[1, 2, 3].map(i => (
                                 <div key={i} className="animate-pulse">
                                     <div className="h-4 bg-slate-200 dark:bg-white/5 rounded-md w-3/4 mb-2"></div>
                                     <div className="h-3 bg-slate-100 dark:bg-white/5 rounded-md w-full"></div>
                                 </div>
                             ))}
-                        </div>
+                        </m.div>
                     ) : news.length > 0 ? (
                         news.map((item, idx) => (
-                            <motion.div
+                            <m.div
                                 key={item.guid || idx}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -82,12 +88,18 @@ export default function NewsWidget() {
                                 >
                                     Read full story <ExternalLink size={10} />
                                 </Link>
-                            </motion.div>
+                            </m.div>
                         ))
                     ) : (
-                        <div className="text-center py-10 text-slate-400 text-sm font-medium">
+                        <m.div
+                            key="empty"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="text-center py-10 text-slate-400 text-sm font-medium"
+                        >
                             No news available at the moment.
-                        </div>
+                        </m.div>
                     )}
                 </AnimatePresence>
             </div>

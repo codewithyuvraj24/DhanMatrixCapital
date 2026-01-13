@@ -1,11 +1,11 @@
 "use client"
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  ChevronDown, 
-  Layers, 
-  Zap, 
-  RefreshCw, 
+import { m, AnimatePresence } from 'framer-motion'
+import {
+  ChevronDown,
+  Layers,
+  Zap,
+  RefreshCw,
   Globe,
   Settings
 } from 'lucide-react'
@@ -38,7 +38,7 @@ export default function DeploymentSettings() {
 
   return (
     <div className="w-full bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-3xl overflow-hidden shadow-sm">
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
       >
@@ -46,17 +46,17 @@ export default function DeploymentSettings() {
           <Settings className="text-slate-400" size={20} />
           <h2 className="font-heading text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Deployment Settings</h2>
         </div>
-        <motion.div
+        <m.div
           animate={{ rotate: isOpen ? 0 : -90 }}
           transition={{ duration: 0.2 }}
         >
           <ChevronDown className="text-slate-400" size={20} />
-        </motion.div>
+        </m.div>
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -66,10 +66,10 @@ export default function DeploymentSettings() {
             <div className="px-8 pb-8 pt-2">
               <div className="mb-6">
                 <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Recommendations</h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {recommendations.map((rec, idx) => (
-                    <motion.div
+                    <m.div
                       key={idx}
                       whileHover={{ y: -2 }}
                       className="p-6 bg-white dark:bg-black/20 border border-slate-100 dark:border-white/5 rounded-2xl hover:border-red-500/20 dark:hover:border-red-500/20 transition-all cursor-pointer group"
@@ -83,12 +83,12 @@ export default function DeploymentSettings() {
                       <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                         {rec.description}
                       </p>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

@@ -35,7 +35,7 @@ export default function ROICalculator() {
     const totalGains = finalValue - totalContributions
 
     return (
-        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-8 rounded-3xl">
+        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 rounded-2xl">
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
                     <Calculator className="text-blue-600 dark:text-blue-400" size={20} />
@@ -97,7 +97,7 @@ export default function ROICalculator() {
 
             {/* Chart */}
             <div className="h-48 mb-6">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -140,18 +140,18 @@ export default function ROICalculator() {
             </div>
 
             {/* Results */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
-                    <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">Final Value</p>
-                    <p className="text-xl font-black text-blue-600 dark:text-blue-400">₹{finalValue.toLocaleString('en-IN')}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                    <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-0.5">Final Value</p>
+                    <p className="text-lg font-black text-blue-600 dark:text-blue-400">₹{finalValue.toLocaleString('en-IN')}</p>
                 </div>
-                <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                    <p className="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Total Gains</p>
-                    <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">+₹{totalGains.toLocaleString('en-IN')}</p>
+                <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                    <p className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-0.5">Total Gains</p>
+                    <p className="text-lg font-black text-emerald-600 dark:text-emerald-400">+₹{totalGains.toLocaleString('en-IN')}</p>
                 </div>
-                <div className="p-4 bg-slate-500/10 border border-slate-500/20 rounded-2xl">
-                    <p className="text-xs font-black text-slate-600 dark:text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-1">Invested</p>
-                    <p className="text-xl font-black text-slate-600 dark:text-slate-600 dark:text-slate-300">₹{totalContributions.toLocaleString('en-IN')}</p>
+                <div className="p-3 bg-slate-500/10 border border-slate-500/20 rounded-xl">
+                    <p className="text-[10px] font-black text-slate-600 dark:text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-0.5">Invested</p>
+                    <p className="text-lg font-black text-slate-600 dark:text-slate-600 dark:text-slate-300">₹{totalContributions.toLocaleString('en-IN')}</p>
                 </div>
             </div>
         </div>

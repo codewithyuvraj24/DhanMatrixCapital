@@ -1,5 +1,5 @@
 "use client"
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ReactNode, useRef } from 'react'
 
 interface MagneticButtonProps {
@@ -41,7 +41,7 @@ export default function MagneticButton({ children, className = '', onClick, disa
     }
 
     return (
-        <motion.button
+        <m.button
             ref={ref}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -53,6 +53,6 @@ export default function MagneticButton({ children, className = '', onClick, disa
             aria-label={ariaLabel}
         >
             {children}
-        </motion.button>
+        </m.button>
     )
 }

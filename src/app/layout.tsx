@@ -90,6 +90,7 @@ export const metadata = {
 
 
 
+
 import { FramerMotionProvider } from '@/components/providers/FramerMotionProvider'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -101,6 +102,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+
+        {/* Performance Resource Hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
       </head>
       <body
         className={`${inter.className} min-h-screen transition-colors duration-300`}
@@ -120,41 +126,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
+
+        {/* Structured Data */}
+        <OrganizationSchema />
+
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
         <SpeedInsights />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FinancialService",
-              "name": "DhanMatrixCapital",
-              "alternateName": "DMC",
-              "description": "SEBI Regulated Wealth Management Platform - Smart Investing & Structured Growth",
-              "url": "https://dhanmatrixcapital.vercel.app",
-              "logo": "https://dhanmatrixcapital.vercel.app/icon-512.png",
-              "image": "https://dhanmatrixcapital.vercel.app/og-image.png",
-              "telephone": "+91-8446285154",
-              "email": "dhanmatrixcap@gmail.com",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "IN"
-              },
-              "sameAs": [],
-              "priceRange": "\u20B925,000+",
-              "areaServed": "IN",
-              "serviceType": ["Investment Management", "Wealth Management", "Financial Planning"],
-              "knowsAbout": ["Stock Market", "Mutual Funds", "Portfolio Management", "Financial Planning"],
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "14"
-              }
-            })
-          }}
-        />
       </body>
     </html>
   )

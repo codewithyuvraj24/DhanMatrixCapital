@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Target, Edit3, Check, X } from 'lucide-react'
 
 interface GoalTrackerProps {
@@ -26,7 +26,7 @@ export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerP
     }
 
     return (
-        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-8 rounded-3xl">
+        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
@@ -62,7 +62,7 @@ export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerP
                             className="text-slate-100 dark:text-white/5"
                         />
                         {/* Progress circle */}
-                        <motion.circle
+                        <m.circle
                             cx="96"
                             cy="96"
                             r="90"
@@ -95,8 +95,8 @@ export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerP
                 {/* Amounts */}
                 <div className="mt-8 w-full space-y-3">
                     <div className="flex justify-between items-center">
-                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Current</span>
-                        <span className="text-lg font-black text-slate-900 dark:text-white">
+                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Current</span>
+                        <span className="text-base font-black text-slate-900 dark:text-white">
                             ₹{currentAmount.toLocaleString('en-IN')}
                         </span>
                     </div>
@@ -128,8 +128,8 @@ export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerP
                         </div>
                     ) : (
                         <div className="flex justify-between items-center">
-                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
-                            <span className="text-lg font-black text-purple-600 dark:text-purple-400">
+                            <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
+                            <span className="text-base font-black text-purple-600 dark:text-purple-400">
                                 ₹{goalAmount.toLocaleString('en-IN')}
                             </span>
                         </div>

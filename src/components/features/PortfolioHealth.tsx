@@ -1,5 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Activity, TrendingUp, AlertTriangle } from 'lucide-react'
 
 interface PortfolioHealthProps {
@@ -36,7 +36,7 @@ export default function PortfolioHealth({
     const strokeDashoffset = circumference - (healthScore / 100) * circumference
 
     return (
-        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-8 rounded-3xl">
+        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 rounded-2xl">
             <div className="flex items-center gap-3 mb-6">
                 <div className={`w-10 h-10 rounded-xl bg-${status.color}-500/10 flex items-center justify-center`}>
                     <StatusIcon className={`text-${status.color}-600 dark:text-${status.color}-400`} size={20} />
@@ -57,7 +57,7 @@ export default function PortfolioHealth({
                             className="text-slate-100 dark:text-white/5"
                         />
                         {/* Progress arc */}
-                        <motion.path
+                        <m.path
                             d="M 20 90 A 80 80 0 0 1 180 90"
                             fill="none"
                             stroke={`url(#health-gradient-${status.color})`}
@@ -95,20 +95,20 @@ export default function PortfolioHealth({
                 {/* Metrics */}
                 <div className="w-full space-y-3">
                     <div className="flex justify-between items-center p-3 bg-slate-50 dark:bg-white/5 rounded-xl">
-                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Active Ratio</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white">
+                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Active Ratio</span>
+                        <span className="text-xs font-black text-slate-900 dark:text-white">
                             {Math.round(activeRatio)}%
                         </span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-slate-50 dark:bg-white/5 rounded-xl">
-                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Diversification</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white">
+                    <div className="flex justify-between items-center p-2.5 bg-slate-50 dark:bg-white/5 rounded-xl">
+                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Diversification</span>
+                        <span className="text-xs font-black text-slate-900 dark:text-white">
                             {Math.round(diversity)}%
                         </span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-slate-50 dark:bg-white/5 rounded-xl">
-                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Total Positions</span>
-                        <span className="text-sm font-black text-slate-900 dark:text-white">
+                    <div className="flex justify-between items-center p-2.5 bg-slate-50 dark:bg-white/5 rounded-xl">
+                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Total Positions</span>
+                        <span className="text-xs font-black text-slate-900 dark:text-white">
                             {totalInvestments}
                         </span>
                     </div>

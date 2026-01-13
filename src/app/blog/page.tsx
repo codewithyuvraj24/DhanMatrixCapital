@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { ArrowRight, BookOpen, Clock, Tag, Search, TrendingUp, Shield, PieChart } from 'lucide-react'
 // Dummy Data for Blog Posts
 const featuredPost = {
@@ -48,10 +48,10 @@ const recentPosts = [
 export default function BlogPage() {
     return (
         <div className="min-h-screen font-sans selection:bg-blue-500/30">
-            <div className="pt-32 pb-20 max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
+            <div className="pt-20 lg:pt-32 pb-12 max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
                 {/* Header Section */}
                 <div className="mb-16 text-left">
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
@@ -61,11 +61,11 @@ export default function BlogPage() {
                             <BookOpen size={14} />
                             Wealth Academy
                         </div>
-                        <h1 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
+                        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
                             Smart Investing <br />
                             <span className="text-blue-600">Made Simple.</span>
                         </h1>
-                        <p className="text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
+                        <p className="text-base text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
                             Master the art of wealth creation with our expert guides, market insights, and financial education resources.
                         </p>
 
@@ -85,7 +85,7 @@ export default function BlogPage() {
                                 Popular: <span className="text-slate-600 dark:text-slate-300 cursor-pointer hover:text-blue-500 transition-colors">Investing 101</span>, <span className="text-slate-600 dark:text-slate-300 cursor-pointer hover:text-blue-500 transition-colors">Market Trends</span>
                             </p>
                         </div>
-                    </motion.div>
+                    </m.div>
                 </div>
 
                 <div>
@@ -96,7 +96,7 @@ export default function BlogPage() {
                     </h2>
 
                     <Link href={`/blog/${featuredPost.id}`} className="block mb-20">
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
@@ -143,7 +143,7 @@ export default function BlogPage() {
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     </Link>
 
                     {/* Recent Posts Grid */}
@@ -160,12 +160,12 @@ export default function BlogPage() {
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {recentPosts.map((post, idx) => (
                             <Link href={`/blog/${post.id}`} key={post.id}>
-                                <motion.div
+                                <m.div
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: idx * 0.1 }}
-                                    className="group h-full bg-white dark:bg-slate-900/40 rounded-[2rem] p-5 border border-slate-100 dark:border-white/5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 flex flex-col"
+                                    className="group h-full bg-white dark:bg-slate-900/40 rounded-[2rem] p-4 border border-slate-100 dark:border-white/5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 flex flex-col"
                                 >
                                     <div className="mb-5 flex justify-between items-start">
                                         <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
@@ -187,7 +187,7 @@ export default function BlogPage() {
                                         <span className="flex items-center gap-1"><Clock size={14} /> {post.readTime}</span>
                                         <span>{post.date}</span>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             </Link>
                         ))}
                     </div>

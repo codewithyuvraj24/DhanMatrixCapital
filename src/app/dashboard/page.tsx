@@ -7,7 +7,7 @@ import { db } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { validateInvestmentAmount, validateWithdrawalDate, formatCurrency, getAmountErrorMessage } from '@/lib/validators'
 import { addDoc } from 'firebase/firestore'
@@ -241,7 +241,7 @@ function Dashboard() {
           {loading ? (
             <StatsSkeleton />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {/* Primary Card */}
               <StaggerItem>
                 <div className="bg-white dark:bg-white/5 border-l-4 border-l-blue-600 border-y border-r border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
@@ -281,7 +281,7 @@ function Dashboard() {
           {loading ? (
             <ChartSkeleton />
           ) : (
-            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6 mb-10 items-start">
+            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6 mb-8 items-start">
               <div className="xl:col-span-2 lg:col-span-2 space-y-6">
                 {/* Container created via DashboardCharts modification or added here if needed. 
                      Checking DashboardCharts.tsx, it has 'grid grid-cols-1...'. 
@@ -396,14 +396,14 @@ function Dashboard() {
         <AnimatePresence>
           {showModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-              <motion.div
+              <m.div
                 className="absolute inset-0 bg-black/60 backdrop-blur-md"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setShowModal(false)}
               />
-              <motion.div
+              <m.div
                 className="bg-white dark:bg-slate-900 rounded-[3rem] border border-white/20 shadow-2xl w-full max-w-xl p-10 relative z-10"
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -480,7 +480,7 @@ function Dashboard() {
                     {submitting ? 'EXECUTING...' : 'CONFIRM POSITION'}
                   </MagneticButton>
                 </div>
-              </motion.div>
+              </m.div>
             </div>
           )
           }

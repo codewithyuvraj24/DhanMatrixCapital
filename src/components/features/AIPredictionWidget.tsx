@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { Sparkles, TrendingUp, ShieldCheck, BrainCircuit, Info, AlertCircle } from 'lucide-react'
 import { formatCurrency } from '@/lib/validators'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -82,7 +82,7 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
 
                 <AnimatePresence mode='wait'>
                     {loading ? (
-                        <motion.div
+                        <m.div
                             key="loading"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -93,9 +93,9 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                                 <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-600 animate-pulse" size={20} />
                             </div>
                             <p className="text-sm font-black text-blue-600 animate-pulse uppercase tracking-[0.2em]">Analyzing Market Matrix...</p>
-                        </motion.div>
+                        </m.div>
                     ) : prediction ? (
-                        <motion.div
+                        <m.div
                             key="result"
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -128,19 +128,24 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                                     Predictions based on historical volatility and Monte Carlo simulations.
                                 </p>
                             </div>
-                        </motion.div>
+                        </m.div>
                     ) : (
-                        <div className="flex-1 flex flex-col items-center justify-center text-center">
+                        <m.div
+                            key="empty"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="flex-1 flex flex-col items-center justify-center text-center"
+                        >
                             <AlertCircle className="text-slate-300 mb-4" size={40} />
                             <p className="text-sm font-bold text-slate-600">No investment data available for AI analysis.</p>
-                        </div>
+                        </m.div>
                     )}
                 </AnimatePresence>
 
                 {/* Info Overlay */}
                 <AnimatePresence>
                     {showInfo && (
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
@@ -167,7 +172,7 @@ export default function AIPredictionWidget({ totalInvested }: { totalInvested: n
                             >
                                 Got it
                             </MagneticButton>
-                        </motion.div>
+                        </m.div>
                     )}
                 </AnimatePresence>
             </div>

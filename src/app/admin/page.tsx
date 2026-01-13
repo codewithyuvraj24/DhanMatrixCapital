@@ -6,7 +6,7 @@ import { db, auth } from '@/lib/firebase'
 import { useAuth } from '@/context/AuthContext'
 import { signOut } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { useToast } from '@/components/ui/PremiumToast'
 import { StatsSkeleton, TableSkeleton, ChartSkeleton } from '@/components/ui/Skeleton'
@@ -428,7 +428,7 @@ function AdminPanel() {
       {/* Investments Management */}
       <AnimatePresence mode="wait">
         {activeTab === 'investments' ? (
-          <motion.div
+          <m.div
             key="investments-tab"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -503,9 +503,9 @@ function AdminPanel() {
                 </table>
               </div>
             )}
-          </motion.div>
+          </m.div>
         ) : activeTab === 'users' ? (
-          <motion.div
+          <m.div
             key="users-tab"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -604,9 +604,9 @@ function AdminPanel() {
                 </tbody>
               </table>
             </div>
-          </motion.div>
+          </m.div>
         ) : activeTab === 'audit' ? (
-          <motion.div
+          <m.div
             key="audit-tab"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -616,9 +616,9 @@ function AdminPanel() {
             <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
               <AuditLogViewer />
             </Suspense>
-          </motion.div>
+          </m.div>
         ) : (
-          <motion.div
+          <m.div
             key="settings-tab"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -628,7 +628,7 @@ function AdminPanel() {
             <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] animate-pulse" />}>
               <DeploymentSettings />
             </Suspense>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

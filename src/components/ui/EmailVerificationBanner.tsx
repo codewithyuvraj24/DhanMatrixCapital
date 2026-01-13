@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { sendEmailVerification } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { Mail, AlertCircle, CheckCircle2, RefreshCw } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 interface EmailVerificationBannerProps {
     isVerified: boolean
@@ -47,7 +47,7 @@ export default function EmailVerificationBanner({ isVerified, userEmail }: Email
 
     return (
         <AnimatePresence>
-            <motion.div
+            <m.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -68,14 +68,14 @@ export default function EmailVerificationBanner({ isVerified, userEmail }: Email
                         </p>
 
                         {message && (
-                            <motion.div
+                            <m.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="mb-3 p-2 bg-white dark:bg-black/20 rounded-lg text-xs font-medium text-amber-800 dark:text-amber-200 flex items-center gap-2"
                             >
                                 <CheckCircle2 size={14} />
                                 {message}
-                            </motion.div>
+                            </m.div>
                         )}
 
                         <div className="flex flex-wrap gap-2">
@@ -106,7 +106,7 @@ export default function EmailVerificationBanner({ isVerified, userEmail }: Email
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
         </AnimatePresence>
     )
 }

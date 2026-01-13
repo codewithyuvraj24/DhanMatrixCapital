@@ -7,7 +7,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useAuth } from '@/context/AuthContext'
 import { Shield, Copy, CheckCircle2, AlertTriangle, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 interface TwoFactorSetupProps {
     onClose: () => void
@@ -106,7 +106,7 @@ export default function TwoFactorSetup({ onClose, onEnable }: TwoFactorSetupProp
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
+            <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -114,7 +114,7 @@ export default function TwoFactorSetup({ onClose, onEnable }: TwoFactorSetupProp
                 onClick={onClose}
             />
 
-            <motion.div
+            <m.div
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl p-8 relative z-10 shadow-2xl border border-white/20"
@@ -179,14 +179,14 @@ export default function TwoFactorSetup({ onClose, onEnable }: TwoFactorSetupProp
                                 autoFocus
                             />
                             {error && (
-                                <motion.p
+                                <m.p
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className="text-red-500 text-xs font-bold text-center mt-3 flex items-center justify-center gap-1.5"
                                 >
                                     <AlertTriangle size={12} />
                                     {error}
-                                </motion.p>
+                                </m.p>
                             )}
                         </div>
 
@@ -210,19 +210,19 @@ export default function TwoFactorSetup({ onClose, onEnable }: TwoFactorSetupProp
 
                 {step === 3 && (
                     <div className="text-center py-8">
-                        <motion.div
+                        <m.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: "spring" }}
                             className="w-20 h-20 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6"
                         >
                             <CheckCircle2 size={40} strokeWidth={3} />
-                        </motion.div>
+                        </m.div>
                         <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">2FA Enabled!</h3>
                         <p className="text-slate-500 dark:text-slate-400 text-sm">Your account is now more secure.</p>
                     </div>
                 )}
-            </motion.div>
+            </m.div>
         </div>
     )
 }

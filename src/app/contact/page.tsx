@@ -1,26 +1,26 @@
 "use client"
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FadeIn } from "@/components/ui/Animations"
 import { Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, HelpCircle } from "lucide-react"
 import { useForm, ValidationError } from '@formspree/react';
 
 export default function Contact() {
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
+    <div className="min-h-screen pt-20 lg:pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-0">
         <FadeIn>
-          <div className="text-center mb-16 sm:mb-24 pt-8 sm:pt-0">
-            <h1 className="text-4xl sm:text-7xl font-black mb-8 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
+          <div className="text-center mb-12 sm:mb-24 pt-8 sm:pt-0">
+            <h1 className="text-3xl sm:text-5xl font-black mb-6 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
               Let's <span className="text-blue-600">Connect.</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
               Have questions about your investment journey? We're here to help you every step of the way.
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 mb-20 sm:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-24">
           {[
             {
               icon: <Mail size={32} strokeWidth={2.5} className="text-blue-600 dark:text-blue-400" />,
@@ -44,12 +44,12 @@ export default function Contact() {
               link: "#"
             }
           ].map((item, idx) => (
-            <motion.div
+            <m.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="p-8 sm:p-10 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-[2rem] hover:border-blue-500/50 transition-all duration-500 text-center group shadow-xl hover:-translate-y-2"
+              className="p-6 sm:p-8 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-[2rem] hover:border-blue-500/50 transition-all duration-500 text-center group shadow-xl hover:-translate-y-2"
             >
               <div className="w-16 h-16 mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-black/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
                 {item.icon}
@@ -59,7 +59,7 @@ export default function Contact() {
                 {item.info}
               </a>
               <p className="text-[10px] sm:text-xs text-slate-500 font-black uppercase tracking-widest">{item.sub}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -72,7 +72,7 @@ export default function Contact() {
                 </div>
                 <h3 className="text-3xl font-black dark:text-white tracking-tighter">Send us a <span className="text-blue-600">Message.</span></h3>
               </div>
-              <div className="bg-white/40 dark:bg-white/5 backdrop-blur-xl p-8 sm:p-12 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-2xl relative overflow-hidden">
+              <div className="bg-white/40 dark:bg-white/5 backdrop-blur-xl p-6 sm:p-10 rounded-[2.5rem] border border-slate-200 dark:border-white/10 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[60px] pointer-events-none"></div>
                 <ContactForm />
               </div>
@@ -94,7 +94,7 @@ export default function Contact() {
                   { q: "Is my data secure?", a: "We use 256-bit encryption and follow SEBI-aligned practices to ensure your data and investments are always safe." },
                   { q: "When can I withdraw?", a: "We offer flexible withdrawals. Most plans allow you to request money back with a 24-hour processing cycle." }
                 ].map((faq, idx) => (
-                  <div key={idx} className="p-8 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-100 dark:border-white/10 rounded-[2rem] hover:border-blue-500/50 transition-all duration-300 shadow-xl shadow-black/5 group">
+                  <div key={idx} className="p-6 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-100 dark:border-white/10 rounded-[2rem] hover:border-blue-500/50 transition-all duration-300 shadow-xl shadow-black/5 group">
                     <h4 className="font-black text-lg mb-3 dark:text-white tracking-tight group-hover:text-blue-600 transition-colors">{faq.q}</h4>
                     <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-medium">
                       {faq.a}
@@ -137,7 +137,7 @@ function ContactForm() {
             type="text"
             name="name"
             placeholder="Your Name"
-            className="w-full px-5 py-4 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
+            className="w-full px-4 py-3 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
             required
           />
           <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-[10px] font-black uppercase mt-2 tracking-widest" />
@@ -149,7 +149,7 @@ function ContactForm() {
             type="email"
             name="email"
             placeholder="hello@example.com"
-            className="w-full px-5 py-4 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
+            className="w-full px-4 py-3 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
             required
           />
           <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-[10px] font-black uppercase mt-2 tracking-widest" />
@@ -164,7 +164,7 @@ function ContactForm() {
             type="tel"
             name="phone"
             placeholder="+91 00000 00000"
-            className="w-full px-5 py-4 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
+            className="w-full px-4 py-3 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all font-medium placeholder:text-slate-400"
             required
           />
           <ValidationError prefix="Phone" field="phone" errors={state.errors} className="text-red-500 text-[10px] font-black uppercase mt-2 tracking-widest" />
@@ -176,7 +176,7 @@ function ContactForm() {
             <select
               id="subject"
               name="subject"
-              className="w-full px-5 py-4 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all appearance-none font-bold text-sm pr-12"
+              className="w-full px-4 py-3 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all appearance-none font-bold text-sm pr-12"
             >
               <option value="Investment Inquiry">Investment Inquiry</option>
               <option value="Account Support">Account Support</option>
@@ -197,7 +197,7 @@ function ContactForm() {
           name="message"
           placeholder="How can we help you today?"
           rows={5}
-          className="w-full px-5 py-4 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all resize-none font-medium placeholder:text-slate-400"
+          className="w-full px-4 py-3 bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600 dark:text-white transition-all resize-none font-medium placeholder:text-slate-400"
           required
         />
         <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-[10px] font-black uppercase mt-2 tracking-widest" />
@@ -206,7 +206,7 @@ function ContactForm() {
       <button
         type="submit"
         disabled={state.submitting}
-        className="w-full px-8 py-5 bg-blue-600 text-white font-black text-lg rounded-2xl hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+        className="w-full px-6 py-4 bg-blue-600 text-white font-black text-lg rounded-2xl hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
       >
         {state.submitting ? (
           <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>

@@ -5,15 +5,15 @@ import Link from "next/link"
 
 export default function About() {
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
+    <div className="min-h-screen pt-20 lg:pt-24 pb-12 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
       <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
         <FadeIn>
-          <div className="text-left max-w-4xl mb-20 sm:mb-32">
-            <h1 className="font-heading text-4xl sm:text-7xl font-black mb-8 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
+          <div className="text-left max-w-4xl mb-12 sm:mb-24">
+            <h1 className="font-heading text-3xl sm:text-5xl lg:text-7xl font-black mb-6 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
               Simple, Smart <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Wealth Management.</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
               We help you grow your wealth with professional strategies and easy-to-use tools.
             </p>
           </div>
@@ -24,7 +24,7 @@ export default function About() {
             <FadeIn delay={0.2}>
               <div className="relative group">
                 <div className="absolute inset-0 bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
-                <div className="relative z-10 bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-8 sm:p-12 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] hover:border-blue-500/50 transition-all duration-500">
+                <div className="relative z-10 bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-6 sm:p-10 rounded-[2rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] hover:border-blue-500/50 transition-all duration-500">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600/10 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest mb-6">
                     <Lock size={12} strokeWidth={3} />
                     Your Security
@@ -32,7 +32,7 @@ export default function About() {
                   <h3 className="font-heading text-3xl sm:text-4xl font-black mb-6 dark:text-white tracking-tight">
                     Our Mission
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 text-lg font-medium">
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 text-base font-medium">
                     To build a transparent and easy-to-use platform where your money works harder for you. We simplify complex market data into clear opportunities for growth.
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -52,8 +52,8 @@ export default function About() {
             <FadeIn delay={0.4}>
               <div className="space-y-12">
                 <div>
-                  <h3 className="font-heading text-3xl sm:text-5xl font-black mb-6 text-slate-900 dark:text-white tracking-tight">Built for <br />You.</h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-medium">
+                  <h3 className="font-heading text-2xl sm:text-4xl font-black mb-4 text-slate-900 dark:text-white tracking-tight">Built for <br />You.</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-base leading-relaxed font-medium">
                     Dhanmatrixcapital started with a simple goal: making professional-level wealth management tools available to everyone. We've built a team of experts dedicated to your financial success.
                   </p>
                 </div>
@@ -88,7 +88,7 @@ export default function About() {
                 { icon: <Award className="text-emerald-500" />, title: "Excellence", desc: "Aiming for consistent returns with smart risk management." }
               ].map((val, idx) => (
                 <StaggerItem key={idx}>
-                  <div className="h-full p-8 sm:p-10 bg-white/40 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2rem] hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:-translate-y-2">
+                  <div className="h-full p-6 sm:p-8 bg-white/40 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[1.5rem] hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:-translate-y-2">
                     <div className="mb-6 p-4 bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-black/5 w-fit group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
                       {val.icon}
                     </div>

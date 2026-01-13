@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Animations'
 import { Check, AlertTriangle, TrendingUp, Shield, Zap, Crown, Lock } from 'lucide-react'
 import Link from 'next/link'
@@ -31,7 +31,7 @@ export default function Plans() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
+    <div className="min-h-screen pt-20 lg:pt-24 pb-12 bg-slate-50 dark:bg-[#050505] transition-colors duration-500">
       <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16">
         {plans.map(plan => (
           <InvestmentProductSchema
@@ -44,27 +44,28 @@ export default function Plans() {
         ))}
 
         {/* Hero Section with Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 lg:mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 lg:mb-32">
           <FadeIn>
             <div className="text-left max-w-4xl">
-              <h1 className="font-heading text-4xl sm:text-7xl font-black mb-8 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
+              <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-black mb-3 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
                 Investment <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Growth Plans.</span>
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10 max-w-2xl leading-relaxed">
+              <p className="text-sm sm:text-xl text-slate-500 dark:text-slate-400 font-medium mb-6 max-w-2xl leading-relaxed">
                 Choose the right plan to grow your wealth with crystal clear transparency and proven results.
               </p>
 
               {/* Trust Strip */}
-              <div className="flex flex-wrap gap-4 sm:gap-8">
+              {/* Trust Strip - Horizontal Scroll on Mobile */}
+              <div className="flex overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap gap-3 pb-2 sm:pb-0">
                 {[
                   { icon: Shield, text: "SEBI Compliant" },
                   { icon: TrendingUp, text: "Transparent Returns" },
                   { icon: Check, text: "Expert Managed" }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/5 rounded-full border border-slate-200 dark:border-white/10 shadow-sm">
-                    <item.icon size={16} className="text-blue-600 dark:text-blue-400" strokeWidth={3} />
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">{item.text}</span>
+                  <div key={idx} className="flex items-center gap-2 px-2.5 py-1 bg-white dark:bg-white/5 rounded-full border border-slate-200 dark:border-white/10 shadow-sm shrink-0">
+                    <item.icon size={11} className="text-blue-600 dark:text-blue-400" strokeWidth={3} />
+                    <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest whitespace-nowrap">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -120,9 +121,9 @@ export default function Plans() {
 
             {plans.map((plan, idx) => (
               <StaggerItem key={plan.id}>
-                <motion.div
-                  className={`h-full border rounded-[2.5rem] p-8 sm:p-10 cursor-pointer transition-all duration-300 relative overflow-hidden group shadow-lg hover:shadow-2xl hover:-translate-y-2 ${selectedPlan === plan.id
-                    ? 'border-blue-600 bg-white dark:bg-white/10 ring-2 ring-blue-600 ring-offset-4 dark:ring-offset-black'
+                <m.div
+                  className={`h-full border rounded-2xl p-4 sm:p-10 cursor-pointer transition-all duration-300 relative overflow-hidden group shadow-lg hover:shadow-2xl hover:-translate-y-2 ${selectedPlan === plan.id
+                    ? 'border-blue-600 bg-white dark:bg-white/10 ring-2 ring-blue-600 ring-offset-2 dark:ring-offset-black'
                     : 'border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-md hover:border-blue-500/50'
                     }`}
                   onClick={() => setSelectedPlan(selectedPlan === plan.id ? null : plan.id)}
@@ -133,43 +134,46 @@ export default function Plans() {
                     </div>
                   )}
 
-                  <div className="flex justify-between items-start mb-8 mt-2">
-                    <div className={`p-4 rounded-2xl shadow-xl shadow-black/5 group-hover:scale-110 transition-transform duration-500 ${plan.popular ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-slate-50 dark:bg-slate-800'}`}>
-                      {plan.icon}
+                  <div className="flex justify-between items-start mb-6 mt-2">
+                    <div className={`p-3.5 rounded-2xl shadow-xl shadow-black/5 group-hover:scale-110 transition-transform duration-500 ${plan.popular ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-slate-50 dark:bg-slate-800'}`}>
+                      {plan.id === 1 ? <TrendingUp size={24} className="text-blue-500" /> : plan.icon}
                     </div>
                   </div>
 
-                  <h3 className="font-heading text-2xl font-black mb-6 dark:text-white tracking-tight">{plan.name}</h3>
-                  <div className="mb-8 p-6 bg-slate-50 dark:bg-black/20 rounded-2xl border border-slate-100 dark:border-white/5">
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-5xl sm:text-6xl font-black text-blue-600 dark:text-blue-500 tracking-tighter">{plan.annualReturn}</span>
-                      <span className="text-lg font-bold text-slate-400 uppercase tracking-tight">Returns / Month</span>
+                  <h3 className="font-heading text-lg font-black mb-3 dark:text-white tracking-tight">{plan.name}</h3>
+                  <div className="mb-4 p-3 bg-slate-50/50 dark:bg-black/20 rounded-2xl border border-slate-100 dark:border-white/5">
+                    <div className="flex items-baseline gap-2 mb-1.5">
+                      <span className="text-4xl sm:text-5xl font-black text-blue-600 dark:text-blue-500 tracking-tighter">{plan.annualReturn}</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight opacity-70">Returns / Mo</span>
                     </div>
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                      <AlertTriangle size={10} /> Historical Range • Past perf. not guaranteed
-                    </div>
-                  </div>
-
-                  <div className="space-y-5 mb-10">
-                    <div className="flex justify-between items-center py-3 border-b border-slate-100 dark:border-white/5">
-                      <span className="text-xs font-black uppercase tracking-wider text-slate-500">Min Investment</span>
-                      <span className="font-bold text-xl text-slate-900 dark:text-white">{plan.minInvestment}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-3 border-b border-slate-100 dark:border-white/5">
-                      <span className="text-xs font-black uppercase tracking-wider text-slate-500">Lock-in Period</span>
-                      <span className="font-bold text-xl text-slate-900 dark:text-white">{plan.term}</span>
+                    <div className="text-[8px] font-bold text-slate-400/60 uppercase tracking-widest flex items-center gap-1">
+                      <AlertTriangle size={8} /> Historical Range • Past perf. not guaranteed
                     </div>
                   </div>
 
-                  <button
-                    className={`w-full py-4 rounded-xl font-black text-base flex items-center justify-center gap-2 transition-all duration-300 ${selectedPlan === plan.id
-                      ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/30'
-                      : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white hover:shadow-lg'}`}
-                  >
-                    {selectedPlan === plan.id ? 'Plan Selected' : 'Start Investing'}
-                    {selectedPlan !== plan.id && <TrendingUp size={16} />}
-                  </button>
-                </motion.div>
+                  <div className="space-y-1 mb-5">
+                    <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Min Investment</span>
+                      <span className="font-bold text-sm text-slate-900 dark:text-white">{plan.minInvestment}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Lock-in Period</span>
+                      <span className="font-bold text-sm text-slate-900 dark:text-white">{plan.term}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <button
+                      className={`w-full py-3.5 sm:py-4 rounded-xl font-black text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 ${selectedPlan === plan.id
+                        ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/30'
+                        : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white hover:shadow-lg'}`}
+                    >
+                      {selectedPlan === plan.id ? 'Plan Selected' : 'Start Investing'}
+                      {selectedPlan !== plan.id && <TrendingUp size={14} />}
+                    </button>
+                    <p className="text-[9px] font-bold text-slate-400/60 text-center uppercase tracking-widest leading-none">No hidden charges • Secure</p>
+                  </div>
+                </m.div>
               </StaggerItem>
             ))}
           </div>
@@ -177,18 +181,18 @@ export default function Plans() {
 
         <AnimatePresence>
           {selectedPlan && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, height: 0, marginTop: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginTop: 48 }}
+              animate={{ opacity: 1, height: 'auto', marginTop: 32 }}
               exit={{ opacity: 0, height: 0, marginTop: 0 }}
               className="overflow-hidden px-4 sm:px-0"
             >
-              <div className="bg-white/60 dark:bg-white/5 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 lg:p-16 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden">
+              <div className="bg-white/60 dark:bg-white/5 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-6 lg:p-16 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[100px] pointer-events-none"></div>
                 <div className="flex flex-col lg:flex-row gap-16 items-start relative z-10">
                   <div className="flex-1">
                     <div className="flex items-center gap-6 mb-10">
-                      <div className="p-4 bg-white dark:bg-slate-900 rounded-2xl shadow-xl text-blue-600 dark:text-blue-400">
+                      <div className="bg-blue-600 dark:bg-blue-600/90 rounded-2xl p-4 shadow-xl shadow-blue-500/10 text-white">
                         {plans.find(p => p.id === selectedPlan)?.icon}
                       </div>
                       <div>
@@ -217,7 +221,7 @@ export default function Plans() {
                     </h3>
                     <ul className="space-y-5">
                       {plans.find(p => p.id === selectedPlan)?.features.map((feature, idx) => (
-                        <motion.li
+                        <m.li
                           key={idx}
                           className="flex items-center gap-4"
                           initial={{ opacity: 0, x: 20 }}
@@ -228,7 +232,7 @@ export default function Plans() {
                             <Check className="text-emerald-500" size={14} strokeWidth={4} />
                           </div>
                           <span className="text-slate-700 dark:text-slate-300 font-bold text-base">{feature}</span>
-                        </motion.li>
+                        </m.li>
                       ))}
                     </ul>
 
@@ -253,7 +257,7 @@ export default function Plans() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

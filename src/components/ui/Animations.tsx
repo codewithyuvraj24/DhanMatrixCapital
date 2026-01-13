@@ -1,5 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import React from 'react'
 
 interface AnimationProps {
@@ -47,7 +47,7 @@ const itemVariants = {
 
 export function PageTransition({ children, className = "" }: AnimationProps) {
   return (
-    <motion.div
+    <m.div
       initial="initial"
       animate="animate"
       exit="exit"
@@ -56,41 +56,41 @@ export function PageTransition({ children, className = "" }: AnimationProps) {
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
 export function StaggerContainer({ children, className = "" }: AnimationProps) {
   return (
-    <motion.div
+    <m.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
 export function StaggerItem({ children, className = "" }: AnimationProps) {
   return (
-    <motion.div variants={itemVariants} className={className} transition={{ duration: 0.3 }}>
+    <m.div variants={itemVariants} className={className} transition={{ duration: 0.3 }}>
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
 export function FadeIn({ children, delay = 0, className = "" }: AnimationProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={className}
       transition={{ duration: 0.3, delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -103,27 +103,27 @@ export function SlideIn({ children, direction = 'left', className = "" }: Animat
   }
 
   return (
-    <motion.div
+    <m.div
       initial={directionVariants[direction].initial}
       animate={directionVariants[direction].animate}
       className={className}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
 export function ScaleIn({ children, className = "" }: AnimationProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       className={className}
       transition={{ duration: 0.3 }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 

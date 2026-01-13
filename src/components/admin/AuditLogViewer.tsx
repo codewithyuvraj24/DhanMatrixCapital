@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import { motion } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FileText, User, DollarSign, Shield, Eye, Ban, Unlock, Edit, Trash2, RefreshCw } from 'lucide-react'
 import type { AuditLogEntry } from '@/lib/audit'
 
@@ -123,8 +123,8 @@ export default function AuditLogViewer() {
                         key={value}
                         onClick={() => setFilter(value)}
                         className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${filter === value
-                                ? 'bg-red-600 text-white shadow-lg shadow-red-500/20'
-                                : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 hover:border-red-500/30'
+                            ? 'bg-red-600 text-white shadow-lg shadow-red-500/20'
+                            : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 hover:border-red-500/30'
                             }`}
                     >
                         {label}
@@ -158,7 +158,7 @@ export default function AuditLogViewer() {
                             </thead>
                             <tbody className="divide-y divide-slate-50 dark:divide-white/5">
                                 {logs.map((log) => (
-                                    <motion.tr
+                                    <m.tr
                                         key={log.id}
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -200,7 +200,7 @@ export default function AuditLogViewer() {
                                                 </div>
                                             )}
                                         </td>
-                                    </motion.tr>
+                                    </m.tr>
                                 ))}
                             </tbody>
                         </table>

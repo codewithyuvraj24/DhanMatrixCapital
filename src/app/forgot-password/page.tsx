@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
-import { motion } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { Mail, ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 
@@ -47,7 +47,7 @@ export default function ForgotPassword() {
     if (success) {
         return (
             <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="w-full max-w-md bg-white rounded-2xl shadow-sm p-8 text-center"
@@ -83,7 +83,7 @@ export default function ForgotPassword() {
                         <ArrowLeft size={16} />
                         Back to Login
                     </Link>
-                </motion.div>
+                </m.div>
             </div>
         )
     }

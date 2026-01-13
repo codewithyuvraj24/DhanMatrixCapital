@@ -5,12 +5,12 @@ import { memo } from "react"
 
 function PlansPreview() {
     return (
-        <section className="py-20 sm:py-32 relative overflow-hidden">
+        <section className="py-12 sm:py-32 relative overflow-hidden">
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <div className="text-center mb-16 sm:mb-24">
-                    <h2 className="font-heading text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Investment <span className="text-blue-600">Plans</span></h2>
-                    <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">Simple, transparent plans designed for consistent growth.</p>
+                <div className="text-left sm:text-center mb-10 sm:mb-24 px-4 sm:px-0">
+                    <h2 className="font-heading text-xl sm:text-6xl font-black mb-3 text-slate-900 dark:text-white leading-tight">Investment <span className="text-blue-600">Plans</span></h2>
+                    <p className="text-sm sm:text-xl text-slate-500 dark:text-slate-300 font-medium max-w-2xl sm:mx-auto">Simple, transparent plans designed for consistent growth.</p>
                 </div>
 
                 <div className="flex justify-center max-w-md mx-auto">
@@ -29,9 +29,9 @@ function PlansPreview() {
                             popular: true
                         }
                     ].map((plan, idx) => (
-                        <div key={idx} className={`relative p-8 sm:p-12 rounded-[2.5rem] border transition-all duration-700 ${plan.popular
-                            ? 'bg-blue-600 border-blue-500 text-white shadow-[0_32px_64px_-12px_rgba(37,99,235,0.4)] lg:scale-110 z-10'
-                            : 'bg-white/40 dark:bg-white/5 backdrop-blur-md border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:border-blue-500/50 hover:shadow-xl hover:shadow-black/5'
+                        <div key={idx} className={`relative p-5 sm:p-12 rounded-2xl border transition-all duration-700 ${plan.popular
+                            ? 'bg-blue-600 border-blue-500 text-white shadow-[0_32px_64px_-12px_rgba(37,99,235,0.4)] sm:scale-110 z-10 mx-4 sm:mx-0'
+                            : 'bg-white/40 dark:bg-white/5 backdrop-blur-md border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:border-blue-500/50 hover:shadow-xl hover:shadow-black/5 mx-4 sm:mx-0'
                             }`}>
                             {plan.popular && (
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 text-black px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-xl">
@@ -39,22 +39,22 @@ function PlansPreview() {
                                 </div>
                             )}
                             <div className="flex justify-between items-start mb-6">
-                                <h3 className="font-heading text-2xl sm:text-3xl font-black">{plan.name}</h3>
+                                <h3 className="font-heading text-xl sm:text-3xl font-black">{plan.name}</h3>
                                 {plan.popular && <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm"><Check size={20} /></div>}
                             </div>
                             <div className="flex items-baseline gap-1 mb-8">
-                                <span className="text-4xl sm:text-5xl font-black tracking-tighter">{plan.returns}</span>
+                                <span className="text-3xl sm:text-5xl font-black tracking-tighter">{plan.returns}</span>
                             </div>
-                            <div className="space-y-4 sm:space-y-5 mb-10 sm:mb-12">
-                                <div className="flex justify-between text-xs sm:text-sm font-bold uppercase tracking-widest opacity-70">
+                            <div className="space-y-3 sm:space-y-5 mb-8 sm:mb-12">
+                                <div className="flex justify-between text-[9px] sm:text-sm font-bold uppercase tracking-[0.2em] opacity-80">
                                     <span>Min Investment</span>
                                     <span>{plan.min}</span>
                                 </div>
                                 <div className="h-px bg-current opacity-10"></div>
                                 {plan.features.map((f, i) => (
-                                    <div key={i} className="flex items-center gap-4 font-semibold text-sm sm:text-base">
-                                        <div className={`p-1 rounded-full ${plan.popular ? "bg-blue-400/30" : "bg-blue-500/10"}`}>
-                                            <Check className={plan.popular ? "text-blue-100" : "text-blue-600 dark:text-blue-400"} size={14} />
+                                    <div key={i} className="flex items-center gap-3 font-bold text-xs sm:text-base">
+                                        <div className={`p-1 rounded-full shrink-0 ${plan.popular ? "bg-blue-400/30" : "bg-blue-500/10"}`}>
+                                            <Check className={plan.popular ? "text-blue-100" : "text-blue-600 dark:text-blue-400"} size={12} />
                                         </div>
                                         <span>{f}</span>
                                     </div>

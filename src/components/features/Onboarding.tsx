@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import { db } from '@/lib/firebase'
@@ -120,7 +120,7 @@ export default function OnboardingWizard() {
 
             {/* Progress Bar */}
             <div className="absolute top-0 left-0 right-0 h-2 bg-slate-100 dark:bg-white/5">
-                <motion.div
+                <m.div
                     className="h-full bg-gradient-to-r from-blue-600 to-indigo-600"
                     initial={{ width: 0 }}
                     animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
@@ -133,7 +133,7 @@ export default function OnboardingWizard() {
 
                     {/* Step 1: Welcome */}
                     {currentStep === 0 && (
-                        <motion.div
+                        <m.div
                             key="welcome"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -155,12 +155,12 @@ export default function OnboardingWizard() {
                             >
                                 Let's Get Started
                             </button>
-                        </motion.div>
+                        </m.div>
                     )}
 
                     {/* Step 2: Goals */}
                     {currentStep === 1 && (
-                        <motion.div
+                        <m.div
                             key="goals"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -217,12 +217,12 @@ export default function OnboardingWizard() {
                                     </button>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
 
                     {/* Step 3: Risk */}
                     {currentStep === 2 && (
-                        <motion.div
+                        <m.div
                             key="risk"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -272,12 +272,12 @@ export default function OnboardingWizard() {
                                     </button>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
 
                     {/* Step 4: Plan Selection */}
                     {currentStep === 3 && (
-                        <motion.div
+                        <m.div
                             key="plan"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -322,12 +322,12 @@ export default function OnboardingWizard() {
                             >
                                 Confirm Selection
                             </button>
-                        </motion.div>
+                        </m.div>
                     )}
 
                     {/* Step 5: Completion */}
                     {currentStep === 4 && (
-                        <motion.div
+                        <m.div
                             key="finish"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -353,7 +353,7 @@ export default function OnboardingWizard() {
                                     Not redirecting? Click here
                                 </button>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
 
                 </AnimatePresence>

@@ -155,15 +155,15 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm p-5">
 
         {/* Header */}
-        <div className="text-center mb-6 pt-2">
-          <h1 className="font-heading text-2xl font-semibold text-slate-900">
+        <div className="text-center mb-5 pt-1">
+          <h1 className="font-heading text-xl font-semibold text-slate-900">
             Create Account
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 mt-0.5">
             Join the future of wealth management
           </p>
         </div>
@@ -267,7 +267,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-brand-primary py-3 text-white font-semibold active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
+              className="w-full rounded-xl bg-brand-primary py-2.5 text-white font-semibold text-sm active:scale-[0.98] transition shadow-lg shadow-brand-primary/20 hover:bg-brand-secondary disabled:opacity-70 flex items-center justify-center gap-2"
             >
               {loading ? <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Create Account'}
             </button>

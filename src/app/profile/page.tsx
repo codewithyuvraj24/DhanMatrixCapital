@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { FadeIn, Stagger, ScaleIn } from '@/components/ui/Animations'
 import { User, Shield, Activity, Save, Mail, CreditCard, Calendar, LogOut, CheckCircle2 } from 'lucide-react'
 import ProfilePictureUpload from '@/components/ui/ProfilePictureUpload'
@@ -130,7 +130,7 @@ function ProfileContent() {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
               return (
-                <motion.button
+                <m.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all relative overflow-hidden ${isActive
@@ -139,7 +139,7 @@ function ProfileContent() {
                     }`}
                 >
                   {isActive && (
-                    <motion.div
+                    <m.div
                       layoutId="activeTab"
                       className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500"
                     />
@@ -148,7 +148,7 @@ function ProfileContent() {
                     <Icon size={20} />
                     {tab.label}
                   </span>
-                </motion.button>
+                </m.button>
               )
             })}
           </Stagger>
@@ -185,7 +185,7 @@ function ProfileContent() {
 
             {/* PROFILE TAB */}
             {activeTab === 'profile' && (
-              <motion.div
+              <m.div
                 key="profile"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -235,14 +235,14 @@ function ProfileContent() {
                     </div>
 
                     {message && (
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center gap-3 text-emerald-600 dark:text-emerald-400 font-bold text-sm"
                       >
                         <CheckCircle2 size={18} />
                         {message}
-                      </motion.div>
+                      </m.div>
                     )}
 
                     <div className="pt-4">
@@ -288,12 +288,12 @@ function ProfileContent() {
                     <p className="text-sm text-slate-500 mt-1">Matrix Initialization Date</p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* SECURITY TAB */}
             {activeTab === 'security' && (
-              <motion.div
+              <m.div
                 key="security"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -337,7 +337,7 @@ function ProfileContent() {
 
                       <AnimatePresence>
                         {showPasswordForm && (
-                          <motion.div
+                          <m.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
@@ -384,7 +384,7 @@ function ProfileContent() {
                                 {loading ? 'Updating...' : 'Save New Password'}
                               </button>
                             </div>
-                          </motion.div>
+                          </m.div>
                         )}
                       </AnimatePresence>
                     </div>
@@ -455,12 +455,12 @@ function ProfileContent() {
                     Delete Account
                   </button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* ACTIVITY TAB */}
             {activeTab === 'activity' && (
-              <motion.div
+              <m.div
                 key="activity"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -492,7 +492,7 @@ function ProfileContent() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
           </AnimatePresence>

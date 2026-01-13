@@ -5,14 +5,14 @@ import { Cpu, BarChart3, ShieldCheck, Users } from "lucide-react"
 
 function ValueProps() {
     return (
-        <section className="py-20 sm:py-32 relative overflow-hidden">
+        <section className="py-12 sm:py-32 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-blue-500/5 blur-[120px] pointer-events-none"></div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <div className="text-center mb-16 sm:mb-24">
-                    <h2 className="font-heading text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">
+                <div className="text-left sm:text-center mb-12 sm:mb-24 px-4 sm:px-0">
+                    <h2 className="font-heading text-xl sm:text-6xl font-black mb-3 text-slate-900 dark:text-white leading-tight tracking-tight">
                         Why Choose <span className="text-blue-600 dark:text-blue-400">DMC?</span>
                     </h2>
-                    <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">
+                    <p className="text-sm sm:text-xl text-slate-500 dark:text-slate-300 font-medium max-w-2xl sm:mx-auto">
                         We make growing your wealth simple, safe, and transparent.
                     </p>
                 </div>
@@ -42,12 +42,14 @@ function ValueProps() {
                             }
                         ].map((prop, idx) => (
                             <StaggerItem key={idx}>
-                                <div className="h-full p-10 sm:p-12 rounded-[2rem] bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2">
-                                    <div className="mb-8 p-4 rounded-2xl bg-white dark:bg-slate-900 shadow-xl shadow-black/5 w-fit group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
-                                        {prop.icon}
+                                <div className="h-full p-6 sm:p-12 rounded-3xl bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 hover:border-blue-500/50 transition-all duration-500 group relative overflow-hidden shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2">
+                                    <div className="mb-6 p-3 rounded-2xl bg-white dark:bg-slate-900 shadow-xl shadow-black/5 w-fit group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+                                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
+                                            {prop.icon}
+                                        </div>
                                     </div>
-                                    <h3 className="font-heading text-2xl font-black mb-6 dark:text-white">{prop.title}</h3>
-                                    <p className="text-slate-600 dark:text-slate-300 leading-loose font-medium text-sm sm:text-base">{prop.desc}</p>
+                                    <h3 className="font-heading text-lg font-black mb-3 dark:text-white tracking-tight">{prop.title}</h3>
+                                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium text-xs sm:text-base">{prop.desc}</p>
                                 </div>
                             </StaggerItem>
                         ))}

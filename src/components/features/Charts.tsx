@@ -37,9 +37,9 @@ export function InvestmentTrendChart() {
   if (!mounted) return <div className="h-[300px]" />
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Investment Momentum</h2>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full p-4">
+      <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Investment Momentum</h2>
+      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
         <LineChart data={investmentTrendData}>
           <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
           <XAxis
@@ -90,9 +90,9 @@ export function PortfolioBreakdownChart() {
   if (!mounted) return <div className="h-[300px]" />
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Asset Distribution</h2>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full p-4">
+      <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Asset Distribution</h2>
+      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
         <PieChart>
           <Pie
             data={portfolioData}
@@ -134,9 +134,9 @@ export function PlanComparisonChart() {
   if (!mounted) return <div className="h-[300px]" />
 
   return (
-    <div className="w-full p-6">
-      <h2 className="text-sm font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6">Yield Projections</h2>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="w-full p-4">
+      <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Yield Projections</h2>
+      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
         <BarChart data={returnData}>
           <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
           <XAxis

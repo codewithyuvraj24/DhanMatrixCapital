@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useState, ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react'
 
 type ToastType = 'success' | 'error' | 'info'
@@ -39,7 +39,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none">
                 <AnimatePresence>
                     {toasts.map(toast => (
-                        <motion.div
+                        <m.div
                             key={toast.id}
                             initial={{ opacity: 0, y: 50, scale: 0.9 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -84,7 +84,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                             >
                                 <X size={14} />
                             </button>
-                        </motion.div>
+                        </m.div>
                     ))}
                 </AnimatePresence>
             </div>
