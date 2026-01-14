@@ -47,7 +47,7 @@ const allPosts = [
         category: "Market Education",
         readTime: "5 min read",
         date: "Jan 05, 2026",
-        image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
         author: "DMC Research Team",
         content: `<p>Detailed content for Understanding Risk would go here...</p>`
     },
@@ -58,7 +58,7 @@ const allPosts = [
         category: "Safety & Regulation",
         readTime: "4 min read",
         date: "Jan 02, 2026",
-        image: "https://images.unsplash.com/photo-1565514020176-6c2235b8b3a9?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop",
         author: "DMC Research Team",
         content: `<p>Detailed content for SEBI Regulation would go here...</p>`
     },
