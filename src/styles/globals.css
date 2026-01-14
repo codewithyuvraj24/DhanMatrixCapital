@@ -14,9 +14,16 @@
   }
 
   body {
+    font-size: 14px;
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  @media (min-width: 640px) {
+    body {
+      font-size: 16px;
+    }
   }
 }
 
@@ -31,6 +38,7 @@ body,
 .will-change-transform {
   will-change: transform;
 }
+
 .will-change-opacity {
   will-change: opacity;
 }
@@ -39,13 +47,24 @@ body,
   .animate-pulse-subtle {
     animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  .shadow-soft {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .rounded-uniform {
+    border-radius: 1rem;
+  }
 }
 
 @keyframes pulse-subtle {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: .95;
     transform: scale(1.02);
@@ -54,17 +73,49 @@ body,
 
 /* Background Orb Animations */
 @keyframes float1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, 30px) scale(1.1); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(50px, 30px) scale(1.1);
+  }
 }
+
 @keyframes float2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-40px, -60px) scale(1.2); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-40px, -60px) scale(1.2);
+  }
 }
+
 @keyframes float3 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-20px, 40px); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-20px, 40px);
+  }
 }
-.orb-1 { animation: float1 15s linear infinite; }
-.orb-2 { animation: float2 18s linear infinite; }
-.orb-3 { animation: float3 20s linear infinite; }
+
+.orb-1 {
+  animation: float1 15s linear infinite;
+}
+
+.orb-2 {
+  animation: float2 18s linear infinite;
+}
+
+.orb-3 {
+  animation: float3 20s linear infinite;
+}

@@ -30,7 +30,7 @@ export default function HeroLayout({ user, visuals }: HeroLayoutProps) {
                                 SEBI Regulated & ISO 27001 Secure
                             </div>
 
-                            <h1 className="font-heading text-2xl sm:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.2] sm:leading-[1.1] tracking-tight mb-4">
+                            <h1 className="font-heading text-3xl sm:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-4">
                                 Grow your wealth with <br className="hidden sm:block" />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
                                     data-driven strategies

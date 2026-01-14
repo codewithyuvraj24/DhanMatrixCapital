@@ -52,7 +52,7 @@ export default function TermsPage() {
 
                                 {/* Clause 1: Risk */}
                                 <div className="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-500/10">
-                                    <h3 className="font-heading text-lg font-black text-amber-900 dark:text-amber-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
+                                    <h3 className="font-heading text-2xl font-black text-amber-900 dark:text-amber-400 mb-4 flex items-center gap-2 uppercase tracking-wide">
                                         <AlertCircle size={20} />
                                         01. Risk Disclosure
                                     </h3>
@@ -63,7 +63,7 @@ export default function TermsPage() {
 
                                 {/* Clause 2: Account Security */}
                                 <div className="pl-6 border-l-2 border-slate-200 dark:border-slate-800">
-                                    <h3 className="font-heading text-xl font-black text-slate-900 dark:text-white mb-4">02. Account Liability</h3>
+                                    <h3 className="font-heading text-2xl font-black text-slate-900 dark:text-white mb-4">02. Account Liability</h3>
                                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                                         You are the sole custodian of your access credentials. DhanMatrixCapital is not liable for unauthorized access resulting from your failure to secure your device or credentials.
                                     </p>
@@ -81,7 +81,7 @@ export default function TermsPage() {
 
                                 {/* Clause 3: Termination */}
                                 <div className="pl-6 border-l-2 border-slate-200 dark:border-slate-800">
-                                    <h3 className="font-heading text-xl font-black text-slate-900 dark:text-white mb-4">03. Termination of Service</h3>
+                                    <h3 className="font-heading text-2xl font-black text-slate-900 dark:text-white mb-4">03. Termination of Service</h3>
                                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                                         We reserve the right to suspend or terminate accounts found to be engaging in fraudulent activity, money laundering, or violation of SEBI regulations, without prior notice.
                                     </p>

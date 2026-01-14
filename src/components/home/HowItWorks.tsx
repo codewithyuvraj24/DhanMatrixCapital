@@ -15,42 +15,42 @@ function HowItWorks() {
                 <div className="max-w-4xl mx-auto px-4 relative z-10">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <h2 className="font-heading text-4xl sm:text-6xl font-black mb-4 leading-tight">Investment <span className="text-blue-400">Strategy</span></h2>
-                            <p className="text-lg sm:text-xl text-blue-200 font-bold tracking-widest uppercase mb-6">Our Diversified Portfolio</p>
-                            <p className="text-blue-200/60 max-w-2xl mx-auto leading-relaxed">
+                            <h2 className="font-heading text-3xl sm:text-6xl font-black mb-4 leading-tight">Investment <span className="text-blue-400">Strategy</span></h2>
+                            <p className="text-sm sm:text-xl text-blue-200 font-bold tracking-widest uppercase mb-6">Our Diversified Portfolio</p>
+                            <p className="text-sm sm:text-lg text-blue-200/60 max-w-2xl mx-auto leading-relaxed">
                                 We intentionally spread capital across multiple asset classes—Large Caps for stability, Mid/Small Caps for growth, and Gold for hedging—to maximize returns while minimizing risk.
                             </p>
                         </div>
                     </FadeIn>
 
                     <StaggerContainer>
-                        <div className="grid grid-cols-2 gap-4 md:gap-6">
+                        <div className="grid grid-cols-2 gap-3 sm:gap-6">
                             {/* Large Cap - 40% */}
-                            <div className="col-span-2 p-10 md:p-14 border border-white/10 rounded-[2rem] bg-gradient-to-b from-blue-600/20 to-blue-900/20 backdrop-blur-md text-center hover:border-blue-500/30 transition-all group shadow-2xl">
-                                <div className="text-7xl md:text-9xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 group-hover:scale-105 transition-transform duration-500">40%</div>
-                                <div className="text-2xl md:text-3xl font-bold text-blue-100 tracking-wide">Large-Cap Stocks</div>
+                            <div className="col-span-2 p-8 sm:p-14 border border-white/10 rounded-[2rem] bg-gradient-to-b from-blue-600/20 to-blue-900/20 backdrop-blur-md text-center hover:border-blue-500/30 transition-all group shadow-2xl">
+                                <div className="text-4xl sm:text-7xl md:text-9xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 group-hover:scale-105 transition-transform duration-500">40%</div>
+                                <div className="text-lg sm:text-3xl font-bold text-blue-100 tracking-wide">Large-Cap Stocks</div>
                             </div>
 
                             {/* Mid Cap - 25% & Small Cap - 15% */}
-                            <div className="col-span-1 p-8 md:p-10 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[220px] group">
-                                <div className="text-5xl md:text-7xl font-black mb-3 text-white group-hover:scale-105 transition-transform duration-300">25%</div>
-                                <div className="text-lg md:text-xl font-bold text-slate-300">Mid-Cap</div>
+                            <div className="col-span-1 p-5 sm:p-10 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[160px] sm:min-h-[220px] group">
+                                <div className="text-3xl sm:text-5xl md:text-7xl font-black mb-1 sm:mb-3 text-white group-hover:scale-105 transition-transform duration-300">25%</div>
+                                <div className="text-xs sm:text-xl font-bold text-slate-300">Mid-Cap</div>
                             </div>
 
-                            <div className="col-span-1 p-8 md:p-10 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[220px] group">
-                                <div className="text-5xl md:text-7xl font-black mb-3 text-white group-hover:scale-105 transition-transform duration-300">15%</div>
-                                <div className="text-lg md:text-xl font-bold text-slate-300">Small-Cap</div>
+                            <div className="col-span-1 p-5 sm:p-10 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[160px] sm:min-h-[220px] group">
+                                <div className="text-3xl sm:text-5xl md:text-7xl font-black mb-1 sm:mb-3 text-white group-hover:scale-105 transition-transform duration-300">15%</div>
+                                <div className="text-xs sm:text-xl font-bold text-slate-300">Small-Cap</div>
                             </div>
 
                             {/* IPO - 10% & Gold/Silver - 10% */}
-                            <div className="col-span-1 p-6 md:p-8 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[180px] group">
-                                <div className="text-4xl md:text-6xl font-black mb-2 text-white/90 group-hover:scale-105 transition-transform duration-300">10%</div>
-                                <div className="text-base md:text-lg font-bold text-slate-400">IPO Opportunities</div>
+                            <div className="col-span-1 p-5 sm:p-8 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[140px] sm:min-h-[180px] group">
+                                <div className="text-2xl sm:text-4xl md:text-6xl font-black mb-1 sm:mb-2 text-white/90 group-hover:scale-105 transition-transform duration-300">10%</div>
+                                <div className="text-xs sm:text-lg font-bold text-slate-400">IPO Opportunities</div>
                             </div>
 
-                            <div className="col-span-1 p-6 md:p-8 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[180px] group">
-                                <div className="text-4xl md:text-6xl font-black mb-2 text-white/90 group-hover:scale-105 transition-transform duration-300">10%</div>
-                                <div className="text-base md:text-lg font-bold text-slate-400">Gold & Silver</div>
+                            <div className="col-span-1 p-5 sm:p-8 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md text-center hover:bg-white/10 transition-all flex flex-col justify-center items-center min-h-[140px] sm:min-h-[180px] group">
+                                <div className="text-2xl sm:text-4xl md:text-6xl font-black mb-1 sm:mb-2 text-white/90 group-hover:scale-105 transition-transform duration-300">10%</div>
+                                <div className="text-xs sm:text-lg font-bold text-slate-400">Gold & Silver</div>
                             </div>
                         </div>
                     </StaggerContainer>
@@ -59,8 +59,8 @@ function HowItWorks() {
 
             <section id="how-it-works" className="py-20 sm:py-32 bg-slate-50 dark:bg-black/20 overflow-hidden relative">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-20 sm:mb-28">
-                        <h2 className="font-heading text-4xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Start Growing in <br className="sm:hidden" /> <span className="text-blue-600">4 Simple Steps</span></h2>
+                    <div className="text-center mb-16 sm:mb-28">
+                        <h2 className="font-heading text-3xl sm:text-6xl font-black mb-6 text-slate-900 dark:text-white leading-tight">Start Growing in <br className="sm:hidden" /> <span className="text-blue-600">4 Simple Steps</span></h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">

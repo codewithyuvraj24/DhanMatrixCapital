@@ -8,11 +8,11 @@ function ValueProps() {
         <section className="py-12 sm:py-32 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-blue-500/5 blur-[120px] pointer-events-none"></div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-                <div className="text-left sm:text-center mb-12 sm:mb-24 px-4 sm:px-0">
-                    <h2 className="font-heading text-xl sm:text-6xl font-black mb-3 text-slate-900 dark:text-white leading-tight tracking-tight">
+                <div className="text-left sm:text-center mb-8 sm:mb-16 px-4 sm:px-0">
+                    <h2 className="font-heading text-2xl sm:text-5xl font-black mb-3 text-slate-900 dark:text-white leading-tight tracking-tight">
                         Why Choose <span className="text-blue-600 dark:text-blue-400">DMC?</span>
                     </h2>
-                    <p className="text-sm sm:text-xl text-slate-500 dark:text-slate-300 font-medium max-w-2xl sm:mx-auto">
+                    <p className="text-sm sm:text-lg text-slate-500 dark:text-slate-300 font-medium max-w-2xl sm:mx-auto">
                         We make growing your wealth simple, safe, and transparent.
                     </p>
                 </div>

@@ -169,7 +169,7 @@ export default function Login() {
 
         {/* Header */}
         <div className="text-center mb-5 pt-1">
-          <h1 className="font-heading text-xl font-semibold text-slate-900">
+          <h1 className="font-heading text-2xl font-semibold text-slate-900">
             Sign in to DhanMatrixCapital
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">

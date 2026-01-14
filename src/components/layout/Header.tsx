@@ -53,11 +53,11 @@ export default function Header() {
         : 'bg-white/80 dark:bg-transparent backdrop-blur-sm py-1.5 border-b border-transparent dark:border-white/5'
         }`}
     >
-      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 flex items-center h-9 sm:h-12">
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-12 2xl:px-16 flex items-center h-12 sm:h-20">
         {/* Left: Branding */}
         <div className="flex-1 flex justify-start">
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-heading text-base sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
+            <span className="font-heading text-lg sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white tracking-tight">
               DhanMatrix<span className="font-black text-blue-600 dark:text-blue-500">Capital</span>
             </span>
           </Link>
@@ -141,11 +141,11 @@ export default function Header() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden w-10 h-10 -mr-2 flex items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all"
+            className="md:hidden w-8 h-8 -mr-1 flex items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
       </div>
