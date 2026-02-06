@@ -1,125 +1,62 @@
-
 "use client"
 
 import { useAuth } from "@/context/AuthContext"
-import { m } from "framer-motion"
-import { TrendingUp, ArrowRight } from "lucide-react"
-import { Card } from "@/components/ui/Card"
-import HeroLayout from "./HeroLayout"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+import DashboardMock from "./DashboardMock"
 
 export default function Hero() {
     const { user } = useAuth()
 
-    const visuals = (
-        <m.div
-            initial={{ opacity: 0, x: 100, rotateY: -20 }}
-            animate={{ opacity: 1, x: 0, rotateY: -12 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative w-full h-full perspective-1000"
-            style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-12deg) rotateX(5deg)' }}
-        >
-            {/* Glass Card 1: Main Dashboard Mockup */}
-            <div className="absolute top-10 right-10 w-[90%] h-[500px] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/50 dark:border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden p-6 hover:rotate-0 transition-transform duration-700 ease-out">
-                {/* Window Controls */}
-                <div className="absolute top-0 left-0 right-0 h-16 border-b border-slate-100 dark:border-white/5 flex items-center justify-between px-8">
-                    <div className="flex gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-amber-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
-                    </div>
-                    <div className="h-2 w-20 bg-slate-100 dark:bg-white/10 rounded-full"></div>
-                </div>
+    return (
+        <section className="w-full bg-white dark:bg-[#050505] pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+            <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-                <div className="mt-16 space-y-4">
-                    <div className="flex gap-4">
-                        {/* Card A: Total Balance with Graph */}
-                        <Card className="w-2/3 h-40 relative group">
-                            <div className="flex justify-between items-start z-10 relative">
-                                <div>
-                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Balance</p>
-                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-1">₹14,20,500</h3>
-                                </div>
-                                <div className="bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-                                    <TrendingUp size={12} /> +12.4%
-                                </div>
-                            </div>
-                            {/* Simulated Graph Line */}
-                            <div className="absolute bottom-0 left-0 right-0 h-16 flex items-end justify-between px-2 gap-1 opacity-50">
-                                {[40, 60, 45, 70, 50, 80, 65, 90, 75, 100].map((h, i) => (
-                                    <div key={i} style={{ height: `${h}%` }} className="w-full bg-blue-500/20 rounded-t-sm group-hover:bg-blue-500/40 transition-colors"></div>
-                                ))}
-                            </div>
-                        </Card>
+                    {/* Left Content */}
+                    <div className="flex flex-col items-start text-left max-w-xl">
 
-                        {/* Card B: Asset Allocation */}
-                        <Card className="w-1/3 h-40 relative p-4 flex flex-col items-center justify-center">
-                            <div className="relative w-20 h-20 rounded-full border-8 border-slate-200 dark:border-white/10 border-t-purple-500 border-r-blue-500 rotate-45"></div>
-                            <div className="absolute inset-0 flex items-center justify-center flex-col">
-                                <span className="text-xs font-bold text-slate-400">Assets</span>
-                                <span className="text-sm font-black text-slate-900 dark:text-white">5</span>
-                            </div>
-                            <div className="mt-2 text-[10px] font-bold text-slate-400 flex gap-2">
-                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-500"></div> Stocks</span>
-                                <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500"></div> Crypto</span>
-                            </div>
-                        </Card>
+                        <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.1] tracking-tight text-[#0B1220] dark:text-white mb-6">
+                            Smart investing, built for Indian markets.
+                        </h1>
+
+                        <p className="font-sans font-normal text-lg sm:text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-8 sm:mb-10">
+                            We use real market data, disciplined strategies, and full transparency to help you grow wealth without guesswork. SEBI-regulated, security-first, and designed for long-term investors.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-8">
+                            <Link
+                                href={user ? "/dashboard" : "/register"}
+                                className="w-full sm:w-auto px-8 py-4 bg-[#2563EB] hover:bg-blue-700 text-white rounded-lg font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+                            >
+                                Start investing
+                            </Link>
+                            <Link
+                                href="/how-it-works"
+                                className="w-full sm:w-auto px-8 py-4 bg-transparent text-[#0B1220] dark:text-white border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg font-medium text-base transition-colors flex items-center justify-center gap-2"
+                            >
+                                See how it works
+                            </Link>
+                        </div>
+
+                        {/* Trust Line */}
+                        <div className="text-xs sm:text-sm font-medium text-slate-500 flex items-center gap-2">
+                            <span>SEBI regulated</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                            <span>ISO 27001 compliant</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                            <span>Real-time portfolio tracking</span>
+                        </div>
+
                     </div>
 
-                    {/* Bottom List: Recent Activity */}
-                    <Card className="h-44">
-                        <div className="flex justify-between items-center mb-4">
-                            <h4 className="text-xs font-bold text-slate-400 uppercase">Recent Activity</h4>
-                            <ArrowRight size={14} className="text-slate-400" />
-                        </div>
-                        <div className="space-y-3">
-                            {[
-                                { name: 'Bitcoin Purchase', date: 'Today, 10:23 AM', amount: '-₹25,000', icon: 'B', color: 'bg-orange-100 text-orange-600' },
-                                { name: 'SIP Deposit', date: 'Yesterday', amount: '+₹10,000', icon: '₹', color: 'bg-green-100 text-green-600' },
-                                { name: 'Apple Stock', date: 'Jan 2, 2024', amount: '+₹5,400', icon: 'A', color: 'bg-slate-200 text-slate-600' },
-                            ].map((item, i) => (
-                                <div key={i} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`w-8 h-8 rounded-full ${item.color} flex items-center justify-center font-bold text-xs`}>
-                                            {item.icon}
-                                        </div>
-                                        <div>
-                                            <p className="text-xs font-bold text-slate-900 dark:text-white">{item.name}</p>
-                                            <p className="text-[10px] text-slate-400">{item.date}</p>
-                                        </div>
-                                    </div>
-                                    <span className={`text-xs font-bold ${item.amount.startsWith('+') ? 'text-green-600' : 'text-slate-900 dark:text-white'}`}>
-                                        {item.amount}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </Card>
+                    {/* Right Visuals (Dashboard Mock) */}
+                    <div className="w-full relative mt-8 lg:mt-0 order-first lg:order-last">
+                        <DashboardMock />
+                    </div>
+
                 </div>
             </div>
-
-            {/* Floating Stats Card */}
-            <m.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-20 -left-10 w-64 bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-white/5 z-20"
-            >
-                <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 font-bold">
-                        <TrendingUp size={24} />
-                    </div>
-                    <div>
-                        <p className="text-xs font-bold text-slate-400 uppercase">Growth</p>
-                        <p className="text-xl font-black text-slate-900 dark:text-white">+24.5%</p>
-                    </div>
-                </div>
-                <div className="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                    <div className="bg-emerald-500 w-[75%] h-full rounded-full"></div>
-                </div>
-            </m.div>
-
-        </m.div>
+        </section>
     )
-
-    return <HeroLayout user={user} visuals={visuals} />
 }
-

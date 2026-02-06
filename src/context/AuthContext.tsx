@@ -61,13 +61,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const targetUid = impersonatedId || u.uid
         setIsImpersonating(!!impersonatedId)
 
-        profileUnsub = onSnapshot(doc(db, 'users', targetUid), (snap) => {
-          if (snap.exists()) {
-            setProfile(snap.data())
-          } else {
-            setProfile(null)
-          }
-        })
+        if (targetUid) {
+          profileUnsub = onSnapshot(doc(db, 'users', targetUid), (snap) => {
+            if (snap.exists()) {
+              setProfile(snap.data())
+            } else {
+              setProfile(null)
+            }
+          })
+        }
 
         // 2. Listen to Admin Status (Admins Collection or Super Email)
         if (u.email === 'yuvraj.basutkar24@gmail.com') {

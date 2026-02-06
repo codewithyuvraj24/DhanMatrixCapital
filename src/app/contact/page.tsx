@@ -1,9 +1,94 @@
 "use client"
-import { useState } from 'react'
-import { m, AnimatePresence } from 'framer-motion'
+import { m } from 'framer-motion'
 import { FadeIn } from "@/components/ui/Animations"
 import { Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, HelpCircle, ChevronDown } from "lucide-react"
 import { useForm, ValidationError } from '@formspree/react';
+import { memo } from 'react';
+
+// Memoized Contact Options List to prevent re-renders
+const ContactOptions = memo(() => {
+  const options = [
+    {
+      icon: <Mail size={20} strokeWidth={2.5} className="text-blue-600 dark:text-blue-400" />,
+      title: "Email Support",
+      info: "dhanmatrixcap@gmail.com",
+      sub: "Response within 24 hours",
+      link: "mailto:dhanmatrixcap@gmail.com"
+    },
+    {
+      icon: <Phone size={20} strokeWidth={2.5} className="text-indigo-600 dark:text-indigo-400" />,
+      title: "Call Us",
+      info: "+91 8446285154",
+      sub: "Mon-Fri, 9am-6pm IST",
+      link: "tel:+918446285154"
+    },
+    {
+      icon: <MapPin size={20} strokeWidth={2.5} className="text-slate-600 dark:text-slate-400" />,
+      title: "Office",
+      info: "Solapur, MH, India",
+      sub: "Visit us by appointment",
+      link: "#"
+    }
+  ]
+
+  return (
+    <div className="flex flex-col gap-3 mb-12 sm:mb-24">
+      {options.map((item, idx) => (
+        <m.div
+          key={idx}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: idx * 0.1 }}
+          className="group flex items-center gap-4 p-4 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl hover:border-blue-500/50 transition-all duration-300 shadow-sm active:scale-[0.98]"
+        >
+          <div className="w-10 h-10 shrink-0 bg-white dark:bg-slate-900 rounded-xl shadow-sm flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+            {item.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between mb-0.5">
+              <h3 className="font-bold text-sm dark:text-white truncate">{item.title}</h3>
+              <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider hidden sm:block">{item.sub}</span>
+            </div>
+            <a href={item.link} className="text-blue-600 dark:text-blue-400 font-bold text-sm sm:text-base hover:underline block truncate">
+              {item.info}
+            </a>
+          </div>
+        </m.div>
+      ))}
+    </div>
+  )
+})
+ContactOptions.displayName = 'ContactOptions'
+
+// Memoized FAQ Section
+const FAQSection = memo(() => (
+  <div className="max-w-2xl mx-auto">
+    <FadeIn delay={0.4}>
+      <div className="flex items-center gap-3 mb-8 px-2">
+        <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400">
+          <HelpCircle size={20} />
+        </div>
+        <h3 className="text-2xl font-black dark:text-white tracking-tight leading-none">Common <br className="sm:hidden" /><span className="text-indigo-600">Questions.</span></h3>
+      </div>
+      <div className="space-y-3">
+        {[
+          { q: "How do I get started?", a: "It's simple. Sign up, choose your preferred investment plan, and follow the steps to start growing your wealth." },
+          { q: "Minimum investment?", a: "You can start your investment journey with as little as ₹25,000." },
+          { q: "Is my data secure?", a: "We use 256-bit encryption and follow SEBI-aligned practices to ensure your data and investments are always safe." },
+          { q: "When can I withdraw?", a: "We offer flexible withdrawals. Most plans allow you to request money back with a 24-hour processing cycle." }
+        ].map((faq, idx) => (
+          <div key={idx} className="p-5 bg-white dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl">
+            <h4 className="font-bold text-sm mb-2 dark:text-white text-slate-900">{faq.q}</h4>
+            <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-medium">
+              {faq.a}
+            </p>
+          </div>
+        ))}
+      </div>
+    </FadeIn>
+  </div>
+))
+FAQSection.displayName = 'FAQSection'
 
 export default function Contact() {
   return (
@@ -20,52 +105,7 @@ export default function Contact() {
           </div>
         </FadeIn>
 
-        <div className="flex flex-col gap-3 mb-12 sm:mb-24">
-          {[
-            {
-              icon: <Mail size={20} strokeWidth={2.5} className="text-blue-600 dark:text-blue-400" />,
-              title: "Email Support",
-              info: "dhanmatrixcap@gmail.com",
-              sub: "Response within 24 hours",
-              link: "mailto:dhanmatrixcap@gmail.com"
-            },
-            {
-              icon: <Phone size={20} strokeWidth={2.5} className="text-indigo-600 dark:text-indigo-400" />,
-              title: "Call Us",
-              info: "+91 8446285154",
-              sub: "Mon-Fri, 9am-6pm IST",
-              link: "tel:+918446285154"
-            },
-            {
-              icon: <MapPin size={20} strokeWidth={2.5} className="text-slate-600 dark:text-slate-400" />,
-              title: "Office",
-              info: "Solapur, MH, India",
-              sub: "Visit us by appointment",
-              link: "#"
-            }
-          ].map((item, idx) => (
-            <m.div
-              key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="group flex items-center gap-4 p-4 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl hover:border-blue-500/50 transition-all duration-300 shadow-sm active:scale-[0.98]"
-            >
-              <div className="w-10 h-10 shrink-0 bg-white dark:bg-slate-900 rounded-xl shadow-sm flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                {item.icon}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-0.5">
-                  <h3 className="font-bold text-sm dark:text-white truncate">{item.title}</h3>
-                  <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider hidden sm:block">{item.sub}</span>
-                </div>
-                <a href={item.link} className="text-blue-600 dark:text-blue-400 font-bold text-sm sm:text-base hover:underline block truncate">
-                  {item.info}
-                </a>
-              </div>
-            </m.div>
-          ))}
-        </div>
+        <ContactOptions />
 
         <div className="max-w-5xl mx-auto mb-16 sm:mb-24 px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
@@ -93,32 +133,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* FAQ Section - kept simple below */}
-        <div className="max-w-2xl mx-auto">
-          <FadeIn delay={0.4}>
-            <div className="flex items-center gap-3 mb-8 px-2">
-              <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400">
-                <HelpCircle size={20} />
-              </div>
-              <h3 className="text-2xl font-black dark:text-white tracking-tight leading-none">Common <br className="sm:hidden" /><span className="text-indigo-600">Questions.</span></h3>
-            </div>
-            <div className="space-y-3">
-              {[
-                { q: "How do I get started?", a: "It's simple. Sign up, choose your preferred investment plan, and follow the steps to start growing your wealth." },
-                { q: "Minimum investment?", a: "You can start your investment journey with as little as ₹25,000." },
-                { q: "Is my data secure?", a: "We use 256-bit encryption and follow SEBI-aligned practices to ensure your data and investments are always safe." },
-                { q: "When can I withdraw?", a: "We offer flexible withdrawals. Most plans allow you to request money back with a 24-hour processing cycle." }
-              ].map((faq, idx) => (
-                <div key={idx} className="p-5 bg-white dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl">
-                  <h4 className="font-bold text-sm mb-2 dark:text-white text-slate-900">{faq.q}</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-medium">
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
+        <FAQSection />
       </div>
     </div>
   )

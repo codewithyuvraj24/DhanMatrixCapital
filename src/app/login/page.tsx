@@ -1,17 +1,66 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
-import { m, AnimatePresence } from 'framer-motion'
-import { FadeIn } from '@/components/ui/Animations'
-import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { m } from 'framer-motion'
+import { AlertCircle, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { checkRateLimit, recordFailedAttempt, clearLoginAttempts } from '@/lib/security'
+
+// Memoized Visuals Component to prevent re-renders on input
+const LoginVisuals = memo(() => {
+  return (
+    <div className="hidden lg:flex flex-col justify-center items-center p-12 bg-slate-900 rounded-[2rem] relative overflow-hidden order-1 lg:order-2 shadow-2xl">
+      <div className="w-full max-w-md relative z-10 text-center mb-10">
+        <h2 className="text-3xl font-bold text-white leading-tight mb-3">
+          Manage your <br /> <span className="text-blue-400">investments securely.</span>
+        </h2>
+        <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xs mx-auto">
+          Access your dashboard, track performance, and grow your wealth.
+        </p>
+      </div>
+
+      {/* Minimal Dashboard Abstraction - Dark Mode Optimized */}
+      <div className="relative w-full max-w-sm rounded-2xl bg-slate-800 shadow-2xl shadow-black/50 overflow-hidden border border-slate-700/50">
+        {/* Header */}
+        <div className="h-10 border-b border-slate-700/50 flex items-center px-4 gap-3 bg-slate-800">
+          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          <div className="w-2 h-2 rounded-full bg-slate-600"></div>
+          <div className="ml-auto w-16 h-2 rounded-full bg-slate-700"></div>
+        </div>
+        {/* Body */}
+        <div className="p-5 grid grid-cols-2 gap-4 bg-slate-900/50">
+          {/* Chart */}
+          <div className="col-span-2 bg-slate-800 p-4 rounded-xl border border-slate-700/50 shadow-sm h-32 flex items-end gap-2 px-6 pb-2 relative overflow-hidden">
+            {/* Gradient Graph */}
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-blue-500/10 to-transparent"></div>
+            <div className="flex-1 h-3/4 bg-blue-500 rounded-t-sm opacity-60"></div>
+            <div className="flex-1 h-1/2 bg-blue-500 rounded-t-sm opacity-40"></div>
+            <div className="flex-1 h-full bg-blue-500 rounded-t-sm"></div>
+            <div className="flex-1 h-2/3 bg-blue-500 rounded-t-sm opacity-50"></div>
+          </div>
+          {/* Stats */}
+          <div className="bg-slate-800 p-3 rounded-xl border border-slate-700/50 shadow-sm h-20">
+            <div className="w-6 h-6 rounded-full bg-slate-700 mb-2"></div>
+            <div className="w-12 h-2 rounded-full bg-slate-700"></div>
+          </div>
+          <div className="bg-blue-600 p-3 rounded-xl shadow-sm h-20 flex flex-col justify-end">
+            <div className="w-10 h-2 rounded-full bg-white/30"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Subtle texture - Deep & Mysterious */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-900/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+    </div>
+  )
+})
+LoginVisuals.displayName = 'LoginVisuals'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -31,20 +80,18 @@ export default function Login() {
     }
   }, [currentUser, profile, role, router])
 
-  // Real-time email validation
-  useEffect(() => {
+  // Validation on blur instead of every keystroke for performance
+  const validateEmail = () => {
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setEmailError('Invalid email format')
     } else {
       setEmailError('')
     }
-  }, [email])
+  }
 
-  const shakeVariants = {
-    shake: {
-      x: [0, -10, 10, -10, 10, 0],
-      transition: { duration: 0.4 }
-    }
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+    if (emailError) setEmailError('') // Clear error immediately when user starts typing again
   }
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
@@ -198,7 +245,8 @@ export default function Login() {
                     <input
                       type="email"
                       value={email}
-                      onChange={e => setEmail(e.target.value)}
+                      onChange={handleEmailChange}
+                      onBlur={validateEmail}
                       required
                       placeholder="name@company.com"
                       className={`w-full h-11 px-4 bg-slate-50 border ${emailError ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200 focus:border-slate-400 focus:ring-4 focus:ring-slate-100'} rounded-lg outline-none text-sm font-medium text-slate-900 transition-all placeholder:text-slate-400`}
@@ -282,50 +330,7 @@ export default function Login() {
         </div>
 
         {/* Right Side - Visuals - Premium Dark Navy */}
-        <div className="hidden lg:flex flex-col justify-center items-center p-12 bg-slate-900 rounded-[2rem] relative overflow-hidden order-1 lg:order-2 shadow-2xl">
-          <div className="w-full max-w-md relative z-10 text-center mb-10">
-            <h2 className="text-3xl font-bold text-white leading-tight mb-3">
-              Manage your <br /> <span className="text-blue-400">investments securely.</span>
-            </h2>
-            <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xs mx-auto">
-              Access your dashboard, track performance, and grow your wealth.
-            </p>
-          </div>
-
-          {/* Minimal Dashboard Abstraction - Dark Mode Optimized */}
-          <div className="relative w-full max-w-sm rounded-2xl bg-slate-800 shadow-2xl shadow-black/50 overflow-hidden border border-slate-700/50">
-            {/* Header */}
-            <div className="h-10 border-b border-slate-700/50 flex items-center px-4 gap-3 bg-slate-800">
-              <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-              <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-              <div className="ml-auto w-16 h-2 rounded-full bg-slate-700"></div>
-            </div>
-            {/* Body */}
-            <div className="p-5 grid grid-cols-2 gap-4 bg-slate-900/50">
-              {/* Chart */}
-              <div className="col-span-2 bg-slate-800 p-4 rounded-xl border border-slate-700/50 shadow-sm h-32 flex items-end gap-2 px-6 pb-2 relative overflow-hidden">
-                {/* Gradient Graph */}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-blue-500/10 to-transparent"></div>
-                <div className="flex-1 h-3/4 bg-blue-500 rounded-t-sm opacity-60"></div>
-                <div className="flex-1 h-1/2 bg-blue-500 rounded-t-sm opacity-40"></div>
-                <div className="flex-1 h-full bg-blue-500 rounded-t-sm"></div>
-                <div className="flex-1 h-2/3 bg-blue-500 rounded-t-sm opacity-50"></div>
-              </div>
-              {/* Stats */}
-              <div className="bg-slate-800 p-3 rounded-xl border border-slate-700/50 shadow-sm h-20">
-                <div className="w-6 h-6 rounded-full bg-slate-700 mb-2"></div>
-                <div className="w-12 h-2 rounded-full bg-slate-700"></div>
-              </div>
-              <div className="bg-blue-600 p-3 rounded-xl shadow-sm h-20 flex flex-col justify-end">
-                <div className="w-10 h-2 rounded-full bg-white/30"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Subtle texture - Deep & Mysterious */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-900/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
-        </div>
+        <LoginVisuals />
 
       </div>
     </div>

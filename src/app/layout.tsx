@@ -3,13 +3,19 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { AuthProvider } from '@/context/AuthContext'
 import { ThemeProvider } from '@/context/ThemeContext'
-import BackgroundOrbs from '@/components/layout/BackgroundOrbs'
+// import BackgroundOrbs from '@/components/layout/BackgroundOrbs' // Replaced with dynamic import
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ToastProvider } from '@/components/ui/PremiumToast'
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from 'react'
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { OrganizationSchema } from '@/components/seo/StructuredData'
+import dynamic from 'next/dynamic'
+
+// Lazy load background animations so initial paint is faster
+const BackgroundOrbs = dynamic(() => import('@/components/layout/BackgroundOrbs'), {
+  ssr: false,
+})
 
 const inter = Inter({
   subsets: ['latin'],

@@ -34,46 +34,48 @@ export function InvestmentTrendChart() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return <div className="h-[300px]" />
+  if (!mounted) return <div className="h-[250px] w-full bg-slate-100 dark:bg-white/5 rounded-xl animate-pulse" />
 
   return (
     <div className="w-full p-4">
       <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Investment Momentum</h2>
-      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
-        <LineChart data={investmentTrendData}>
-          <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
-          <XAxis
-            dataKey="month"
-            stroke={isDark ? "#94a3b8" : "#64748b"}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <YAxis
-            stroke={isDark ? "#94a3b8" : "#64748b"}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: isDark ? '#1e293b' : '#ffffff',
-              borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-              borderRadius: '16px',
-              boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
-              color: isDark ? '#f8fafc' : '#1e293b'
-            }}
-          />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#3b82f6"
-            strokeWidth={4}
-            dot={{ fill: '#3b82f6', strokeWidth: 2, r: 6, stroke: isDark ? '#0f172a' : '#fff' }}
-            activeDot={{ r: 8, strokeWidth: 0 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <div style={{ width: '100%', height: 250 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={investmentTrendData}>
+            <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
+            <XAxis
+              dataKey="month"
+              stroke={isDark ? "#94a3b8" : "#64748b"}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke={isDark ? "#94a3b8" : "#64748b"}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                borderRadius: '16px',
+                boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+                color: isDark ? '#f8fafc' : '#1e293b'
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#3b82f6"
+              strokeWidth={4}
+              dot={{ fill: '#3b82f6', strokeWidth: 2, r: 6, stroke: isDark ? '#0f172a' : '#fff' }}
+              activeDot={{ r: 8, strokeWidth: 0 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   )
 }
@@ -87,37 +89,39 @@ export function PortfolioBreakdownChart() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return <div className="h-[300px]" />
+  if (!mounted) return <div className="h-[250px] w-full bg-slate-100 dark:bg-white/5 rounded-xl animate-pulse" />
 
   return (
     <div className="w-full p-4">
       <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Asset Distribution</h2>
-      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
-        <PieChart>
-          <Pie
-            data={portfolioData}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {portfolioData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
-            ))}
-          </Pie>
-          <Tooltip
-            contentStyle={{
-              backgroundColor: isDark ? '#1e293b' : '#ffffff',
-              borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-              borderRadius: '16px',
-              color: isDark ? '#f8fafc' : '#1e293b'
-            }}
-          />
-          <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px', fontSize: '12px', fontWeight: 'bold' }} />
-        </PieChart>
-      </ResponsiveContainer>
+      <div style={{ width: '100%', height: 250 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={portfolioData}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {portfolioData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                borderRadius: '16px',
+                color: isDark ? '#f8fafc' : '#1e293b'
+              }}
+            />
+            <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px', fontSize: '12px', fontWeight: 'bold' }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   )
 }
@@ -131,38 +135,40 @@ export function PlanComparisonChart() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return <div className="h-[300px]" />
+  if (!mounted) return <div className="h-[250px] w-full bg-slate-100 dark:bg-white/5 rounded-xl animate-pulse" />
 
   return (
     <div className="w-full p-4">
       <h2 className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-4">Yield Projections</h2>
-      <ResponsiveContainer width="100%" height={250} minWidth={0} minHeight={0} debounce={50}>
-        <BarChart data={returnData}>
-          <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
-          <XAxis
-            dataKey="plan"
-            stroke={isDark ? "#94a3b8" : "#64748b"}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <YAxis
-            stroke={isDark ? "#94a3b8" : "#64748b"}
-            fontSize={12}
-            tickLine={false}
-            axisLine={false}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: isDark ? '#1e293b' : '#ffffff',
-              borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-              borderRadius: '16px',
-              color: isDark ? '#f8fafc' : '#1e293b'
-            }}
-          />
-          <Bar dataKey="return" fill="#10b981" radius={[12, 12, 0, 0]} barSize={40} />
-        </BarChart>
-      </ResponsiveContainer>
+      <div style={{ width: '100%', height: 250 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={returnData}>
+            <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"} />
+            <XAxis
+              dataKey="plan"
+              stroke={isDark ? "#94a3b8" : "#64748b"}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke={isDark ? "#94a3b8" : "#64748b"}
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                borderRadius: '16px',
+                color: isDark ? '#f8fafc' : '#1e293b'
+              }}
+            />
+            <Bar dataKey="return" fill="#10b981" radius={[12, 12, 0, 0]} barSize={40} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   )
 }
