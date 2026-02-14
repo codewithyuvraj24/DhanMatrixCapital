@@ -1,10 +1,8 @@
 'use client'
 
 import { Suspense, lazy } from 'react'
-import { ChartSkeleton } from '@/components/ui/Skeleton'
 
 const InvestmentTrendChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.InvestmentTrendChart })))
-const PortfolioBreakdownChart = lazy(() => import('@/components/features/Charts').then(m => ({ default: m.PortfolioBreakdownChart })))
 const GoalTracker = lazy(() => import('@/components/features/GoalTracker'))
 const ROICalculator = lazy(() => import('@/components/features/ROICalculator'))
 const PortfolioHealth = lazy(() => import('@/components/features/PortfolioHealth'))
@@ -18,43 +16,32 @@ interface DashboardChartsProps {
 
 export function DashboardCharts({ totalInvested, activeInvestments, totalInvestments, initialGoal }: DashboardChartsProps) {
     return (
-        <>
-            {/* Analytics Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <Suspense fallback={<ChartSkeleton />}>
-                    <div className="lg:col-span-2">
-                        <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-1.5 rounded-2xl overflow-hidden min-h-[300px] shadow-sm">
-                            <InvestmentTrendChart />
-                        </div>
-                    </div>
-                </Suspense>
+        <div className="space-y-4 sm:space-y-6">
+            {/* Main Chart */}
+            <Suspense fallback={<div className="bg-white dark:bg-slate-800 rounded-lg p-4 sm:p-6 h-64 sm:h-80 animate-pulse border border-slate-200 dark:border-slate-700" />}>
+                <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 sm:p-6">
+                    <InvestmentTrendChart />
+                </div>
+            </Suspense>
 
-                <Suspense fallback={<ChartSkeleton />}>
-                    <div className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-1.5 rounded-2xl overflow-hidden h-full min-h-[300px] shadow-sm">
-                        <PortfolioBreakdownChart />
-                    </div>
-                </Suspense>
-            </div>
-
-            {/* Wealth Tracking Tools */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
-                <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-2xl animate-pulse" />}>
+            {/* Secondary Widgets */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <Suspense fallback={<div className="bg-white dark:bg-slate-800 rounded-lg p-4 sm:p-6 h-48 animate-pulse border border-slate-200 dark:border-slate-700" />}>
                     <GoalTracker currentAmount={totalInvested} initialGoal={initialGoal} />
                 </Suspense>
 
-                <Suspense fallback={<div className="h-64 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-2xl animate-pulse" />}>
+                <Suspense fallback={<div className="bg-white dark:bg-slate-800 rounded-lg p-4 sm:p-6 h-48 animate-pulse border border-slate-200 dark:border-slate-700" />}>
                     <PortfolioHealth
                         activeInvestments={activeInvestments}
                         totalInvestments={totalInvestments}
                     />
                 </Suspense>
-
-                <Suspense fallback={<div className="h-64 lg:col-span-3 bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-2xl animate-pulse" />}>
-                    <div className="lg:col-span-3">
-                        <ROICalculator />
-                    </div>
-                </Suspense>
             </div>
-        </>
+
+            {/* ROI Calculator */}
+            <Suspense fallback={<div className="bg-white dark:bg-slate-800 rounded-lg p-4 sm:p-6 h-64 sm:h-96 animate-pulse border border-slate-200 dark:border-slate-700" />}>
+                <ROICalculator />
+            </Suspense>
+        </div>
     )
 }

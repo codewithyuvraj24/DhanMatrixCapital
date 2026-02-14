@@ -1,129 +1,111 @@
-"use client"
 
-import { ArrowUpRight, ArrowDownRight, Info, MoreHorizontal } from "lucide-react"
+
+import { ArrowUpRight, TrendingUp } from "lucide-react"
 
 export default function DashboardMock() {
     return (
-        <div className="relative w-full max-w-[500px] mx-auto lg:ml-auto select-none">
-            {/* Main Container - Realistic Product Feel */}
-            <div className="bg-white dark:bg-[#0B1220] rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="relative w-full max-w-[600px] mx-auto lg:ml-auto select-none p-4">
+            {/* Main Application Window */}
+            <div className="bg-white dark:bg-[#0B1220] rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] border border-slate-100 dark:border-slate-800 p-6 sm:p-8 relative z-10">
 
-                {/* Header / Nav */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800/50">
-                    <div className="flex items-center gap-2">
-                        <div className="h-3 w-3 rounded-full bg-slate-200 dark:bg-slate-700"></div>
-                        <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">Portfolio Overview</span>
+                {/* Header Section */}
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mb-8">
+                    <div>
+                        <p className="text-[10px] sms:text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Total Balance</p>
+                        <h3 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">₹14,20,500</h3>
+
+                        {/* Fake Bar Chart */}
+                        <div className="flex items-end gap-1.5 h-12 sm:h-16">
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[40%]"></div>
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[70%]"></div>
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[50%]"></div>
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[85%]"></div>
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[60%]"></div>
+                            <div className="w-8 sm:w-10 bg-slate-100 dark:bg-slate-800 rounded-t-md h-[90%]"></div>
+                        </div>
                     </div>
-                    <div className="text-[10px] text-slate-400 font-mono">Today • 10:42 AM IST</div>
+
+                    <div className="flex flex-col items-end">
+                        <div className="flex items-center gap-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-6">
+                            <ArrowUpRight size={14} strokeWidth={3} />
+                            +12.4%
+                        </div>
+
+                        {/* Donut Chart Mock */}
+                        <div className="relative w-24 h-24 flex items-center justify-center">
+                            <div className="absolute inset-0 rounded-full border-[6px] border-slate-100 dark:border-slate-800"></div>
+                            <div className="absolute inset-0 rounded-full border-[6px] border-blue-600 border-t-transparent border-l-transparent rotate-45"></div>
+                            <div className="text-center">
+                                <div className="text-[9px] font-bold text-slate-400 uppercase">Assets</div>
+                                <div className="text-xl font-black text-slate-900 dark:text-white">5</div>
+                            </div>
+                        </div>
+                        <div className="flex gap-3 mt-3 text-[9px] font-bold text-slate-400">
+                            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-blue-600"></div>Stocks</div>
+                            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-purple-500"></div>Crypto</div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Main Content Area */}
-                <div className="p-5 space-y-6">
-
-                    {/* Top Metric Section */}
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <p className="text-xs text-slate-500 font-medium mb-1">Total invested value</p>
-                            <h3 className="text-2xl font-bold text-[#0B1220] dark:text-white tracking-tight">₹14,18,740</h3>
-
-                            <div className="flex items-center gap-3 mt-2">
-                                <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-1.5 py-0.5 rounded">
-                                    <ArrowUpRight size={12} strokeWidth={2.5} />
-                                    <span>18.7%</span>
-                                </div>
-                                <span className="text-xs text-slate-400 font-medium">1Y Return</span>
-                            </div>
-                        </div>
-
-                        <div className="text-right">
-                            <p className="text-xs text-slate-500 font-medium mb-1 flex items-center justify-end gap-1">
-                                Today's P&L
-                                <Info size={10} className="text-slate-300" />
-                            </p>
-                            <p className="text-sm font-semibold text-rose-500 flex items-center justify-end gap-0.5">
-                                <ArrowDownRight size={14} strokeWidth={2.5} />
-                                ₹820
-                            </p>
-                        </div>
+                {/* Recent Activity */}
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <div className="flex justify-between items-center mb-4">
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recent Activity</h4>
+                        <ArrowUpRight size={14} className="text-slate-400" />
                     </div>
-
-                    {/* Holdings List (Scrollable feel) */}
-                    <div className="space-y-3">
-                        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Active Holdings</h4>
-
-                        {/* Holding Item 1 */}
-                        <div className="flex items-center justify-between p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-slate-200 transition-colors cursor-default">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-blue-600 text-white flex items-center justify-center text-xs font-bold">H</div>
-                                <div>
-                                    <p className="text-sm font-semibold text-[#0B1220] dark:text-gray-100">HDFC Bank</p>
-                                    <p className="text-[10px] text-slate-400">Avg. 1450.20</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-sm font-bold text-[#0B1220] dark:text-gray-100">₹4,25,000</p>
-                                <p className="text-[10px] text-emerald-600 font-medium">+12.4%</p>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500 font-bold">B</div>
+                            <div>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white">Bitcoin Purchase</p>
+                                <p className="text-[10px] font-medium text-slate-400">Today, 10:23 AM</p>
                             </div>
                         </div>
-
-                        {/* Holding Item 2 */}
-                        <div className="flex items-center justify-between p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-slate-200 transition-colors cursor-default">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">I</div>
-                                <div>
-                                    <p className="text-sm font-semibold text-[#0B1220] dark:text-gray-100">Infosys</p>
-                                    <p className="text-[10px] text-slate-400">Avg. 1380.50</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-sm font-bold text-[#0B1220] dark:text-gray-100">₹2,10,500</p>
-                                <p className="text-[10px] text-emerald-600 font-medium">+8.2%</p>
-                            </div>
-                        </div>
-
-                        {/* Holding Item 3 (Cut off to imply scroll) */}
-                        <div className="flex items-center justify-between p-3 rounded-lg border border-slate-100 dark:border-slate-800 opacity-50">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded bg-orange-500 text-white flex items-center justify-center text-xs font-bold">R</div>
-                                <div>
-                                    <p className="text-sm font-semibold text-[#0B1220] dark:text-gray-100">Reliance Ind.</p>
-                                    <p className="text-[10px] text-slate-400">Avg. 2400.00</p>
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-sm font-bold text-[#0B1220] dark:text-gray-100">₹5,40,000</p>
-                                <p className="text-[10px] text-emerald-600 font-medium">+24.1%</p>
-                            </div>
-                        </div>
-
+                        <span className="text-sm font-bold text-slate-900 dark:text-white">-₹25,000</span>
                     </div>
-
-                    {/* Orders Section */}
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800/50">
-                        <div className="flex items-center justify-between text-slate-400 mb-2">
-                            <h4 className="text-[11px] font-bold uppercase tracking-widest">Orders & Adjustments</h4>
-                            <MoreHorizontal size={14} />
-                        </div>
-                        <div className="flex items-center justify-between py-2">
-                            <div className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                                <span className="text-xs text-slate-600 dark:text-slate-300">SIP Executed (Nifty 50)</span>
+                    <div className="flex items-center justify-between mt-4 opacity-50">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 font-bold">S</div>
+                            <div>
+                                <p className="text-sm font-bold text-slate-900">Stock Dividend</p>
                             </div>
-                            <span className="text-[10px] text-slate-400">10:00 AM</span>
                         </div>
+                        <span className="text-sm font-bold text-emerald-600">+₹10,000</span>
                     </div>
-
+                    <div className="flex items-center justify-between mt-4 opacity-30">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 font-bold">D</div>
+                            <div>
+                                <p className="text-sm font-bold text-slate-900">Deposit</p>
+                            </div>
+                        </div>
+                        <span className="text-sm font-bold text-emerald-600">+₹5,400</span>
+                    </div>
                 </div>
-
-                {/* Footer info/disclaimer */}
-                <div className="bg-slate-50 dark:bg-slate-900/50 px-4 py-2 border-t border-slate-100 dark:border-slate-800/50">
-                    <p className="text-[9px] text-slate-400 text-center">Returns exclude taxes and brokerage</p>
-                </div>
-
             </div>
 
-            {/* Decorative Blur behind (Subtle) */}
-            <div className="absolute -z-10 top-10 left-10 right-10 bottom-10 bg-blue-500/5 blur-3xl rounded-full"></div>
+            {/* Floating Growth Card */}
+            <div className="absolute bottom-8 -left-4 sm:-left-12 bg-white dark:bg-[#0B1220] p-5 rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] border border-slate-100 dark:border-slate-800 z-20 w-48 animate-bounce-slow">
+                <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-500">
+                        <TrendingUp size={20} strokeWidth={3} />
+                    </div>
+                    <div className="text-right">
+                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Growth</p>
+                        <p className="text-xl font-black text-slate-900 dark:text-white">+24.5%</p>
+                    </div>
+                </div>
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="bg-emerald-500 w-[75%] h-full rounded-full"></div>
+                </div>
+            </div>
+
+            {/* Top Dots */}
+            <div className="absolute -top-6 left-8 flex gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-400"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+            </div>
         </div>
     )
 }

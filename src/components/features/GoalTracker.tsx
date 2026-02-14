@@ -26,122 +26,135 @@ export default function GoalTracker({ currentAmount, initialGoal }: GoalTrackerP
     }
 
     return (
-        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 p-6 rounded-2xl">
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
-                        <Target className="text-purple-600 dark:text-purple-400" size={20} />
-                    </div>
-                    <h2 className="text-lg font-black text-slate-900 dark:text-white">Investment Goal</h2>
-                </div>
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h3 className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">Investment Goal</h3>
                 {!isEditing && (
                     <button
                         onClick={() => {
                             setIsEditing(true)
                             setTempGoal(goalAmount.toString())
                         }}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-colors"
+                        className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors"
                     >
-                        <Edit3 size={16} className="text-slate-600 dark:text-slate-300" />
+                        <Edit3 size={14} className="text-slate-600 dark:text-slate-300" />
                     </button>
                 )}
             </div>
 
             {/* Circular Progress */}
-            <div className="flex flex-col items-center">
-                <div className="relative w-48 h-48">
-                    <svg className="transform -rotate-90 w-48 h-48">
+            <div className="flex flex-col items-center mb-4 sm:mb-6">
+                <div className="relative w-32 h-32 sm:w-36 sm:h-36">
+                    <svg className="transform -rotate-90 w-32 h-32 sm:w-36 sm:h-36">
                         {/* Background circle */}
                         <circle
-                            cx="96"
-                            cy="96"
-                            r="90"
+                            cx="64"
+                            cy="64"
+                            r="58"
                             stroke="currentColor"
-                            strokeWidth="12"
+                            strokeWidth="8"
                             fill="none"
-                            className="text-slate-100 dark:text-white/5"
+                            className="text-slate-100 dark:text-slate-700 sm:hidden"
+                        />
+                        <circle
+                            cx="72"
+                            cy="72"
+                            r="64"
+                            stroke="currentColor"
+                            strokeWidth="8"
+                            fill="none"
+                            className="text-slate-100 dark:text-slate-700 hidden sm:block"
                         />
                         {/* Progress circle */}
                         <m.circle
-                            cx="96"
-                            cy="96"
-                            r="90"
-                            stroke="url(#gradient)"
-                            strokeWidth="12"
+                            cx="64"
+                            cy="64"
+                            r="58"
+                            stroke="currentColor"
+                            strokeWidth="8"
                             fill="none"
                             strokeLinecap="round"
                             strokeDasharray={circumference}
                             initial={{ strokeDashoffset: circumference }}
                             animate={{ strokeDashoffset }}
                             transition={{ duration: 1, ease: "easeOut" }}
+                            className="text-emerald-500 dark:text-emerald-400 sm:hidden"
                         />
-                        <defs>
-                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="#8B5CF6" />
-                                <stop offset="100%" stopColor="#EC4899" />
-                            </linearGradient>
-                        </defs>
+                        <m.circle
+                            cx="72"
+                            cy="72"
+                            r="64"
+                            stroke="currentColor"
+                            strokeWidth="8"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeDasharray={circumference * 1.1}
+                            initial={{ strokeDashoffset: circumference * 1.1 }}
+                            animate={{ strokeDashoffset: strokeDashoffset * 1.1 }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="text-emerald-500 dark:text-emerald-400 hidden sm:block"
+                        />
                     </svg>
 
                     {/* Center content */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                        <p className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
                             {Math.round(progress)}%
                         </p>
-                        <p className="text-xs text-slate-600 dark:text-slate-300 font-bold uppercase tracking-widest mt-1">Complete</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Complete</p>
                     </div>
                 </div>
+            </div>
 
-                {/* Amounts */}
-                <div className="mt-8 w-full space-y-3">
+            {/* Amounts */}
+            <div className="space-y-2 sm:space-y-3">
+                <div className="flex justify-between items-center">
+                    <span className="text-xs text-slate-600 dark:text-slate-400">Current</span>
+                    <span className="text-sm font-medium text-slate-900 dark:text-white">
+                        ₹{currentAmount.toLocaleString('en-IN')}
+                    </span>
+                </div>
+
+                {isEditing ? (
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-600 dark:text-slate-400">Target</span>
+                        <div className="flex-1 flex items-center gap-2">
+                            <input
+                                type="number"
+                                value={tempGoal}
+                                onChange={e => setTempGoal(e.target.value)}
+                                className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                autoFocus
+                            />
+                            <button
+                                onClick={handleSave}
+                                className="p-1 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition-colors"
+                            >
+                                <Check size={14} />
+                            </button>
+                            <button
+                                onClick={() => setIsEditing(false)}
+                                className="p-1 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-white rounded hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors"
+                            >
+                                <X size={14} />
+                            </button>
+                        </div>
+                    </div>
+                ) : (
                     <div className="flex justify-between items-center">
-                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Current</span>
-                        <span className="text-base font-black text-slate-900 dark:text-white">
-                            ₹{currentAmount.toLocaleString('en-IN')}
+                        <span className="text-xs text-slate-600 dark:text-slate-400">Target</span>
+                        <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                            ₹{goalAmount.toLocaleString('en-IN')}
                         </span>
                     </div>
+                )}
 
-                    {isEditing ? (
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
-                            <div className="flex-1 flex items-center gap-2">
-                                <input
-                                    type="number"
-                                    value={tempGoal}
-                                    onChange={e => setTempGoal(e.target.value)}
-                                    className="flex-1 px-3 py-1.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-purple-500"
-                                    autoFocus
-                                />
-                                <button
-                                    onClick={handleSave}
-                                    className="p-1.5 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
-                                >
-                                    <Check size={16} />
-                                </button>
-                                <button
-                                    onClick={() => setIsEditing(false)}
-                                    className="p-1.5 bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-white/20 transition-colors"
-                                >
-                                    <X size={16} />
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex justify-between items-center">
-                            <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Target</span>
-                            <span className="text-base font-black text-purple-600 dark:text-purple-400">
-                                ₹{goalAmount.toLocaleString('en-IN')}
-                            </span>
-                        </div>
-                    )}
-
-                    <div className="pt-3 border-t border-slate-100 dark:border-white/5">
-                        <div className="flex justify-between items-center">
-                            <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Remaining</span>
-                            <span className="text-lg font-black text-orange-600 dark:text-orange-400">
-                                ₹{Math.max(0, goalAmount - currentAmount).toLocaleString('en-IN')}
-                            </span>
-                        </div>
+                <div className="pt-2 sm:pt-3 border-t border-slate-200 dark:border-slate-700">
+                    <div className="flex justify-between items-center">
+                        <span className="text-xs text-slate-600 dark:text-slate-400">Remaining</span>
+                        <span className="text-sm font-medium text-slate-900 dark:text-white">
+                            ₹{Math.max(0, goalAmount - currentAmount).toLocaleString('en-IN')}
+                        </span>
                     </div>
                 </div>
             </div>

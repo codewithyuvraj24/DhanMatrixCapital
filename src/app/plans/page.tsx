@@ -9,21 +9,61 @@ import { InvestmentProductSchema } from '@/components/seo/StructuredData'
 const plans = [
   {
     id: 1,
-    name: 'Growth Plan',
-    minInvestment: '₹25,000',
-    annualReturn: '5-9%',
+    name: 'Silver Plan',
+    minInvestment: '₹25,000 - ₹75,000',
+    annualReturn: '5%',
     term: 'Flexible',
-    description: 'A balanced approach for steady growth with the flexibility to withdraw your money whenever you need it.',
+    description: 'Perfect for getting started. A balanced approach for steady growth with complete flexibility.',
     features: [
       "Withdraw money anytime",
       "Process within 24 hours",
       "100% Tax-free returns",
       "Real-time tracking",
       "Smart risk management",
+      "Standard support"
+    ],
+    icon: Shield,
+    iconColor: "text-slate-400",
+    popular: false
+  },
+  {
+    id: 2,
+    name: 'Gold Plan',
+    minInvestment: '₹75,000 - ₹1,25,000',
+    annualReturn: '5.7%',
+    term: 'Flexible',
+    description: 'Our most popular choice. Enhanced returns for serious investors looking for optimal growth.',
+    features: [
+      "Withdraw money anytime",
+      "Process within 24 hours",
+      "100% Tax-free returns",
+      "Real-time tracking",
+      "Priority risk management",
       "Priority help & support"
     ],
-    icon: <TrendingUp className="text-blue-500" size={32} />,
+    icon: Zap,
+    iconColor: "text-amber-500",
     popular: true
+  },
+  {
+    id: 3,
+    name: 'Platinum Plan',
+    minInvestment: '₹1,25,000 - ₹2,50,000',
+    annualReturn: '6.2%',
+    term: 'Flexible',
+    description: 'Maximum returns for high-value investments. Premium service and exclusive benefits.',
+    features: [
+      "Withdraw money anytime",
+      "Instant processing",
+      "100% Tax-free returns",
+      "Real-time tracking",
+      "Advanced risk strategies",
+      "Dedicated Relationship Manager"
+    ],
+    icon: Crown,
+    iconColor: "text-blue-500",
+    popular: false,
+    premium: true
   }
 ]
 
@@ -48,11 +88,11 @@ export default function Plans() {
           <FadeIn>
             <div className="text-left max-w-4xl">
               <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-black mb-3 text-slate-900 dark:text-white leading-[1.1] tracking-tighter">
-                Investment <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Growth Plans.</span>
+                Choose Your <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Investment Plan</span>
               </h1>
               <p className="text-sm sm:text-xl text-slate-500 dark:text-slate-400 font-medium mb-6 max-w-2xl leading-relaxed">
-                Choose the right plan to grow your wealth with crystal clear transparency and proven results.
+                Flexible plans based on your investment amount. Higher commitment, better returns.
               </p>
 
               {/* Trust Strip */}
@@ -115,7 +155,7 @@ export default function Plans() {
         </div>
 
         <StaggerContainer>
-          <div className="max-w-xl mx-auto mb-16 relative">
+          <div className="max-w-7xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-3 gap-6 relative px-4 sm:px-0">
             {/* Security Badge Absolute */}
             {/* Removed absolute center badge for cleaner grid layout, replaced with inline Trust Strip above */}
 
@@ -124,19 +164,21 @@ export default function Plans() {
                 <m.div
                   className={`h-full border rounded-2xl p-4 sm:p-10 cursor-pointer transition-all duration-300 relative overflow-hidden group shadow-lg hover:shadow-2xl hover:-translate-y-2 ${selectedPlan === plan.id
                     ? 'border-blue-600 bg-white dark:bg-white/10 ring-2 ring-blue-600 ring-offset-2 dark:ring-offset-black'
-                    : 'border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-md hover:border-blue-500/50'
+                    : plan.premium
+                      ? 'border-indigo-500/30 bg-gradient-to-b from-white/80 to-indigo-50/50 dark:from-white/5 dark:to-indigo-500/10 backdrop-blur-md hover:border-indigo-500/50 hover:shadow-indigo-500/20'
+                      : 'border-slate-200 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-md hover:border-blue-500/50'
                     }`}
                   onClick={() => setSelectedPlan(selectedPlan === plan.id ? null : plan.id)}
                 >
                   {plan.popular && (
-                    <div className="absolute top-0 right-0 px-6 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-bl-2xl">
+                    <div className="absolute top-0 right-0 px-6 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-bl-2xl z-10">
                       Most Popular
                     </div>
                   )}
 
                   <div className="flex justify-between items-start mb-6 mt-2">
-                    <div className={`p-3.5 rounded-2xl shadow-xl shadow-black/5 group-hover:scale-110 transition-transform duration-500 ${plan.popular ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-slate-50 dark:bg-slate-800'}`}>
-                      {plan.id === 1 ? <TrendingUp size={24} className="text-blue-500" /> : plan.icon}
+                    <div className={`p-3.5 rounded-2xl shadow-xl shadow-black/5 group-hover:scale-110 transition-transform duration-500 ${plan.popular ? 'bg-blue-50 dark:bg-blue-900/20' : plan.premium ? 'bg-indigo-50 dark:bg-indigo-900/20' : 'bg-slate-50 dark:bg-slate-800'}`}>
+                      <plan.icon size={24} className={plan.iconColor} />
                     </div>
                   </div>
 
@@ -147,13 +189,13 @@ export default function Plans() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight opacity-70">Returns / Mo</span>
                     </div>
                     <div className="text-[8px] font-bold text-slate-400/60 uppercase tracking-widest flex items-center gap-1">
-                      <AlertTriangle size={8} /> Historical Range • Past perf. not guaranteed
+                      <AlertTriangle size={8} /> Returns are indicative
                     </div>
                   </div>
 
                   <div className="space-y-1 mb-5">
                     <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Min Investment</span>
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Invested Amount</span>
                       <span className="font-bold text-sm text-slate-900 dark:text-white">{plan.minInvestment}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
@@ -168,7 +210,7 @@ export default function Plans() {
                         ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/30'
                         : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white hover:shadow-lg'}`}
                     >
-                      {selectedPlan === plan.id ? 'Plan Selected' : 'Start Investing'}
+                      {selectedPlan === plan.id ? 'Plan Selected' : 'Invest Now'}
                       {selectedPlan !== plan.id && <TrendingUp size={14} />}
                     </button>
                     <p className="text-[9px] font-bold text-slate-400/60 text-center uppercase tracking-widest leading-none">No hidden charges • Secure</p>
@@ -176,6 +218,12 @@ export default function Plans() {
                 </m.div>
               </StaggerItem>
             ))}
+          </div>
+
+          <div className="text-center mt-12 mb-16 px-4">
+            <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">
+              Returns are indicative and subject to market conditions.
+            </p>
           </div>
         </StaggerContainer>
 
@@ -193,7 +241,10 @@ export default function Plans() {
                   <div className="flex-1">
                     <div className="flex items-center gap-6 mb-10">
                       <div className="bg-blue-600 dark:bg-blue-600/90 rounded-2xl p-4 shadow-xl shadow-blue-500/10 text-white">
-                        {plans.find(p => p.id === selectedPlan)?.icon}
+                        {(() => {
+                          const PlanIcon = plans.find(p => p.id === selectedPlan)?.icon
+                          return PlanIcon ? <PlanIcon size={32} className="text-white" /> : null
+                        })()}
                       </div>
                       <div>
                         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-1">Selected Plan</div>
