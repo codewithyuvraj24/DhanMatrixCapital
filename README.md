@@ -4,8 +4,6 @@
 
 DhanMatrix Capital is a premium fintech platform designed to provide high-growth investment strategies to Indian investors. Built with a focus on **transparency**, **security**, and **performance**, it offers a seamless, app-like experience on the web.
 
-[Dashboard Screenshot]
-
 ---
 
 ## 🌟 Key Features
