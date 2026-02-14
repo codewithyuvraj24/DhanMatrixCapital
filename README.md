@@ -9,14 +9,8 @@
       C A P I T A L   •   W E A L T H   •   F U T U R E
 ```
 
-<<<<<<< HEAD
 > **"The only wealth management platform you'll ever need."**  
 > *Institutional-grade strategies. Consumer-grade simplicity.*
-=======
-**Institutional-Grade Wealth Management for the Modern Investor.**
-
-DhanMatrix Capital is a premium fintech platform designed to provide high-growth investment strategies to Indian investors. Built with a focus on **transparency**, **security**, and **performance**, it offers a seamless, app-like experience on the web.
->>>>>>> 8d37e86e5c1379f2e27682b89981fe200feb7ced
 
 ---
 
