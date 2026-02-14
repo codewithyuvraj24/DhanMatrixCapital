@@ -1,4 +1,4 @@
-# DhanMatrix Capital 🚀
+# DhanMatrixCapital 🚀
 
 **Institutional-Grade Wealth Management for the Modern Investor.**
 
