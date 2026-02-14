@@ -1,113 +1,150 @@
-# DhanMatrixCapital 🚀
+# 
+```
+  _____  _                  __  __       _        _times_  
+ |  __ \| |                |  \/  |     | |      (_)      
+ | |  | | |__   __ _ _ __  | \  / | __ _| |_ _ __ ___  __ 
+ | |  | | '_ \ / _` | '_ \ | |\/| |/ _` | __| '__| \ \/ / 
+ | |__| | | | | (_| | | | || |  | | (_| | |_| |  | |>  <  
+ |_____/|_| |_|\__,_|_| |_||_|  |_|\__,_|\__|_|  |_/_/\_\ 
+      C A P I T A L   •   W E A L T H   •   F U T U R E
+```
 
-**Institutional-Grade Wealth Management for the Modern Investor.**
-
-DhanMatrix Capital is a premium fintech platform designed to provide high-growth investment strategies to Indian investors. Built with a focus on **transparency**, **security**, and **performance**, it offers a seamless, app-like experience on the web.
-
-[Dashboard Screenshot]
-
----
-
-## 🌟 Key Features
-
-### 💎 Premium Investment Plans
-Tailored strategies for every investor profile, featuring:
-*   **Silver Plan**: For steady, consistent growth (₹25k - ₹75k).
-*   **Gold Plan**: Our most popular balanced strategy (₹75k - ₹1.25L).
-*   **Platinum Plan**: High-yield strategies for serious investors (₹1.25L - ₹2.5L).
-
-### ⚡ Ultra-High Performance
-*   **Server Components**: Critical UI (Hero, Dashboard) rendered on the server for instant page loads.
-*   **60fps Animations**: GPU-accelerated framer-motion interactions.
-*   **Optimized Assets**: Next.js Image optimization and dynamic code splitting.
-
-### 🛡️ Secure & Compliant
-*   **SEBI Regulated**: Built with compliance at the core.
-*   **ISO 27001**: Bank-grade security standards.
-*   **Transparent**: Real-time tracking of returns and invested amounts.
+> **"The only wealth management platform you'll ever need."**  
+> *Institutional-grade strategies. Consumer-grade simplicity.*
 
 ---
 
-## 🛠️ Technology Stack
+![DhanMatrix Dashboard](public/hero-dashboard.png)
 
-This project is built using the bleeding edge of the React ecosystem:
+## 🌟 The Vision
 
-| Category | Technology |
-| :--- | :--- |
-| **Framework** | [Next.js 14](https://nextjs.org/) (App Router) |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) |
-| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
-| **Backend** | Firebase (Auth & Firestore) |
-| **Icons** | [Lucide React](https://lucide.dev/) |
-| **Charts** | [Recharts](https://recharts.org/) |
-| **Analytics** | Vercel Analytics & Speed Insights |
+**DhanMatrix Capital** isn't just another investment app. It's a statement. 
+We built this platform to bridge the gap between **complex institutional tools** and **accessible personal finance**. 
+
+Traditional wealth management is clunky, opaque, and outdated. We are:
+*   **Transparent**: Real-time tracking, no hidden fees.
+*   **Secure**: Bank-grade encryption & SEBI compliance.
+*   **Beautiful**: A UI that makes you *want* to check your portfolio.
 
 ---
 
-## 🏗️ Architecture Overview
+## 💎 Investment Plans: Tailored for Growth
 
-### Client vs. Server Components
-We utilize a hybrid rendering approach:
-*   **Server Components (`Hero.tsx`, `DashboardMock.tsx`)**: Handle static content and initial data fetching to reduce bundle size.
-*   **Client Components (`HeroActions.tsx`, `PlansPreview.tsx`)**: Handle user interactivity (clicks, hover states, animations).
+We offer three distinct tiers designed to match your financial ambition.
 
-### Performance First
-*   **Dynamic Imports**: Heavy components like animations and charts are lazy-loaded.
-*   **Font Optimization**: `next/font` with `display: swap` ensures text is visible instantly.
-*   **CSS Blobs**: Background animations use `will-change: transform` to offload rendering to the GPU.
+| Feature | **Silver Plan** 🛡️ | **Gold Plan** ⚡ | **Platinum Plan** 👑 |
+| :--- | :--- | :--- | :--- |
+| **Investment** | ₹25k - ₹75k | ₹75k - ₹1.25L | ₹1.25L - ₹2.5L |
+| **Monthly ROI** | **5%** | **5.7%** | **6.2%** |
+| **Risk Profile** | Balanced | Aggressive | High-Yield |
+| **Support** | Standard | Priority | Dedicated Manager |
+| **Processing** | 24 Hours | 24 Hours | **Instant** |
+| **Best For** | Starters | **Most Popular** | HNI / Pros |
+
+---
+
+## 🛠️ Under the Hood: Engineering Excellence
+
+We didn't just build a website; we engineered a **high-performance financial terminal**.
+
+### 🏗️ Architecture
+*   **Hybrid Rendering**: We use **Next.js 14 Server Components** for the heavy lifting (Hero, Dashboard Visuals) to ensure instant First Contentful Paint (FCP).
+*   **Client Interactivity**: Specific islands of interactivity (`HeroActions.tsx`, `PlansPreview.tsx`) handle user events without bloating the main bundle.
+
+### 🎨 Design System
+*   **Typography**: 
+    *   *Headings*: `Plus Jakarta Sans` (Modern, geometric, trustworthy).
+    *   *Body*: `Inter` (The gold standard for readability).
+*   **Palette**: 
+    *   `Brand Primary`: `#2563EB` (Trust Blue)
+    *   `Brand Accent`: `#0F172A` (Slate Dark)
+    *   `Success`: `#10B981` (Emerald Growth)
+
+### 🏎️ Performance Secrets
+*   **GPU Acceleration**: Our background blobs use `will-change: transform` to offload animation rendering to the GPU, ensuring a butter-smooth **60fps** experience even on low-end devices.
+*   **Dynamic Code Splitting**: Heavy charting libraries (`Recharts`) and animations (`Framer Motion`) are lazily loaded only when they enter the viewport.
+
+---
+
+## 📂 Project Structure
+
+```bash
+DhanMatrixCaptital/
+├── public/              # Static assets (images, icons)
+├── src/
+│   ├── app/             # Next.js 14 App Router (Pages & Layouts)
+│   │   ├── plans/       # Investment Plans Page
+│   │   ├── dashboard/   # User Dashboard (Protected)
+│   │   ├── layout.tsx   # Root Layout (Fonts, Providers)
+│   │   └── page.tsx     # Homepage (Hero, Features)
+│   ├── components/
+│   │   ├── home/        # Homepage-specific components (Hero, Mockups)
+│   │   ├── ui/          # Reusable UI Kit (Buttons, Cards, Inputs)
+│   │   └── providers/   # Context Providers (Auth, Theme)
+│   ├── context/         # React Context (Global State)
+│   ├── hooks/           # Custom Hooks (useInvestments, useAuth)
+│   └── styles/          # Global Tailwind styles
+├── tailwind.config.js   # Design System Configuration
+└── tsconfig.json        # TypeScript Configuration
+```
 
 ---
 
 ## 🚀 Getting Started
 
+Ready to build the future? Let's get this running on your machine.
+
 ### Prerequisites
-*   Node.js 18+
-*   npm or yarn
+*   Node.js 18+ (LTS Recommended)
+*   A Firebase Project (for Auth & Database)
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  **Clone the Vault**
     ```bash
     git clone https://github.com/codewithyuvraj24/DhanMatrixCapital.git
     cd DhanMatrixCapital
     ```
 
-2.  **Install dependencies:**
+2.  **Install Dependencies**
     ```bash
     npm install
-    # or
-    yarn install
     ```
 
-3.  **Set up Environment Variables:**
-    Create a `.env.local` file in the root directory and add your Firebase credentials:
+3.  **Configure Environment**
+    Create a `.env.local` file and add your secret keys:
     ```env
     NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
     NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-    # ... other firebase config
     ```
 
-4.  **Run the development server:**
+4.  **Launch Development Server**
     ```bash
     npm run dev
     ```
-
-5.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    Visit `http://localhost:3000` and watch the magic happen. ✨
 
 ---
 
-## 📱 Mobile First Design
+## 🔮 Roadmap
 
-Every component is designed mobile-first, ensuring a flawless experience on devices of all sizes—from the smallest iPhone SE to 4K Ultra-Wide monitors.
+*   [x] **Phase 1: Foundation** (Core UI, Auth, Dashboard V1)
+*   [x] **Phase 2: Growth** (Investment Plans, Payment Integration)
+*   [ ] **Phase 3: Intelligence** (AI-driven Portfolio Recommendations)
+*   [ ] **Phase 4: Global** (Multi-currency support, International Markets)
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We believe in open finance. If you have ideas to make this better:
+1.  Fork the repo.
+2.  Create a feature branch (`git checkout -b feature/amazing-feature`).
+3.  Commit your changes.
+4.  Open a Pull Request.
 
 ---
 
-*Built with ❤️ by [CodeWithYuvraj](https://github.com/codewithyuvraj24)*
+**Built with 💙 by [CodeWithYuvraj](https://github.com/codewithyuvraj24)**  
+*Invest Smart. Grow Faster.*
